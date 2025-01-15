@@ -1,0 +1,36 @@
+speakeasyVersion: 1.468.7
+sources:
+    S2 API:
+        sourceNamespace: s-2-api
+        sourceRevisionDigest: sha256:72b5eea33d379d7e7a0235cbc285ddca0d67808b9aa40b3c0dbcf5affc064e57
+        sourceBlobDigest: sha256:1465d1e0fd5b82a2aec03ae38d5544fb1b1bb2ec55ef548d9d18ef2849c078c6
+        tags:
+            - latest
+            - 1.0.0
+targets:
+    streamstore:
+        source: S2 API
+        sourceNamespace: s-2-api
+        sourceRevisionDigest: sha256:72b5eea33d379d7e7a0235cbc285ddca0d67808b9aa40b3c0dbcf5affc064e57
+        sourceBlobDigest: sha256:1465d1e0fd5b82a2aec03ae38d5544fb1b1bb2ec55ef548d9d18ef2849c078c6
+        codeSamplesNamespace: s-2-api-typescript-code-samples
+        codeSamplesRevisionDigest: sha256:9eff5e081a4a9fb4df0e0c5a1a5829c3395bafaa30b2e76a7b3badb7e9955b01
+workflow:
+    workflowVersion: 1.0.0
+    speakeasyVersion: latest
+    sources:
+        S2 API:
+            inputs:
+                - location: ../s2/proto/public/s2/v1alpha/s2.json
+            registry:
+                location: registry.speakeasyapi.dev/stream-store/s2/s-2-api
+    targets:
+        streamstore:
+            target: typescript
+            source: S2 API
+            codeSamples:
+                registry:
+                    location: registry.speakeasyapi.dev/stream-store/s2/s-2-api-typescript-code-samples
+                labelOverride:
+                    fixedValue: Typescript (SDK)
+                blocking: false

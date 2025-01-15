@@ -1,0 +1,321 @@
+lockVersion: 2.0.0
+id: 2d20490e-9921-47d5-9711-d3c4b91c8cfa
+management:
+  docChecksum: cc64e38916d8bc7d61496686ab99afa2
+  docVersion: 1.0.0
+  speakeasyVersion: 1.468.7
+  generationVersion: 2.493.15
+  releaseVersion: 0.0.1
+  configChecksum: db9a0c2346364d4bb9c689c8e26d0be0
+features:
+  typescript:
+    additionalDependencies: 0.1.0
+    core: 3.18.14
+    defaultEnabledRetries: 0.1.0
+    devContainers: 2.90.0
+    enumUnions: 0.1.0
+    envVarSecurityUsage: 0.1.2
+    globalSecurity: 2.82.12
+    globalSecurityCallbacks: 0.1.0
+    globalSecurityFlattening: 0.1.0
+    globalServerURLs: 2.82.4
+    nullables: 0.1.0
+    pagination: 2.82.8
+    responseFormat: 0.2.3
+    retries: 2.83.0
+    sdkHooks: 0.2.0
+    unions: 2.85.8
+generatedFiles:
+  - .devcontainer/README.md
+  - .devcontainer/devcontainer.json
+  - .devcontainer/setup.sh
+  - .eslintrc.cjs
+  - .gitattributes
+  - .npmignore
+  - FUNCTIONS.md
+  - RUNTIMES.md
+  - USAGE.md
+  - docs/lib/utils/retryconfig.md
+  - docs/models/components/appendinput.md
+  - docs/models/components/appendoutput.md
+  - docs/models/components/appendrecord.md
+  - docs/models/components/assignment.md
+  - docs/models/components/assignment1.md
+  - docs/models/components/basinconfig.md
+  - docs/models/components/basininfo.md
+  - docs/models/components/createbasinrequest.md
+  - docs/models/components/createstreamrequest.md
+  - docs/models/components/header.md
+  - docs/models/components/listbasinsresponse.md
+  - docs/models/components/liststreamsresponse.md
+  - docs/models/components/one.md
+  - docs/models/components/output.md
+  - docs/models/components/output1.md
+  - docs/models/components/output2.md
+  - docs/models/components/reconfigurebasinrequest.md
+  - docs/models/components/reconfigurebasinresponse.md
+  - docs/models/components/reconfigurestreamrequest.md
+  - docs/models/components/reconfigurestreamresponse.md
+  - docs/models/components/retentionpolicy.md
+  - docs/models/components/security.md
+  - docs/models/components/sequencedrecord.md
+  - docs/models/components/sequencedrecordbatch.md
+  - docs/models/components/streamconfig.md
+  - docs/models/components/streaminfo.md
+  - docs/models/components/three.md
+  - docs/models/components/two.md
+  - docs/models/errors/errorresponse.md
+  - docs/models/operations/appendrequest.md
+  - docs/models/operations/checktailrequest.md
+  - docs/models/operations/checktailresponse.md
+  - docs/models/operations/createbasinrequest.md
+  - docs/models/operations/createstreamrequest.md
+  - docs/models/operations/deletebasinrequest.md
+  - docs/models/operations/deletestreamrequest.md
+  - docs/models/operations/getbasinconfigrequest.md
+  - docs/models/operations/getstreamconfigrequest.md
+  - docs/models/operations/header1.md
+  - docs/models/operations/headers2format.md
+  - docs/models/operations/limit.md
+  - docs/models/operations/listbasinsrequest.md
+  - docs/models/operations/listbasinsresponse.md
+  - docs/models/operations/liststreamsrequest.md
+  - docs/models/operations/liststreamsresponse.md
+  - docs/models/operations/one.md
+  - docs/models/operations/readrequest.md
+  - docs/models/operations/reconfigurebasinrequest.md
+  - docs/models/operations/reconfigurestreamrequest.md
+  - docs/models/operations/s2format.md
+  - docs/sdks/account/README.md
+  - docs/sdks/basin/README.md
+  - docs/sdks/stream/README.md
+  - docs/sdks/streamstore/README.md
+  - jsr.json
+  - package.json
+  - src/core.ts
+  - src/funcs/accountCreateBasin.ts
+  - src/funcs/accountDeleteBasin.ts
+  - src/funcs/accountGetBasinConfig.ts
+  - src/funcs/accountListBasins.ts
+  - src/funcs/accountReconfigureBasin.ts
+  - src/funcs/basinCreateStream.ts
+  - src/funcs/basinDeleteStream.ts
+  - src/funcs/basinGetStreamConfig.ts
+  - src/funcs/basinListStreams.ts
+  - src/funcs/basinReconfigureStream.ts
+  - src/funcs/streamAppend.ts
+  - src/funcs/streamCheckTail.ts
+  - src/funcs/streamRead.ts
+  - src/hooks/hooks.ts
+  - src/hooks/index.ts
+  - src/hooks/types.ts
+  - src/index.ts
+  - src/lib/base64.ts
+  - src/lib/config.ts
+  - src/lib/dlv.ts
+  - src/lib/encodings.ts
+  - src/lib/env.ts
+  - src/lib/files.ts
+  - src/lib/http.ts
+  - src/lib/is-plain-object.ts
+  - src/lib/logger.ts
+  - src/lib/matchers.ts
+  - src/lib/primitives.ts
+  - src/lib/retries.ts
+  - src/lib/schemas.ts
+  - src/lib/sdks.ts
+  - src/lib/security.ts
+  - src/lib/url.ts
+  - src/models/components/appendinput.ts
+  - src/models/components/appendoutput.ts
+  - src/models/components/appendrecord.ts
+  - src/models/components/assignment.ts
+  - src/models/components/basinconfig.ts
+  - src/models/components/basininfo.ts
+  - src/models/components/createbasinrequest.ts
+  - src/models/components/createstreamrequest.ts
+  - src/models/components/header.ts
+  - src/models/components/index.ts
+  - src/models/components/listbasinsresponse.ts
+  - src/models/components/liststreamsresponse.ts
+  - src/models/components/output.ts
+  - src/models/components/reconfigurebasinrequest.ts
+  - src/models/components/reconfigurebasinresponse.ts
+  - src/models/components/reconfigurestreamrequest.ts
+  - src/models/components/reconfigurestreamresponse.ts
+  - src/models/components/retentionpolicy.ts
+  - src/models/components/security.ts
+  - src/models/components/sequencedrecord.ts
+  - src/models/components/sequencedrecordbatch.ts
+  - src/models/components/streamconfig.ts
+  - src/models/components/streaminfo.ts
+  - src/models/errors/apierror.ts
+  - src/models/errors/errorresponse.ts
+  - src/models/errors/httpclienterrors.ts
+  - src/models/errors/index.ts
+  - src/models/errors/sdkvalidationerror.ts
+  - src/models/operations/append.ts
+  - src/models/operations/checktail.ts
+  - src/models/operations/createbasin.ts
+  - src/models/operations/createstream.ts
+  - src/models/operations/deletebasin.ts
+  - src/models/operations/deletestream.ts
+  - src/models/operations/getbasinconfig.ts
+  - src/models/operations/getstreamconfig.ts
+  - src/models/operations/index.ts
+  - src/models/operations/listbasins.ts
+  - src/models/operations/liststreams.ts
+  - src/models/operations/read.ts
+  - src/models/operations/reconfigurebasin.ts
+  - src/models/operations/reconfigurestream.ts
+  - src/sdk/account.ts
+  - src/sdk/basin.ts
+  - src/sdk/index.ts
+  - src/sdk/sdk.ts
+  - src/sdk/stream.ts
+  - src/types/blobs.ts
+  - src/types/constdatetime.ts
+  - src/types/enums.ts
+  - src/types/fp.ts
+  - src/types/index.ts
+  - src/types/operations.ts
+  - src/types/rfcdate.ts
+  - src/types/streams.ts
+  - tsconfig.json
+examples:
+  list_basins:
+    speakeasy-default-list-basins:
+      responses:
+        "200":
+          application/json: {"basins": [{"cell": "<value>", "name": "<value>", "scope": "<value>", "state": 27455}], "has_more": true}
+        "400":
+          application/json: {"error": "<value>"}
+  get_basin_config:
+    speakeasy-default-get-basin-config:
+      parameters:
+        path:
+          basin: "<value>"
+      responses:
+        "200":
+          application/json: {}
+        "400":
+          application/json: {"error": "<value>"}
+  create_basin:
+    speakeasy-default-create-basin:
+      parameters:
+        path:
+          basin: "<value>"
+        header: {}
+      requestBody:
+        application/json: {}
+      responses:
+        "201":
+          application/json: {"cell": "<value>", "name": "<value>", "scope": "<value>", "state": 293652}
+        "400":
+          application/json: {"error": "<value>"}
+  delete_basin:
+    speakeasy-default-delete-basin:
+      parameters:
+        path:
+          basin: "<value>"
+      responses:
+        "400":
+          application/json: {"error": "<value>"}
+  reconfigure_basin:
+    speakeasy-default-reconfigure-basin:
+      parameters:
+        path:
+          basin: "<value>"
+      requestBody:
+        application/json: {"mask": ["<value>"]}
+      responses:
+        "200":
+          application/json: {}
+  list_streams:
+    speakeasy-default-list-streams:
+      responses:
+        "200":
+          application/json: {"has_more": false, "streams": []}
+        "400":
+          application/json: {"error": "<value>"}
+  get_stream_config:
+    speakeasy-default-get-stream-config:
+      parameters:
+        path:
+          stream: "<value>"
+        header: {}
+      responses:
+        "200":
+          application/json: {"storage_class": 79230}
+        "400":
+          application/json: {"error": "<value>"}
+  create_stream:
+    speakeasy-default-create-stream:
+      parameters:
+        path:
+          stream: "<value>"
+        header: {}
+      requestBody:
+        application/json: {}
+      responses:
+        "201":
+          application/json: {"created_at": 180107, "name": "<value>"}
+        "400":
+          application/json: {"error": "<value>"}
+  delete_stream:
+    speakeasy-default-delete-stream:
+      parameters:
+        path:
+          stream: "<value>"
+        header: {}
+      responses:
+        "400":
+          application/json: {"error": "<value>"}
+  reconfigure_stream:
+    speakeasy-default-reconfigure-stream:
+      parameters:
+        path:
+          stream: "<value>"
+        header: {}
+      requestBody:
+        application/json: {"mask": []}
+      responses:
+        "200":
+          application/json: {}
+        "400":
+          application/json: {"error": "<value>"}
+  read:
+    speakeasy-default-read:
+      parameters:
+        path:
+          stream: "<value>"
+        query: {}
+        header: {}
+      responses:
+        "200":
+          application/json: {"next_seq_num": 609658}
+        "400":
+          application/json: {"error": "<value>"}
+  append:
+    speakeasy-default-append:
+      parameters:
+        path:
+          stream: "<value>"
+        header: {}
+      requestBody:
+        application/json: {"records": [{"body": "<value>"}]}
+      responses:
+        "200":
+          application/json: {"end_seq_num": 582963, "next_seq_num": 832685, "start_seq_num": 691053}
+        "400":
+          application/json: {"error": "<value>"}
+  check_tail:
+    speakeasy-default-check-tail:
+      parameters:
+        path:
+          stream: "<value>"
+        header: {}
+      responses:
+        "400":
+          application/json: {"error": "<value>"}
+generatedTests: {}

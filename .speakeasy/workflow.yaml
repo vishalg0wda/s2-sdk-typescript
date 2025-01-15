@@ -1,0 +1,18 @@
+workflowVersion: 1.0.0
+speakeasyVersion: latest
+sources:
+    S2 API:
+        inputs:
+            - location: ../s2/proto/public/s2/v1alpha/s2.json
+        registry:
+            location: registry.speakeasyapi.dev/stream-store/s2/s-2-api
+targets:
+    streamstore:
+        target: typescript
+        source: S2 API
+        codeSamples:
+            registry:
+                location: registry.speakeasyapi.dev/stream-store/s2/s-2-api-typescript-code-samples
+            labelOverride:
+                fixedValue: Typescript (SDK)
+            blocking: false
