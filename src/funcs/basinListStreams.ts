@@ -173,16 +173,8 @@ export async function basinListStreams(
     >;
     "~next"?: { cursor: string };
   } => {
-    const nextCursor = jp.value(responseData, "$.results[-1].name");
+    const nextCursor = jp.value(responseData, "$.basins[(@.length-1)].name");
     if (nextCursor == null) {
-      return { next: () => null };
-    }
-    const results = jp.value(responseData, "$.results");
-    if (!Array.isArray(results) || !results.length) {
-      return { next: () => null };
-    }
-    const limit = request?.limit ?? 0;
-    if (results.length < limit) {
       return { next: () => null };
     }
 

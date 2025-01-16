@@ -92,8 +92,7 @@
             }
           ],
           "outputs": {
-            "nextCursor": "$.results[-1].name",
-            "results": "$.results"
+            "nextCursor": "$.basins[(@.length-1)].name"
           },
           "type": "cursor"
         }
@@ -369,8 +368,7 @@
             }
           ],
           "outputs": {
-            "nextCursor": "$.results[-1].name",
-            "results": "$.results"
+            "nextCursor": "$.basins[(@.length-1)].name"
           },
           "type": "cursor"
         }
