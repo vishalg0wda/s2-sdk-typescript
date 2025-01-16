@@ -14,6 +14,9 @@ import { unwrapAsync } from "../types/fp.js";
 import { PageIterator, unwrapResultIterator } from "../types/operations.js";
 
 export class Basin extends ClientSDK {
+  /**
+   * List Streams.
+   */
   async listStreams(
     request: operations.ListStreamsRequest,
     options?: RequestOptions,
@@ -25,6 +28,9 @@ export class Basin extends ClientSDK {
     ));
   }
 
+  /**
+   * Get stream configuration.
+   */
   async getStreamConfig(
     request: operations.GetStreamConfigRequest,
     options?: RequestOptions,
@@ -36,6 +42,9 @@ export class Basin extends ClientSDK {
     ));
   }
 
+  /**
+   * Create a stream.
+   */
   async createStream(
     request: operations.CreateStreamRequest,
     options?: RequestOptions,
@@ -47,6 +56,9 @@ export class Basin extends ClientSDK {
     ));
   }
 
+  /**
+   * Delete a stream.
+   */
   async deleteStream(
     request: operations.DeleteStreamRequest,
     options?: RequestOptions,
@@ -58,6 +70,9 @@ export class Basin extends ClientSDK {
     ));
   }
 
+  /**
+   * Update stream configuration.
+   */
   async reconfigureStream(
     request: operations.ReconfigureStreamRequest,
     options?: RequestOptions,

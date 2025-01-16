@@ -7,13 +7,15 @@ Operate on an S2 account.
 
 ### Available Operations
 
-* [listBasins](#listbasins)
-* [getBasinConfig](#getbasinconfig)
-* [createBasin](#createbasin)
-* [deleteBasin](#deletebasin)
-* [reconfigureBasin](#reconfigurebasin)
+* [listBasins](#listbasins) - List basins.
+* [getBasinConfig](#getbasinconfig) - Get basin configuration.
+* [createBasin](#createbasin) - Create a new basin.
+* [deleteBasin](#deletebasin) - Delete a basin.
+* [reconfigureBasin](#reconfigurebasin) - Update basin configuration.
 
 ## listBasins
+
+List basins.
 
 ### Example Usage
 
@@ -90,6 +92,8 @@ run();
 
 ## getBasinConfig
 
+Get basin configuration.
+
 ### Example Usage
 
 ```typescript
@@ -164,6 +168,8 @@ run();
 | errors.APIError      | 4XX, 5XX             | \*/\*                |
 
 ## createBasin
+
+Create a new basin.
 
 ### Example Usage
 
@@ -242,6 +248,8 @@ run();
 
 ## deleteBasin
 
+Delete a basin.
+
 ### Example Usage
 
 ```typescript
@@ -315,6 +323,8 @@ run();
 
 ## reconfigureBasin
 
+Update basin configuration.
+
 ### Example Usage
 
 ```typescript
@@ -328,6 +338,7 @@ async function run() {
   const result = await streamstore.account.reconfigureBasin({
     basin: "<value>",
     reconfigureBasinRequest: {
+      config: {},
       mask: [
         "<value>",
       ],
@@ -359,6 +370,7 @@ async function run() {
   const res = await accountReconfigureBasin(streamstore, {
     basin: "<value>",
     reconfigureBasinRequest: {
+      config: {},
       mask: [
         "<value>",
       ],

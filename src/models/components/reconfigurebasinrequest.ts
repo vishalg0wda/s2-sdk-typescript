@@ -17,7 +17,10 @@ import {
  * Reconfigure basin request.
  */
 export type ReconfigureBasinRequest = {
-  config?: BasinConfig | null | undefined;
+  /**
+   * Basin configuration.
+   */
+  config: BasinConfig;
   /**
    * Specifies the pieces of configuration being updated.
    *
@@ -33,13 +36,13 @@ export const ReconfigureBasinRequest$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.object({
-  config: z.nullable(BasinConfig$inboundSchema).optional(),
+  config: BasinConfig$inboundSchema,
   mask: z.array(z.string()),
 });
 
 /** @internal */
 export type ReconfigureBasinRequest$Outbound = {
-  config?: BasinConfig$Outbound | null | undefined;
+  config: BasinConfig$Outbound;
   mask: Array<string>;
 };
 
@@ -49,7 +52,7 @@ export const ReconfigureBasinRequest$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   ReconfigureBasinRequest
 > = z.object({
-  config: z.nullable(BasinConfig$outboundSchema).optional(),
+  config: BasinConfig$outboundSchema,
   mask: z.array(z.string()),
 });
 

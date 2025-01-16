@@ -8,6 +8,7 @@ import { ReconfigureBasinRequest } from "streamstore/models/operations";
 let value: ReconfigureBasinRequest = {
   basin: "<value>",
   reconfigureBasinRequest: {
+    config: {},
     mask: [
       "<value>",
     ],

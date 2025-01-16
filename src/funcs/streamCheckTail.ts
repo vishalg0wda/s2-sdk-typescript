@@ -10,6 +10,7 @@ import { safeParse } from "../lib/schemas.js";
 import { RequestOptions } from "../lib/sdks.js";
 import { extractSecurity, resolveGlobalSecurity } from "../lib/security.js";
 import { pathToFunc } from "../lib/url.js";
+import * as components from "../models/components/index.js";
 import { APIError } from "../models/errors/apierror.js";
 import {
   ConnectionError,
@@ -20,16 +21,20 @@ import {
 } from "../models/errors/httpclienterrors.js";
 import * as errors from "../models/errors/index.js";
 import { SDKValidationError } from "../models/errors/sdkvalidationerror.js";
+import { CheckTailServerList } from "../models/operations/checktail.js";
 import * as operations from "../models/operations/index.js";
 import { Result } from "../types/fp.js";
 
+/**
+ * Check the tail.
+ */
 export async function streamCheckTail(
   client: StreamstoreCore,
   request: operations.CheckTailRequest,
   options?: RequestOptions,
 ): Promise<
   Result<
-    operations.CheckTailResponse | undefined,
+    components.CheckTailResponse,
     | errors.ErrorResponse
     | APIError
     | SDKValidationError
@@ -51,6 +56,11 @@ export async function streamCheckTail(
   const payload = parsed.value;
   const body = null;
 
+  const baseURL = options?.serverURL
+    || pathToFunc(CheckTailServerList[0], { charEncoding: "percent" })({
+      basin: "my-favorite-basin",
+    });
+
   const pathParams = {
     stream: encodeSimple("stream", payload.stream, {
       explode: false,
@@ -58,7 +68,7 @@ export async function streamCheckTail(
     }),
   };
 
-  const path = pathToFunc("/streams/{stream}/records")(pathParams);
+  const path = pathToFunc("/streams/{stream}/records/tail")(pathParams);
 
   const headers = new Headers(compactMap({
     Accept: "application/json",
@@ -88,7 +98,7 @@ export async function streamCheckTail(
   const requestRes = client._createRequest(context, {
     security: requestSecurity,
     method: "HEAD",
-    baseURL: options?.serverURL,
+    baseURL: baseURL,
     path: path,
     headers: headers,
     body: body,
@@ -115,7 +125,7 @@ export async function streamCheckTail(
   };
 
   const [result] = await M.match<
-    operations.CheckTailResponse | undefined,
+    components.CheckTailResponse,
     | errors.ErrorResponse
     | APIError
     | SDKValidationError
@@ -125,11 +135,10 @@ export async function streamCheckTail(
     | RequestTimeoutError
     | ConnectionError
   >(
-    M.nil(200, operations.CheckTailResponse$inboundSchema.optional(), {
-      hdrs: true,
-    }),
+    M.json(200, components.CheckTailResponse$inboundSchema),
     M.jsonErr(400, errors.ErrorResponse$inboundSchema),
-    M.fail(["4XX", "5XX"]),
+    M.fail("4XX"),
+    M.fail("5XX"),
   )(response, { extraFields: responseFields });
   if (!result.ok) {
     return result;

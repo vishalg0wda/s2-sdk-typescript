@@ -11,6 +11,9 @@ import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
 
 export class Stream extends ClientSDK {
+  /**
+   * Retrieve a batch of records.
+   */
   async read(
     request: operations.ReadRequest,
     options?: RequestOptions,
@@ -22,6 +25,9 @@ export class Stream extends ClientSDK {
     ));
   }
 
+  /**
+   * Append a batch of records.
+   */
   async append(
     request: operations.AppendRequest,
     options?: RequestOptions,
@@ -33,10 +39,13 @@ export class Stream extends ClientSDK {
     ));
   }
 
+  /**
+   * Check the tail.
+   */
   async checkTail(
     request: operations.CheckTailRequest,
     options?: RequestOptions,
-  ): Promise<operations.CheckTailResponse | undefined> {
+  ): Promise<components.CheckTailResponse> {
     return unwrapAsync(streamCheckTail(
       this,
       request,

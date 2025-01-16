@@ -8,6 +8,7 @@ export * from "./appendrecord.js";
 export * from "./assignment.js";
 export * from "./basinconfig.js";
 export * from "./basininfo.js";
+export * from "./checktailresponse.js";
 export * from "./createbasinrequest.js";
 export * from "./createstreamrequest.js";
 export * from "./header.js";

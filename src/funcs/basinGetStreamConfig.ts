@@ -21,9 +21,13 @@ import {
 } from "../models/errors/httpclienterrors.js";
 import * as errors from "../models/errors/index.js";
 import { SDKValidationError } from "../models/errors/sdkvalidationerror.js";
+import { GetStreamConfigServerList } from "../models/operations/getstreamconfig.js";
 import * as operations from "../models/operations/index.js";
 import { Result } from "../types/fp.js";
 
+/**
+ * Get stream configuration.
+ */
 export async function basinGetStreamConfig(
   client: StreamstoreCore,
   request: operations.GetStreamConfigRequest,
@@ -51,6 +55,11 @@ export async function basinGetStreamConfig(
   }
   const payload = parsed.value;
   const body = null;
+
+  const baseURL = options?.serverURL
+    || pathToFunc(GetStreamConfigServerList[0], { charEncoding: "percent" })({
+      basin: "my-favorite-basin",
+    });
 
   const pathParams = {
     stream: encodeSimple("stream", payload.stream, {
@@ -89,7 +98,7 @@ export async function basinGetStreamConfig(
   const requestRes = client._createRequest(context, {
     security: requestSecurity,
     method: "GET",
-    baseURL: options?.serverURL,
+    baseURL: baseURL,
     path: path,
     headers: headers,
     body: body,
@@ -128,7 +137,8 @@ export async function basinGetStreamConfig(
   >(
     M.json(200, components.StreamConfig$inboundSchema),
     M.jsonErr(400, errors.ErrorResponse$inboundSchema),
-    M.fail(["4XX", "5XX"]),
+    M.fail("4XX"),
+    M.fail("5XX"),
   )(response, { extraFields: responseFields });
   if (!result.ok) {
     return result;

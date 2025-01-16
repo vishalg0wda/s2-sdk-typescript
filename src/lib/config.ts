@@ -12,7 +12,6 @@ import { Params, pathToFunc } from "./url.js";
  */
 export const ServerList = [
   "https://aws.s2.dev/v1alpha",
-  "https://{basin}.b.aws.s2.dev/v1alpha",
 ] as const;
 
 export type SDKOptions = {
@@ -23,10 +22,6 @@ export type SDKOptions = {
    * Allows overriding the default server used by the SDK
    */
   serverIdx?: number;
-  /**
-   * Sets the basin variable for url substitution
-   */
-  basin?: string;
   /**
    * Allows overriding the default server URL used by the SDK
    */
@@ -42,13 +37,7 @@ export type SDKOptions = {
 export function serverURLFromOptions(options: SDKOptions): URL | null {
   let serverURL = options.serverURL;
 
-  const serverParams: Params[] = [
-    {},
-    {
-      "basin": options.basin ?? "demo",
-    },
-  ];
-  let params: Params = {};
+  const params: Params = {};
 
   if (!serverURL) {
     const serverIdx = options.serverIdx ?? 0;
@@ -56,7 +45,6 @@ export function serverURLFromOptions(options: SDKOptions): URL | null {
       throw new Error(`Invalid server index ${serverIdx}`);
     }
     serverURL = ServerList[serverIdx] || "";
-    params = serverParams[serverIdx] || {};
   }
 
   const u = pathToFunc(serverURL)(params);
@@ -66,7 +54,7 @@ export function serverURLFromOptions(options: SDKOptions): URL | null {
 export const SDK_METADATA = {
   language: "typescript",
   openapiDocVersion: "1.0.0",
-  sdkVersion: "0.0.1",
-  genVersion: "2.493.15",
-  userAgent: "speakeasy-sdk/typescript 0.0.1 2.493.15 1.0.0 streamstore",
+  sdkVersion: "0.1.0",
+  genVersion: "2.493.21",
+  userAgent: "speakeasy-sdk/typescript 0.1.0 2.493.21 1.0.0 streamstore",
 } as const;

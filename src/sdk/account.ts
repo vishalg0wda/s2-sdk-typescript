@@ -14,6 +14,9 @@ import { unwrapAsync } from "../types/fp.js";
 import { PageIterator, unwrapResultIterator } from "../types/operations.js";
 
 export class Account extends ClientSDK {
+  /**
+   * List basins.
+   */
   async listBasins(
     request: operations.ListBasinsRequest,
     options?: RequestOptions,
@@ -25,6 +28,9 @@ export class Account extends ClientSDK {
     ));
   }
 
+  /**
+   * Get basin configuration.
+   */
   async getBasinConfig(
     request: operations.GetBasinConfigRequest,
     options?: RequestOptions,
@@ -36,6 +42,9 @@ export class Account extends ClientSDK {
     ));
   }
 
+  /**
+   * Create a new basin.
+   */
   async createBasin(
     request: operations.CreateBasinRequest,
     options?: RequestOptions,
@@ -47,6 +56,9 @@ export class Account extends ClientSDK {
     ));
   }
 
+  /**
+   * Delete a basin.
+   */
   async deleteBasin(
     request: operations.DeleteBasinRequest,
     options?: RequestOptions,
@@ -58,6 +70,9 @@ export class Account extends ClientSDK {
     ));
   }
 
+  /**
+   * Update basin configuration.
+   */
   async reconfigureBasin(
     request: operations.ReconfigureBasinRequest,
     options?: RequestOptions,

@@ -17,7 +17,10 @@ import {
  * Reconfigure basin response.
  */
 export type ReconfigureBasinResponse = {
-  config?: BasinConfig | null | undefined;
+  /**
+   * Basin configuration.
+   */
+  config: BasinConfig;
 };
 
 /** @internal */
@@ -26,12 +29,12 @@ export const ReconfigureBasinResponse$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.object({
-  config: z.nullable(BasinConfig$inboundSchema).optional(),
+  config: BasinConfig$inboundSchema,
 });
 
 /** @internal */
 export type ReconfigureBasinResponse$Outbound = {
-  config?: BasinConfig$Outbound | null | undefined;
+  config: BasinConfig$Outbound;
 };
 
 /** @internal */
@@ -40,7 +43,7 @@ export const ReconfigureBasinResponse$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   ReconfigureBasinResponse
 > = z.object({
-  config: z.nullable(BasinConfig$outboundSchema).optional(),
+  config: BasinConfig$outboundSchema,
 });
 
 /**

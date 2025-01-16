@@ -24,6 +24,9 @@ import { SDKValidationError } from "../models/errors/sdkvalidationerror.js";
 import * as operations from "../models/operations/index.js";
 import { Result } from "../types/fp.js";
 
+/**
+ * Get basin configuration.
+ */
 export async function accountGetBasinConfig(
   client: StreamstoreCore,
   request: operations.GetBasinConfigRequest,
@@ -124,7 +127,8 @@ export async function accountGetBasinConfig(
   >(
     M.json(200, components.BasinConfig$inboundSchema),
     M.jsonErr(400, errors.ErrorResponse$inboundSchema),
-    M.fail(["4XX", "5XX"]),
+    M.fail("4XX"),
+    M.fail("5XX"),
   )(response, { extraFields: responseFields });
   if (!result.ok) {
     return result;

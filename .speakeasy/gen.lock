@@ -1,16 +1,16 @@
 lockVersion: 2.0.0
 id: 2d20490e-9921-47d5-9711-d3c4b91c8cfa
 management:
-  docChecksum: cc64e38916d8bc7d61496686ab99afa2
+  docChecksum: a241a4d5bd806a6aa475ab645685d3a3
   docVersion: 1.0.0
-  speakeasyVersion: 1.468.7
-  generationVersion: 2.493.15
-  releaseVersion: 0.0.1
-  configChecksum: db9a0c2346364d4bb9c689c8e26d0be0
+  speakeasyVersion: 1.468.9
+  generationVersion: 2.493.21
+  releaseVersion: 0.1.0
+  configChecksum: 495f80ed04a4a84deda1331d5a68ad29
 features:
   typescript:
     additionalDependencies: 0.1.0
-    core: 3.18.14
+    core: 3.18.16
     defaultEnabledRetries: 0.1.0
     devContainers: 2.90.0
     enumUnions: 0.1.0
@@ -19,6 +19,7 @@ features:
     globalSecurityCallbacks: 0.1.0
     globalSecurityFlattening: 0.1.0
     globalServerURLs: 2.82.4
+    methodServerURLs: 2.82.1
     nullables: 0.1.0
     pagination: 2.82.8
     responseFormat: 0.2.3
@@ -43,6 +44,7 @@ generatedFiles:
   - docs/models/components/assignment1.md
   - docs/models/components/basinconfig.md
   - docs/models/components/basininfo.md
+  - docs/models/components/checktailresponse.md
   - docs/models/components/createbasinrequest.md
   - docs/models/components/createstreamrequest.md
   - docs/models/components/header.md
@@ -67,7 +69,6 @@ generatedFiles:
   - docs/models/errors/errorresponse.md
   - docs/models/operations/appendrequest.md
   - docs/models/operations/checktailrequest.md
-  - docs/models/operations/checktailresponse.md
   - docs/models/operations/createbasinrequest.md
   - docs/models/operations/createstreamrequest.md
   - docs/models/operations/deletebasinrequest.md
@@ -132,6 +133,7 @@ generatedFiles:
   - src/models/components/assignment.ts
   - src/models/components/basinconfig.ts
   - src/models/components/basininfo.ts
+  - src/models/components/checktailresponse.ts
   - src/models/components/createbasinrequest.ts
   - src/models/components/createstreamrequest.ts
   - src/models/components/header.ts
@@ -227,7 +229,7 @@ examples:
         path:
           basin: "<value>"
       requestBody:
-        application/json: {"mask": ["<value>"]}
+        application/json: {"config": {}, "mask": ["<value>"]}
       responses:
         "200":
           application/json: {}
@@ -318,4 +320,6 @@ examples:
       responses:
         "400":
           application/json: {"error": "<value>"}
+        "200":
+          application/json: {"next_seq_num": 483653}
 generatedTests: {}

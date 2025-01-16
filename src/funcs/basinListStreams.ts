@@ -22,6 +22,7 @@ import {
 import * as errors from "../models/errors/index.js";
 import { SDKValidationError } from "../models/errors/sdkvalidationerror.js";
 import * as operations from "../models/operations/index.js";
+import { ListStreamsServerList } from "../models/operations/liststreams.js";
 import { Result } from "../types/fp.js";
 import {
   createPageIterator,
@@ -30,6 +31,9 @@ import {
   Paginator,
 } from "../types/operations.js";
 
+/**
+ * List Streams.
+ */
 export async function basinListStreams(
   client: StreamstoreCore,
   request: operations.ListStreamsRequest,
@@ -60,6 +64,11 @@ export async function basinListStreams(
   }
   const payload = parsed.value;
   const body = null;
+
+  const baseURL = options?.serverURL
+    || pathToFunc(ListStreamsServerList[0], { charEncoding: "percent" })({
+      basin: "my-favorite-basin",
+    });
 
   const path = pathToFunc("/streams")();
 
@@ -97,7 +106,7 @@ export async function basinListStreams(
   const requestRes = client._createRequest(context, {
     security: requestSecurity,
     method: "GET",
-    baseURL: options?.serverURL,
+    baseURL: baseURL,
     path: path,
     headers: headers,
     query: query,
@@ -139,7 +148,8 @@ export async function basinListStreams(
       key: "Result",
     }),
     M.jsonErr(400, errors.ErrorResponse$inboundSchema),
-    M.fail(["4XX", "5XX"]),
+    M.fail("4XX"),
+    M.fail("5XX"),
   )(response, { extraFields: responseFields });
   if (!result.ok) {
     return haltIterator(result);

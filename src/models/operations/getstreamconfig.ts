@@ -8,13 +8,21 @@ import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
+export const GetStreamConfigServerList = [
+  "https://aws.s2.dev/v1alpha",
+  /**
+   * Directly access the basin
+   */
+  "https://{basin}.b.aws.s2.dev/v1alpha",
+] as const;
+
 export type GetStreamConfigRequest = {
   /**
    * Name of the stream.
    */
   stream: string;
   /**
-   * Name of the basin.
+   * Name of the basin. Use when accessing the basin through the Account Endpoint.
    */
   s2Basin?: string | undefined;
 };

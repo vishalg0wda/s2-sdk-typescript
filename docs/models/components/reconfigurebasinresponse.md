@@ -7,11 +7,13 @@ Reconfigure basin response.
 ```typescript
 import { ReconfigureBasinResponse } from "streamstore/models/components";
 
-let value: ReconfigureBasinResponse = {};
+let value: ReconfigureBasinResponse = {
+  config: {},
+};
 ```
 
 ## Fields
 
 | Field                                                            | Type                                                             | Required                                                         | Description                                                      |
 | ---------------------------------------------------------------- | ---------------------------------------------------------------- | ---------------------------------------------------------------- | ---------------------------------------------------------------- |
-| `config`                                                         | [components.BasinConfig](../../models/components/basinconfig.md) | :heavy_minus_sign:                                               | N/A                                                              |
+| `config`                                                         | [components.BasinConfig](../../models/components/basinconfig.md) | :heavy_check_mark:                                               | Basin configuration.                                             |

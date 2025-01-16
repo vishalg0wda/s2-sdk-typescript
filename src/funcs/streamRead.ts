@@ -22,8 +22,12 @@ import {
 import * as errors from "../models/errors/index.js";
 import { SDKValidationError } from "../models/errors/sdkvalidationerror.js";
 import * as operations from "../models/operations/index.js";
+import { ReadServerList } from "../models/operations/read.js";
 import { Result } from "../types/fp.js";
 
+/**
+ * Retrieve a batch of records.
+ */
 export async function streamRead(
   client: StreamstoreCore,
   request: operations.ReadRequest,
@@ -51,6 +55,11 @@ export async function streamRead(
   }
   const payload = parsed.value;
   const body = null;
+
+  const baseURL = options?.serverURL
+    || pathToFunc(ReadServerList[0], { charEncoding: "percent" })({
+      basin: "my-favorite-basin",
+    });
 
   const pathParams = {
     stream: encodeSimple("stream", payload.stream, {
@@ -98,7 +107,7 @@ export async function streamRead(
   const requestRes = client._createRequest(context, {
     security: requestSecurity,
     method: "GET",
-    baseURL: options?.serverURL,
+    baseURL: baseURL,
     path: path,
     headers: headers,
     query: query,
@@ -138,7 +147,8 @@ export async function streamRead(
   >(
     M.json(200, components.Output$inboundSchema),
     M.jsonErr(400, errors.ErrorResponse$inboundSchema),
-    M.fail(["4XX", "5XX"]),
+    M.fail("4XX"),
+    M.fail("5XX"),
   )(response, { extraFields: responseFields });
   if (!result.ok) {
     return result;

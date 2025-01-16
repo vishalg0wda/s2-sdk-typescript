@@ -21,9 +21,13 @@ import {
 } from "../models/errors/httpclienterrors.js";
 import * as errors from "../models/errors/index.js";
 import { SDKValidationError } from "../models/errors/sdkvalidationerror.js";
+import { DeleteStreamServerList } from "../models/operations/deletestream.js";
 import * as operations from "../models/operations/index.js";
 import { Result } from "../types/fp.js";
 
+/**
+ * Delete a stream.
+ */
 export async function basinDeleteStream(
   client: StreamstoreCore,
   request: operations.DeleteStreamRequest,
@@ -51,6 +55,11 @@ export async function basinDeleteStream(
   }
   const payload = parsed.value;
   const body = null;
+
+  const baseURL = options?.serverURL
+    || pathToFunc(DeleteStreamServerList[0], { charEncoding: "percent" })({
+      basin: "my-favorite-basin",
+    });
 
   const pathParams = {
     stream: encodeSimple("stream", payload.stream, {
@@ -89,7 +98,7 @@ export async function basinDeleteStream(
   const requestRes = client._createRequest(context, {
     security: requestSecurity,
     method: "DELETE",
-    baseURL: options?.serverURL,
+    baseURL: baseURL,
     path: path,
     headers: headers,
     body: body,
@@ -128,7 +137,8 @@ export async function basinDeleteStream(
   >(
     M.nil(202, z.void()),
     M.jsonErr(400, errors.ErrorResponse$inboundSchema),
-    M.fail(["4XX", "5XX"]),
+    M.fail("4XX"),
+    M.fail("5XX"),
   )(response, { extraFields: responseFields });
   if (!result.ok) {
     return result;

@@ -3,7 +3,7 @@ speakeasyVersion: latest
 sources:
     S2 API:
         inputs:
-            - location: ../s2/proto/public/s2/v1alpha/s2.json
+            - location: s2.json
         registry:
             location: registry.speakeasyapi.dev/stream-store/s2/s-2-api
 targets:

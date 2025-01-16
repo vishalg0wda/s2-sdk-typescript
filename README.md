@@ -152,25 +152,25 @@ run();
 
 ### [account](docs/sdks/account/README.md)
 
-* [listBasins](docs/sdks/account/README.md#listbasins)
-* [getBasinConfig](docs/sdks/account/README.md#getbasinconfig)
-* [createBasin](docs/sdks/account/README.md#createbasin)
-* [deleteBasin](docs/sdks/account/README.md#deletebasin)
-* [reconfigureBasin](docs/sdks/account/README.md#reconfigurebasin)
+* [listBasins](docs/sdks/account/README.md#listbasins) - List basins.
+* [getBasinConfig](docs/sdks/account/README.md#getbasinconfig) - Get basin configuration.
+* [createBasin](docs/sdks/account/README.md#createbasin) - Create a new basin.
+* [deleteBasin](docs/sdks/account/README.md#deletebasin) - Delete a basin.
+* [reconfigureBasin](docs/sdks/account/README.md#reconfigurebasin) - Update basin configuration.
 
 ### [basin](docs/sdks/basin/README.md)
 
-* [listStreams](docs/sdks/basin/README.md#liststreams)
-* [getStreamConfig](docs/sdks/basin/README.md#getstreamconfig)
-* [createStream](docs/sdks/basin/README.md#createstream)
-* [deleteStream](docs/sdks/basin/README.md#deletestream)
-* [reconfigureStream](docs/sdks/basin/README.md#reconfigurestream)
+* [listStreams](docs/sdks/basin/README.md#liststreams) - List Streams.
+* [getStreamConfig](docs/sdks/basin/README.md#getstreamconfig) - Get stream configuration.
+* [createStream](docs/sdks/basin/README.md#createstream) - Create a stream.
+* [deleteStream](docs/sdks/basin/README.md#deletestream) - Delete a stream.
+* [reconfigureStream](docs/sdks/basin/README.md#reconfigurestream) - Update stream configuration.
 
 ### [stream](docs/sdks/stream/README.md)
 
-* [read](docs/sdks/stream/README.md#read)
-* [append](docs/sdks/stream/README.md#append)
-* [checkTail](docs/sdks/stream/README.md#checktail)
+* [read](docs/sdks/stream/README.md#read) - Retrieve a batch of records.
+* [append](docs/sdks/stream/README.md#append) - Append a batch of records.
+* [checkTail](docs/sdks/stream/README.md#checktail) - Check the tail.
 
 
 </details>
@@ -191,19 +191,19 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 
 <summary>Available standalone functions</summary>
 
-- [`accountCreateBasin`](docs/sdks/account/README.md#createbasin)
-- [`accountDeleteBasin`](docs/sdks/account/README.md#deletebasin)
-- [`accountGetBasinConfig`](docs/sdks/account/README.md#getbasinconfig)
-- [`accountListBasins`](docs/sdks/account/README.md#listbasins)
-- [`accountReconfigureBasin`](docs/sdks/account/README.md#reconfigurebasin)
-- [`basinCreateStream`](docs/sdks/basin/README.md#createstream)
-- [`basinDeleteStream`](docs/sdks/basin/README.md#deletestream)
-- [`basinGetStreamConfig`](docs/sdks/basin/README.md#getstreamconfig)
-- [`basinListStreams`](docs/sdks/basin/README.md#liststreams)
-- [`basinReconfigureStream`](docs/sdks/basin/README.md#reconfigurestream)
-- [`streamAppend`](docs/sdks/stream/README.md#append)
-- [`streamCheckTail`](docs/sdks/stream/README.md#checktail)
-- [`streamRead`](docs/sdks/stream/README.md#read)
+- [`accountCreateBasin`](docs/sdks/account/README.md#createbasin) - Create a new basin.
+- [`accountDeleteBasin`](docs/sdks/account/README.md#deletebasin) - Delete a basin.
+- [`accountGetBasinConfig`](docs/sdks/account/README.md#getbasinconfig) - Get basin configuration.
+- [`accountListBasins`](docs/sdks/account/README.md#listbasins) - List basins.
+- [`accountReconfigureBasin`](docs/sdks/account/README.md#reconfigurebasin) - Update basin configuration.
+- [`basinCreateStream`](docs/sdks/basin/README.md#createstream) - Create a stream.
+- [`basinDeleteStream`](docs/sdks/basin/README.md#deletestream) - Delete a stream.
+- [`basinGetStreamConfig`](docs/sdks/basin/README.md#getstreamconfig) - Get stream configuration.
+- [`basinListStreams`](docs/sdks/basin/README.md#liststreams) - List Streams.
+- [`basinReconfigureStream`](docs/sdks/basin/README.md#reconfigurestream) - Update stream configuration.
+- [`streamAppend`](docs/sdks/stream/README.md#append) - Append a batch of records.
+- [`streamCheckTail`](docs/sdks/stream/README.md#checktail) - Check the tail.
+- [`streamRead`](docs/sdks/stream/README.md#read) - Retrieve a batch of records.
 
 </details>
 <!-- End Standalone functions [standalone-funcs] -->
@@ -382,24 +382,14 @@ In some rare cases, the SDK can fail to get a response from the server or even m
 <!-- Start Server Selection [server] -->
 ## Server Selection
 
-### Select Server by Index
+### Override Server URL Per-Client
 
-You can override the default server globally by passing a server index to the `serverIdx: number` optional parameter when initializing the SDK client instance. The selected server will then be used as the default on the operations that use it. This table lists the indexes associated with the available servers:
-
-| #   | Server                                 | Variables       | Default values |
-| --- | -------------------------------------- | --------------- | -------------- |
-| 0   | `https://aws.s2.dev/v1alpha`           |                 |                |
-| 1   | `https://{basin}.b.aws.s2.dev/v1alpha` | `basin: string` | `"demo"`       |
-
-If the selected server has variables, you may override their default values through the additional parameters made available in the SDK constructor.
-
-#### Example
-
+The default server can also be overridden globally by passing a URL to the `serverURL: string` optional parameter when initializing the SDK client instance. For example:
 ```typescript
 import { Streamstore } from "streamstore";
 
 const streamstore = new Streamstore({
-  serverIdx: 1,
+  serverURL: "https://aws.s2.dev/v1alpha",
   bearerAuth: process.env["STREAMSTORE_BEARER_AUTH"] ?? "",
 });
 
@@ -416,19 +406,20 @@ run();
 
 ```
 
-### Override Server URL Per-Client
+### Override Server URL Per-Operation
 
-The default server can also be overridden globally by passing a URL to the `serverURL: string` optional parameter when initializing the SDK client instance. For example:
+The server URL can also be overridden on a per-operation basis, provided a server list was specified for the operation. For example:
 ```typescript
 import { Streamstore } from "streamstore";
 
 const streamstore = new Streamstore({
-  serverURL: "https://aws.s2.dev/v1alpha",
   bearerAuth: process.env["STREAMSTORE_BEARER_AUTH"] ?? "",
 });
 
 async function run() {
-  const result = await streamstore.account.listBasins({});
+  const result = await streamstore.basin.listStreams({}, {
+    serverURL: "https://aws.s2.dev/v1alpha",
+  });
 
   for await (const page of result) {
     // Handle the page

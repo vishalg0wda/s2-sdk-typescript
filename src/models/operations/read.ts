@@ -9,6 +9,14 @@ import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
+export const ReadServerList = [
+  "https://aws.s2.dev/v1alpha",
+  /**
+   * Directly access the basin
+   */
+  "https://{basin}.b.aws.s2.dev/v1alpha",
+] as const;
+
 /**
  * Limit on how many records can be returned upto a maximum of 1000, or 1MiB of metered bytes.
  */
@@ -58,7 +66,7 @@ export type ReadRequest = {
    */
   stream: string;
   /**
-   * Name of the basin.
+   * Name of the basin. Use when accessing the basin through the Account Endpoint.
    */
   s2Basin?: string | undefined;
 };

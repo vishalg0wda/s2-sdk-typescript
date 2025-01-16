@@ -9,6 +9,14 @@ import { Result as SafeParseResult } from "../../types/fp.js";
 import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
+export const ListStreamsServerList = [
+  "https://aws.s2.dev/v1alpha",
+  /**
+   * Directly access the basin
+   */
+  "https://{basin}.b.aws.s2.dev/v1alpha",
+] as const;
+
 export type ListStreamsRequest = {
   /**
    * List stream names that begin with this prefix.
@@ -27,7 +35,7 @@ export type ListStreamsRequest = {
    */
   limit?: number | undefined;
   /**
-   * Name of the basin.
+   * Name of the basin. Use when accessing the basin through the Account Endpoint.
    */
   s2Basin?: string | undefined;
 };
