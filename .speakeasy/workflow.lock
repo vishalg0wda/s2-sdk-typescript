@@ -2,7 +2,7 @@ speakeasyVersion: 1.468.9
 sources:
     S2 API:
         sourceNamespace: s-2-api
-        sourceRevisionDigest: sha256:b9a86795f09b857627d2322a7a05d294832ed84a79fc5ada1d290e664f173865
+        sourceRevisionDigest: sha256:b178e7333b9d3b25538679e8ff28627dd7165d6657be825377155cae2d2aea50
         sourceBlobDigest: sha256:485f7955d758133227ed2ee47f5709e60970fe26d174c5a79259e415cf9df0c4
         tags:
             - latest
@@ -11,17 +11,17 @@ targets:
     streamstore:
         source: S2 API
         sourceNamespace: s-2-api
-        sourceRevisionDigest: sha256:b9a86795f09b857627d2322a7a05d294832ed84a79fc5ada1d290e664f173865
+        sourceRevisionDigest: sha256:b178e7333b9d3b25538679e8ff28627dd7165d6657be825377155cae2d2aea50
         sourceBlobDigest: sha256:485f7955d758133227ed2ee47f5709e60970fe26d174c5a79259e415cf9df0c4
         codeSamplesNamespace: s-2-api-typescript-code-samples
-        codeSamplesRevisionDigest: sha256:a273cb416a17b62d310bbf789a3fc6766ed1217969002f5f1d927e1c340cb09b
+        codeSamplesRevisionDigest: sha256:bbcd35592667f3fa2b56e78ab0c949c706c9cb93d4a92c5ccd1cf201449ba983
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest
     sources:
         S2 API:
             inputs:
-                - location: ../s2/proto/public/s2/v1alpha/s2.json
+                - location: s2.json
             registry:
                 location: registry.speakeasyapi.dev/stream-store/s2/s-2-api
     targets:
