@@ -35,7 +35,7 @@ export type ListStreamsRequest = {
    */
   limit?: number | undefined;
   /**
-   * Name of the basin. Use when accessing the basin through the Account Endpoint.
+   * Only required when basin is not part of the endpoint.
    */
   s2Basin?: string | undefined;
 };

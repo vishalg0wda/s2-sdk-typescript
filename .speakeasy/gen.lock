@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 2d20490e-9921-47d5-9711-d3c4b91c8cfa
 management:
-  docChecksum: 9c2cffaa5861d20227471e0e6b3836f3
+  docChecksum: 17f3106678a94667fe435ea8e9ef864c
   docVersion: 1.0.0
-  speakeasyVersion: 1.468.9
+  speakeasyVersion: 1.469.1
   generationVersion: 2.493.21
-  releaseVersion: 0.1.5
-  configChecksum: b23905d364828f50824e2024c1490e72
+  releaseVersion: 0.1.8
+  configChecksum: 2ef0f2131f62e2f6c9473446dea237c8
 features:
   typescript:
     additionalDependencies: 0.1.0
@@ -54,10 +54,6 @@ generatedFiles:
   - docs/models/components/output.md
   - docs/models/components/output1.md
   - docs/models/components/output2.md
-  - docs/models/components/reconfigurebasinrequest.md
-  - docs/models/components/reconfigurebasinresponse.md
-  - docs/models/components/reconfigurestreamrequest.md
-  - docs/models/components/reconfigurestreamresponse.md
   - docs/models/components/retentionpolicy.md
   - docs/models/components/security.md
   - docs/models/components/sequencedrecord.md
@@ -84,8 +80,6 @@ generatedFiles:
   - docs/models/operations/liststreamsresponse.md
   - docs/models/operations/one.md
   - docs/models/operations/readrequest.md
-  - docs/models/operations/reconfigurebasinrequest.md
-  - docs/models/operations/reconfigurestreamrequest.md
   - docs/models/operations/s2format.md
   - docs/sdks/account/README.md
   - docs/sdks/basin/README.md
@@ -98,12 +92,10 @@ generatedFiles:
   - src/funcs/accountDeleteBasin.ts
   - src/funcs/accountGetBasinConfig.ts
   - src/funcs/accountListBasins.ts
-  - src/funcs/accountReconfigureBasin.ts
   - src/funcs/basinCreateStream.ts
   - src/funcs/basinDeleteStream.ts
   - src/funcs/basinGetStreamConfig.ts
   - src/funcs/basinListStreams.ts
-  - src/funcs/basinReconfigureStream.ts
   - src/funcs/streamAppend.ts
   - src/funcs/streamCheckTail.ts
   - src/funcs/streamRead.ts
@@ -141,10 +133,6 @@ generatedFiles:
   - src/models/components/listbasinsresponse.ts
   - src/models/components/liststreamsresponse.ts
   - src/models/components/output.ts
-  - src/models/components/reconfigurebasinrequest.ts
-  - src/models/components/reconfigurebasinresponse.ts
-  - src/models/components/reconfigurestreamrequest.ts
-  - src/models/components/reconfigurestreamresponse.ts
   - src/models/components/retentionpolicy.ts
   - src/models/components/security.ts
   - src/models/components/sequencedrecord.ts
@@ -168,8 +156,6 @@ generatedFiles:
   - src/models/operations/listbasins.ts
   - src/models/operations/liststreams.ts
   - src/models/operations/read.ts
-  - src/models/operations/reconfigurebasin.ts
-  - src/models/operations/reconfigurestream.ts
   - src/sdk/account.ts
   - src/sdk/basin.ts
   - src/sdk/index.ts
@@ -192,6 +178,8 @@ examples:
           application/json: {"basins": [{"cell": "<value>", "name": "<value>", "scope": "<value>", "state": 27455}], "has_more": true}
         "400":
           application/json: {"error": "<value>"}
+        "500":
+          application/json: {"error": "<value>"}
   get_basin_config:
     speakeasy-default-get-basin-config:
       parameters:
@@ -201,6 +189,8 @@ examples:
         "200":
           application/json: {}
         "400":
+          application/json: {"error": "<value>"}
+        "500":
           application/json: {"error": "<value>"}
   create_basin:
     speakeasy-default-create-basin:
@@ -215,6 +205,8 @@ examples:
           application/json: {"cell": "<value>", "name": "<value>", "scope": "<value>", "state": 293652}
         "400":
           application/json: {"error": "<value>"}
+        "500":
+          application/json: {"error": "<value>"}
   delete_basin:
     speakeasy-default-delete-basin:
       parameters:
@@ -222,6 +214,8 @@ examples:
           basin: "<value>"
       responses:
         "400":
+          application/json: {"error": "<value>"}
+        "500":
           application/json: {"error": "<value>"}
   reconfigure_basin:
     speakeasy-default-reconfigure-basin:
@@ -240,6 +234,8 @@ examples:
           application/json: {"has_more": false, "streams": []}
         "400":
           application/json: {"error": "<value>"}
+        "500":
+          application/json: {"error": "<value>"}
   get_stream_config:
     speakeasy-default-get-stream-config:
       parameters:
@@ -250,6 +246,8 @@ examples:
         "200":
           application/json: {"storage_class": 79230}
         "400":
+          application/json: {"error": "<value>"}
+        "500":
           application/json: {"error": "<value>"}
   create_stream:
     speakeasy-default-create-stream:
@@ -264,6 +262,8 @@ examples:
           application/json: {"created_at": 180107, "name": "<value>"}
         "400":
           application/json: {"error": "<value>"}
+        "500":
+          application/json: {"error": "<value>"}
   delete_stream:
     speakeasy-default-delete-stream:
       parameters:
@@ -272,6 +272,8 @@ examples:
         header: {}
       responses:
         "400":
+          application/json: {"error": "<value>"}
+        "500":
           application/json: {"error": "<value>"}
   reconfigure_stream:
     speakeasy-default-reconfigure-stream:
@@ -298,6 +300,8 @@ examples:
           application/json: {"next_seq_num": 609658}
         "400":
           application/json: {"error": "<value>"}
+        "500":
+          application/json: {"error": "<value>"}
   append:
     speakeasy-default-append:
       parameters:
@@ -311,6 +315,8 @@ examples:
           application/json: {"end_seq_num": 582963, "next_seq_num": 832685, "start_seq_num": 691053}
         "400":
           application/json: {"error": "<value>"}
+        "500":
+          application/json: {"error": "<value>"}
   check_tail:
     speakeasy-default-check-tail:
       parameters:
@@ -322,4 +328,6 @@ examples:
           application/json: {"error": "<value>"}
         "200":
           application/json: {"next_seq_num": 483653}
+        "500":
+          application/json: {"error": "<value>"}
 generatedTests: {}

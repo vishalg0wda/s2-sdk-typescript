@@ -76,6 +76,56 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "x-speakeasy-pagination": {
@@ -128,6 +178,36 @@
             }
           },
           "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
             "description": "",
             "content": {
               "application/json": {
@@ -194,6 +274,36 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       },
@@ -227,43 +337,33 @@
                 }
               }
             }
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "account"
-        ],
-        "summary": "Update basin configuration.",
-        "operationId": "reconfigure_basin",
-        "parameters": [
-          {
-            "name": "basin",
-            "in": "path",
-            "description": "Name of the basin.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ReconfigureBasinRequest"
-              }
-            }
           },
-          "required": true
-        },
-        "responses": {
-          "200": {
+          "404": {
             "description": "",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ReconfigureBasinResponse"
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -311,7 +411,7 @@
           {
             "name": "s2-basin",
             "in": "header",
-            "description": "Name of the basin. Use when accessing the basin through the Account Endpoint.",
+            "description": "Only required when basin is not part of the endpoint.",
             "required": false,
             "schema": {
               "type": "string"
@@ -330,6 +430,36 @@
             }
           },
           "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
             "description": "",
             "content": {
               "application/json": {
@@ -368,7 +498,7 @@
             }
           ],
           "outputs": {
-            "nextCursor": "$.basins[(@.length-1)].name"
+            "nextCursor": "$.streams[(@.length-1)].name"
           },
           "type": "cursor"
         }
@@ -394,7 +524,7 @@
           {
             "name": "s2-basin",
             "in": "header",
-            "description": "Name of the basin. Use when accessing the basin through the Account Endpoint.",
+            "description": "Only required when basin is not part of the endpoint.",
             "required": false,
             "schema": {
               "type": "string"
@@ -413,6 +543,36 @@
             }
           },
           "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
             "description": "",
             "content": {
               "application/json": {
@@ -457,7 +617,7 @@
           {
             "name": "s2-basin",
             "in": "header",
-            "description": "Name of the basin. Use when accessing the basin through the Account Endpoint.",
+            "description": "Only required when basin is not part of the endpoint.",
             "required": false,
             "schema": {
               "type": "string"
@@ -502,6 +662,36 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "servers": [
@@ -538,7 +728,7 @@
           {
             "name": "s2-basin",
             "in": "header",
-            "description": "Name of the basin. Use when accessing the basin through the Account Endpoint.",
+            "description": "Only required when basin is not part of the endpoint.",
             "required": false,
             "schema": {
               "type": "string"
@@ -558,71 +748,28 @@
                 }
               }
             }
-          }
-        },
-        "servers": [
-          {
-            "url": "https://aws.s2.dev/v1alpha"
           },
-          {
-            "url": "https://{basin}.b.aws.s2.dev/v1alpha",
-            "description": "Directly access the basin",
-            "variables": {
-              "basin": {
-                "default": "my-favorite-basin"
-              }
-            }
-          }
-        ]
-      },
-      "patch": {
-        "tags": [
-          "basin"
-        ],
-        "summary": "Update stream configuration.",
-        "operationId": "reconfigure_stream",
-        "parameters": [
-          {
-            "name": "stream",
-            "in": "path",
-            "description": "Name of the stream.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "s2-basin",
-            "in": "header",
-            "description": "Name of the basin. Use when accessing the basin through the Account Endpoint.",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ReconfigureStreamRequest"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
+          "404": {
             "description": "",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ReconfigureStreamResponse"
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
           },
-          "400": {
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
             "description": "",
             "content": {
               "application/json": {
@@ -727,7 +874,7 @@
           {
             "name": "s2-basin",
             "in": "header",
-            "description": "Name of the basin. Use when accessing the basin through the Account Endpoint.",
+            "description": "Only required when basin is not part of the endpoint.",
             "required": false,
             "schema": {
               "type": "string"
@@ -746,6 +893,36 @@
             }
           },
           "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
             "description": "",
             "content": {
               "application/json": {
@@ -808,7 +985,7 @@
           {
             "name": "s2-basin",
             "in": "header",
-            "description": "Name of the basin. Use when accessing the basin through the Account Endpoint.",
+            "description": "Only required when basin is not part of the endpoint.",
             "required": false,
             "schema": {
               "type": "string"
@@ -837,6 +1014,36 @@
             }
           },
           "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
             "description": "",
             "content": {
               "application/json": {
@@ -883,7 +1090,7 @@
           {
             "name": "s2-basin",
             "in": "header",
-            "description": "Name of the basin. Use when accessing the basin through the Account Endpoint.",
+            "description": "Only required when basin is not part of the endpoint.",
             "required": false,
             "schema": {
               "type": "string"
@@ -902,6 +1109,36 @@
             }
           },
           "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
             "description": "",
             "content": {
               "application/json": {
@@ -1332,84 +1569,6 @@
           }
         ],
         "description": "Reply which can be a batch of records, or a sequence number if the request could not be satisfied."
-      },
-      "ReconfigureBasinRequest": {
-        "type": "object",
-        "description": "Reconfigure basin request.",
-        "required": [
-          "config",
-          "mask"
-        ],
-        "properties": {
-          "config": {
-            "$ref": "#/components/schemas/BasinConfig",
-            "description": "Basin configuration."
-          },
-          "mask": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "description": "Specifies the pieces of configuration being updated.\nSee <https://protobuf.dev/reference/protobuf/google.protobuf/#field-mask>"
-          }
-        }
-      },
-      "ReconfigureBasinResponse": {
-        "type": "object",
-        "description": "Reconfigure basin response.",
-        "required": [
-          "config"
-        ],
-        "properties": {
-          "config": {
-            "$ref": "#/components/schemas/BasinConfig",
-            "description": "Basin configuration."
-          }
-        }
-      },
-      "ReconfigureStreamRequest": {
-        "type": "object",
-        "description": "Reconfigure stream request.",
-        "required": [
-          "mask"
-        ],
-        "properties": {
-          "config": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/components/schemas/StreamConfig",
-                "description": "Stream configuration with updated values."
-              }
-            ]
-          },
-          "mask": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "description": "Specifies the pieces of configuration being updated.\nSee <https://protobuf.dev/reference/protobuf/google.protobuf/#field-mask>"
-          }
-        }
-      },
-      "ReconfigureStreamResponse": {
-        "type": "object",
-        "description": "Reconfigure stream response.",
-        "properties": {
-          "config": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/components/schemas/StreamConfig",
-                "description": "Stream configuration."
-              }
-            ]
-          }
-        }
       },
       "RetentionPolicy": {
         "oneOf": [

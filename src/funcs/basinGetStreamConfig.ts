@@ -36,6 +36,7 @@ export async function basinGetStreamConfig(
   Result<
     components.StreamConfig,
     | errors.ErrorResponse
+    | errors.ErrorResponse
     | APIError
     | SDKValidationError
     | UnexpectedClientError
@@ -111,7 +112,7 @@ export async function basinGetStreamConfig(
 
   const doResult = await client._do(req, {
     context,
-    errorCodes: ["400", "4XX", "5XX"],
+    errorCodes: ["400", "404", "409", "4XX", "500", "5XX"],
     retryConfig: context.retryConfig,
     retryCodes: context.retryCodes,
   });
@@ -127,6 +128,7 @@ export async function basinGetStreamConfig(
   const [result] = await M.match<
     components.StreamConfig,
     | errors.ErrorResponse
+    | errors.ErrorResponse
     | APIError
     | SDKValidationError
     | UnexpectedClientError
@@ -136,7 +138,8 @@ export async function basinGetStreamConfig(
     | ConnectionError
   >(
     M.json(200, components.StreamConfig$inboundSchema),
-    M.jsonErr(400, errors.ErrorResponse$inboundSchema),
+    M.jsonErr([400, 404, 409], errors.ErrorResponse$inboundSchema),
+    M.jsonErr(500, errors.ErrorResponse$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, { extraFields: responseFields });

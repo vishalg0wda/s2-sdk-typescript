@@ -156,7 +156,6 @@ run();
 * [getBasinConfig](docs/sdks/account/README.md#getbasinconfig) - Get basin configuration.
 * [createBasin](docs/sdks/account/README.md#createbasin) - Create a new basin.
 * [deleteBasin](docs/sdks/account/README.md#deletebasin) - Delete a basin.
-* [reconfigureBasin](docs/sdks/account/README.md#reconfigurebasin) - Update basin configuration.
 
 ### [basin](docs/sdks/basin/README.md)
 
@@ -164,7 +163,6 @@ run();
 * [getStreamConfig](docs/sdks/basin/README.md#getstreamconfig) - Get stream configuration.
 * [createStream](docs/sdks/basin/README.md#createstream) - Create a stream.
 * [deleteStream](docs/sdks/basin/README.md#deletestream) - Delete a stream.
-* [reconfigureStream](docs/sdks/basin/README.md#reconfigurestream) - Update stream configuration.
 
 ### [stream](docs/sdks/stream/README.md)
 
@@ -195,12 +193,10 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`accountDeleteBasin`](docs/sdks/account/README.md#deletebasin) - Delete a basin.
 - [`accountGetBasinConfig`](docs/sdks/account/README.md#getbasinconfig) - Get basin configuration.
 - [`accountListBasins`](docs/sdks/account/README.md#listbasins) - List basins.
-- [`accountReconfigureBasin`](docs/sdks/account/README.md#reconfigurebasin) - Update basin configuration.
 - [`basinCreateStream`](docs/sdks/basin/README.md#createstream) - Create a stream.
 - [`basinDeleteStream`](docs/sdks/basin/README.md#deletestream) - Delete a stream.
 - [`basinGetStreamConfig`](docs/sdks/basin/README.md#getstreamconfig) - Get stream configuration.
 - [`basinListStreams`](docs/sdks/basin/README.md#liststreams) - List Streams.
-- [`basinReconfigureStream`](docs/sdks/basin/README.md#reconfigurestream) - Update stream configuration.
 - [`streamAppend`](docs/sdks/stream/README.md#append) - Append a batch of records.
 - [`streamCheckTail`](docs/sdks/stream/README.md#checktail) - Check the tail.
 - [`streamRead`](docs/sdks/stream/README.md#read) - Retrieve a batch of records.
@@ -315,10 +311,11 @@ run();
 
 Some methods specify known errors which can be thrown. All the known errors are enumerated in the `models/errors/errors.ts` module. The known errors for a method are documented under the *Errors* tables in SDK docs. For example, the `listBasins` method may throw the following errors:
 
-| Error Type           | Status Code | Content Type     |
-| -------------------- | ----------- | ---------------- |
-| errors.ErrorResponse | 400         | application/json |
-| errors.APIError      | 4XX, 5XX    | \*/\*            |
+| Error Type           | Status Code             | Content Type     |
+| -------------------- | ----------------------- | ---------------- |
+| errors.ErrorResponse | 400, 401, 403, 404, 409 | application/json |
+| errors.ErrorResponse | 500                     | application/json |
+| errors.APIError      | 4XX, 5XX                | \*/\*            |
 
 If the method throws an error and it is not captured by the known errors, it will default to throwing a `APIError`.
 
@@ -347,6 +344,11 @@ async function run() {
         console.error(err.pretty());
         // Raw value may also be inspected
         console.error(err.rawValue);
+        return;
+      }
+      case (err instanceof ErrorResponse): {
+        // Handle err.data$: ErrorResponseData
+        console.error(err);
         return;
       }
       case (err instanceof ErrorResponse): {

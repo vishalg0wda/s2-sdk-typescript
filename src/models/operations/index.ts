@@ -13,5 +13,3 @@ export * from "./getstreamconfig.js";
 export * from "./listbasins.js";
 export * from "./liststreams.js";
 export * from "./read.js";
-export * from "./reconfigurebasin.js";
-export * from "./reconfigurestream.js";

@@ -1,6 +1,6 @@
 {
   "name": "streamstore",
-  "version": "0.1.5",
+  "version": "0.1.8",
   "author": "Speakeasy",
   "main": "./index.js",
   "sideEffects": false,

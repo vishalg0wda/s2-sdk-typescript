@@ -42,6 +42,7 @@ export async function accountListBasins(
     Result<
       operations.ListBasinsResponse,
       | errors.ErrorResponse
+      | errors.ErrorResponse
       | APIError
       | SDKValidationError
       | UnexpectedClientError
@@ -110,7 +111,7 @@ export async function accountListBasins(
 
   const doResult = await client._do(req, {
     context,
-    errorCodes: ["400", "4XX", "5XX"],
+    errorCodes: ["400", "401", "403", "404", "409", "4XX", "500", "5XX"],
     retryConfig: context.retryConfig,
     retryCodes: context.retryCodes,
   });
@@ -126,6 +127,7 @@ export async function accountListBasins(
   const [result, raw] = await M.match<
     operations.ListBasinsResponse,
     | errors.ErrorResponse
+    | errors.ErrorResponse
     | APIError
     | SDKValidationError
     | UnexpectedClientError
@@ -135,7 +137,8 @@ export async function accountListBasins(
     | ConnectionError
   >(
     M.json(200, operations.ListBasinsResponse$inboundSchema, { key: "Result" }),
-    M.jsonErr(400, errors.ErrorResponse$inboundSchema),
+    M.jsonErr([400, 401, 403, 404, 409], errors.ErrorResponse$inboundSchema),
+    M.jsonErr(500, errors.ErrorResponse$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, { extraFields: responseFields });
@@ -149,6 +152,7 @@ export async function accountListBasins(
     next: Paginator<
       Result<
         operations.ListBasinsResponse,
+        | errors.ErrorResponse
         | errors.ErrorResponse
         | APIError
         | SDKValidationError

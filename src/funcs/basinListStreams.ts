@@ -43,6 +43,7 @@ export async function basinListStreams(
     Result<
       operations.ListStreamsResponse,
       | errors.ErrorResponse
+      | errors.ErrorResponse
       | APIError
       | SDKValidationError
       | UnexpectedClientError
@@ -120,7 +121,7 @@ export async function basinListStreams(
 
   const doResult = await client._do(req, {
     context,
-    errorCodes: ["400", "4XX", "5XX"],
+    errorCodes: ["400", "404", "409", "4XX", "500", "5XX"],
     retryConfig: context.retryConfig,
     retryCodes: context.retryCodes,
   });
@@ -136,6 +137,7 @@ export async function basinListStreams(
   const [result, raw] = await M.match<
     operations.ListStreamsResponse,
     | errors.ErrorResponse
+    | errors.ErrorResponse
     | APIError
     | SDKValidationError
     | UnexpectedClientError
@@ -147,7 +149,8 @@ export async function basinListStreams(
     M.json(200, operations.ListStreamsResponse$inboundSchema, {
       key: "Result",
     }),
-    M.jsonErr(400, errors.ErrorResponse$inboundSchema),
+    M.jsonErr([400, 404, 409], errors.ErrorResponse$inboundSchema),
+    M.jsonErr(500, errors.ErrorResponse$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, { extraFields: responseFields });
@@ -162,6 +165,7 @@ export async function basinListStreams(
       Result<
         operations.ListStreamsResponse,
         | errors.ErrorResponse
+        | errors.ErrorResponse
         | APIError
         | SDKValidationError
         | UnexpectedClientError
@@ -173,7 +177,7 @@ export async function basinListStreams(
     >;
     "~next"?: { cursor: string };
   } => {
-    const nextCursor = jp.value(responseData, "$.basins[(@.length-1)].name");
+    const nextCursor = jp.value(responseData, "$.streams[(@.length-1)].name");
     if (nextCursor == null) {
       return { next: () => null };
     }
