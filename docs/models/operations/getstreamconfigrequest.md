@@ -12,7 +12,6 @@ let value: GetStreamConfigRequest = {
 
 ## Fields
 
-| Field                                                 | Type                                                  | Required                                              | Description                                           |
-| ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- |
-| `stream`                                              | *string*                                              | :heavy_check_mark:                                    | Name of the stream.                                   |
-| `s2Basin`                                             | *string*                                              | :heavy_minus_sign:                                    | Only required when basin is not part of the endpoint. |
+| Field               | Type                | Required            | Description         |
+| ------------------- | ------------------- | ------------------- | ------------------- |
+| `stream`            | *string*            | :heavy_check_mark:  | Name of the stream. |

@@ -3,13 +3,11 @@
  */
 
 import * as z from "zod";
-import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const DeleteStreamServerList = [
-  "https://aws.s2.dev/v1alpha",
   /**
    * Directly access the basin
    */
@@ -21,10 +19,6 @@ export type DeleteStreamRequest = {
    * Name of the stream.
    */
   stream: string;
-  /**
-   * Only required when basin is not part of the endpoint.
-   */
-  s2Basin?: string | undefined;
 };
 
 /** @internal */
@@ -34,17 +28,11 @@ export const DeleteStreamRequest$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   stream: z.string(),
-  "s2-basin": z.string().optional(),
-}).transform((v) => {
-  return remap$(v, {
-    "s2-basin": "s2Basin",
-  });
 });
 
 /** @internal */
 export type DeleteStreamRequest$Outbound = {
   stream: string;
-  "s2-basin"?: string | undefined;
 };
 
 /** @internal */
@@ -54,11 +42,6 @@ export const DeleteStreamRequest$outboundSchema: z.ZodType<
   DeleteStreamRequest
 > = z.object({
   stream: z.string(),
-  s2Basin: z.string().optional(),
-}).transform((v) => {
-  return remap$(v, {
-    s2Basin: "s2-basin",
-  });
 });
 
 /**

@@ -10,7 +10,6 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const ListStreamsServerList = [
-  "https://aws.s2.dev/v1alpha",
   /**
    * Directly access the basin
    */
@@ -34,10 +33,6 @@ export type ListStreamsRequest = {
    * Number of results, up to a maximum of 1000.
    */
   limit?: number | undefined;
-  /**
-   * Only required when basin is not part of the endpoint.
-   */
-  s2Basin?: string | undefined;
 };
 
 export type ListStreamsResponse = {
@@ -53,11 +48,9 @@ export const ListStreamsRequest$inboundSchema: z.ZodType<
   prefix: z.string().optional(),
   start_after: z.string().optional(),
   limit: z.number().int().optional(),
-  "s2-basin": z.string().optional(),
 }).transform((v) => {
   return remap$(v, {
     "start_after": "startAfter",
-    "s2-basin": "s2Basin",
   });
 });
 
@@ -66,7 +59,6 @@ export type ListStreamsRequest$Outbound = {
   prefix?: string | undefined;
   start_after?: string | undefined;
   limit?: number | undefined;
-  "s2-basin"?: string | undefined;
 };
 
 /** @internal */
@@ -78,11 +70,9 @@ export const ListStreamsRequest$outboundSchema: z.ZodType<
   prefix: z.string().optional(),
   startAfter: z.string().optional(),
   limit: z.number().int().optional(),
-  s2Basin: z.string().optional(),
 }).transform((v) => {
   return remap$(v, {
     startAfter: "start_after",
-    s2Basin: "s2-basin",
   });
 });
 

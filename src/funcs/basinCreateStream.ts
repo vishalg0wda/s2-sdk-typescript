@@ -76,10 +76,6 @@ export async function basinCreateStream(
   const headers = new Headers(compactMap({
     "Content-Type": "application/json",
     Accept: "application/json",
-    "s2-basin": encodeSimple("s2-basin", payload["s2-basin"], {
-      explode: false,
-      charEncoding: "none",
-    }),
     "s2-request-token": encodeSimple(
       "s2-request-token",
       payload["s2-request-token"],

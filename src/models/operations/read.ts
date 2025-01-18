@@ -10,7 +10,6 @@ import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const ReadServerList = [
-  "https://aws.s2.dev/v1alpha",
   /**
    * Directly access the basin
    */
@@ -65,10 +64,6 @@ export type ReadRequest = {
    * Name of the stream.
    */
   stream: string;
-  /**
-   * Only required when basin is not part of the endpoint.
-   */
-  s2Basin?: string | undefined;
 };
 
 /** @internal */
@@ -193,12 +188,10 @@ export const ReadRequest$inboundSchema: z.ZodType<
   limit: z.lazy(() => Limit$inboundSchema).optional(),
   "s2-format": One$inboundSchema.optional(),
   stream: z.string(),
-  "s2-basin": z.string().optional(),
 }).transform((v) => {
   return remap$(v, {
     "start_seq_num": "startSeqNum",
     "s2-format": "s2Format",
-    "s2-basin": "s2Basin",
   });
 });
 
@@ -208,7 +201,6 @@ export type ReadRequest$Outbound = {
   limit?: Limit$Outbound | undefined;
   "s2-format"?: string | undefined;
   stream: string;
-  "s2-basin"?: string | undefined;
 };
 
 /** @internal */
@@ -221,12 +213,10 @@ export const ReadRequest$outboundSchema: z.ZodType<
   limit: z.lazy(() => Limit$outboundSchema).optional(),
   s2Format: One$outboundSchema.optional(),
   stream: z.string(),
-  s2Basin: z.string().optional(),
 }).transform((v) => {
   return remap$(v, {
     startSeqNum: "start_seq_num",
     s2Format: "s2-format",
-    s2Basin: "s2-basin",
   });
 });
 

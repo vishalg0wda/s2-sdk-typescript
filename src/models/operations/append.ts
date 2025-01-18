@@ -11,7 +11,6 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const AppendServerList = [
-  "https://aws.s2.dev/v1alpha",
   /**
    * Directly access the basin
    */
@@ -44,10 +43,6 @@ export type AppendRequest = {
    * Name of the stream.
    */
   stream: string;
-  /**
-   * Only required when basin is not part of the endpoint.
-   */
-  s2Basin?: string | undefined;
   appendInput: components.AppendInput;
 };
 
@@ -122,12 +117,10 @@ export const AppendRequest$inboundSchema: z.ZodType<
 > = z.object({
   "s2-format": Header1$inboundSchema.optional(),
   stream: z.string(),
-  "s2-basin": z.string().optional(),
   AppendInput: components.AppendInput$inboundSchema,
 }).transform((v) => {
   return remap$(v, {
     "s2-format": "s2Format",
-    "s2-basin": "s2Basin",
     "AppendInput": "appendInput",
   });
 });
@@ -136,7 +129,6 @@ export const AppendRequest$inboundSchema: z.ZodType<
 export type AppendRequest$Outbound = {
   "s2-format"?: string | undefined;
   stream: string;
-  "s2-basin"?: string | undefined;
   AppendInput: components.AppendInput$Outbound;
 };
 
@@ -148,12 +140,10 @@ export const AppendRequest$outboundSchema: z.ZodType<
 > = z.object({
   s2Format: Header1$outboundSchema.optional(),
   stream: z.string(),
-  s2Basin: z.string().optional(),
   appendInput: components.AppendInput$outboundSchema,
 }).transform((v) => {
   return remap$(v, {
     s2Format: "s2-format",
-    s2Basin: "s2-basin",
     appendInput: "AppendInput",
   });
 });

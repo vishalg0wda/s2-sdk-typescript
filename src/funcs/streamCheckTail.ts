@@ -73,10 +73,6 @@ export async function streamCheckTail(
 
   const headers = new Headers(compactMap({
     Accept: "application/json",
-    "s2-basin": encodeSimple("s2-basin", payload["s2-basin"], {
-      explode: false,
-      charEncoding: "none",
-    }),
   }));
 
   const secConfig = await extractSecurity(client._options.bearerAuth);
@@ -98,7 +94,7 @@ export async function streamCheckTail(
 
   const requestRes = client._createRequest(context, {
     security: requestSecurity,
-    method: "HEAD",
+    method: "GET",
     baseURL: baseURL,
     path: path,
     headers: headers,

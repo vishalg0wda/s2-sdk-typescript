@@ -78,10 +78,6 @@ export async function streamRead(
 
   const headers = new Headers(compactMap({
     Accept: "application/json",
-    "s2-basin": encodeSimple("s2-basin", payload["s2-basin"], {
-      explode: false,
-      charEncoding: "none",
-    }),
     "s2-format": encodeSimple("s2-format", payload["s2-format"], {
       explode: false,
       charEncoding: "none",

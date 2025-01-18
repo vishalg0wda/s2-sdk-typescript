@@ -420,7 +420,7 @@ const streamstore = new Streamstore({
 
 async function run() {
   const result = await streamstore.basin.listStreams({}, {
-    serverURL: "https://aws.s2.dev/v1alpha",
+    serverURL: "https://my-favorite-basin.b.aws.s2.dev/v1alpha",
   });
 
   for await (const page of result) {

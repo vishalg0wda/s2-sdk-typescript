@@ -10,7 +10,6 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const CreateStreamServerList = [
-  "https://aws.s2.dev/v1alpha",
   /**
    * Directly access the basin
    */
@@ -22,10 +21,6 @@ export type CreateStreamRequest = {
    * Name of the stream.
    */
   stream: string;
-  /**
-   * Only required when basin is not part of the endpoint.
-   */
-  s2Basin?: string | undefined;
   s2RequestToken?: string | undefined;
   createStreamRequest: components.CreateStreamRequest;
 };
@@ -37,12 +32,10 @@ export const CreateStreamRequest$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   stream: z.string(),
-  "s2-basin": z.string().optional(),
   "s2-request-token": z.string().optional(),
   CreateStreamRequest: components.CreateStreamRequest$inboundSchema,
 }).transform((v) => {
   return remap$(v, {
-    "s2-basin": "s2Basin",
     "s2-request-token": "s2RequestToken",
     "CreateStreamRequest": "createStreamRequest",
   });
@@ -51,7 +44,6 @@ export const CreateStreamRequest$inboundSchema: z.ZodType<
 /** @internal */
 export type CreateStreamRequest$Outbound = {
   stream: string;
-  "s2-basin"?: string | undefined;
   "s2-request-token"?: string | undefined;
   CreateStreamRequest: components.CreateStreamRequest$Outbound;
 };
@@ -63,12 +55,10 @@ export const CreateStreamRequest$outboundSchema: z.ZodType<
   CreateStreamRequest
 > = z.object({
   stream: z.string(),
-  s2Basin: z.string().optional(),
   s2RequestToken: z.string().optional(),
   createStreamRequest: components.CreateStreamRequest$outboundSchema,
 }).transform((v) => {
   return remap$(v, {
-    s2Basin: "s2-basin",
     s2RequestToken: "s2-request-token",
     createStreamRequest: "CreateStreamRequest",
   });

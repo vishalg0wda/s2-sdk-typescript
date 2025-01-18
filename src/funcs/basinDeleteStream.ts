@@ -73,10 +73,6 @@ export async function basinDeleteStream(
 
   const headers = new Headers(compactMap({
     Accept: "application/json",
-    "s2-basin": encodeSimple("s2-basin", payload["s2-basin"], {
-      explode: false,
-      charEncoding: "none",
-    }),
   }));
 
   const secConfig = await extractSecurity(client._options.bearerAuth);
