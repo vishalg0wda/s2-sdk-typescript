@@ -10,7 +10,7 @@ The client can re-establish the session starting at this sequence number.
 import { Output2 } from "streamstore/models/components";
 
 let value: Output2 = {
-  firstSeqNum: 71036,
+  firstSeqNum: 20218,
 };
 ```
 

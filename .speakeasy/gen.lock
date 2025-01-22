@@ -1,16 +1,18 @@
 lockVersion: 2.0.0
 id: 2d20490e-9921-47d5-9711-d3c4b91c8cfa
 management:
-  docChecksum: 4d4099ab54737d7339d549f1a522a641
+  docChecksum: fb8e0662a6c87f19c70e2e2001d107f1
   docVersion: 1.0.0
-  speakeasyVersion: 1.469.1
-  generationVersion: 2.493.21
-  releaseVersion: 0.1.9
-  configChecksum: ae422821608fcc2288fe5f2359eb1d7f
+  speakeasyVersion: 1.469.12
+  generationVersion: 2.493.34
+  releaseVersion: 0.1.10
+  configChecksum: 20463f2664f3d1784db54a7a4cf0f654
+  repoURL: https://github.com/s2-streamstore/s2-sdk-typescript.git
+  installationURL: https://github.com/s2-streamstore/s2-sdk-typescript
 features:
   typescript:
     additionalDependencies: 0.1.0
-    core: 3.18.16
+    core: 3.18.17
     defaultEnabledRetries: 0.1.0
     devContainers: 2.90.0
     enumUnions: 0.1.0
@@ -44,6 +46,7 @@ generatedFiles:
   - docs/models/components/assignment1.md
   - docs/models/components/basinconfig.md
   - docs/models/components/basininfo.md
+  - docs/models/components/basinstate.md
   - docs/models/components/checktailresponse.md
   - docs/models/components/createbasinrequest.md
   - docs/models/components/createstreamrequest.md
@@ -58,6 +61,7 @@ generatedFiles:
   - docs/models/components/security.md
   - docs/models/components/sequencedrecord.md
   - docs/models/components/sequencedrecordbatch.md
+  - docs/models/components/storageclass.md
   - docs/models/components/streamconfig.md
   - docs/models/components/streaminfo.md
   - docs/models/components/three.md
@@ -125,6 +129,7 @@ generatedFiles:
   - src/models/components/assignment.ts
   - src/models/components/basinconfig.ts
   - src/models/components/basininfo.ts
+  - src/models/components/basinstate.ts
   - src/models/components/checktailresponse.ts
   - src/models/components/createbasinrequest.ts
   - src/models/components/createstreamrequest.ts
@@ -137,6 +142,7 @@ generatedFiles:
   - src/models/components/security.ts
   - src/models/components/sequencedrecord.ts
   - src/models/components/sequencedrecordbatch.ts
+  - src/models/components/storageclass.ts
   - src/models/components/streamconfig.ts
   - src/models/components/streaminfo.ts
   - src/models/errors/apierror.ts
@@ -175,7 +181,7 @@ examples:
     speakeasy-default-list-basins:
       responses:
         "200":
-          application/json: {"basins": [{"cell": "<value>", "name": "<value>", "scope": "<value>", "state": 27455}], "has_more": true}
+          application/json: {"basins": [{"cell": "<value>", "name": "<value>", "scope": "<value>", "state": "unspecified"}], "has_more": true}
         "400":
           application/json: {"error": "<value>"}
         "500":
@@ -202,7 +208,7 @@ examples:
         application/json: {}
       responses:
         "201":
-          application/json: {"cell": "<value>", "name": "<value>", "scope": "<value>", "state": 293652}
+          application/json: {"cell": "<value>", "name": "<value>", "scope": "<value>", "state": "active"}
         "400":
           application/json: {"error": "<value>"}
         "500":
@@ -217,16 +223,6 @@ examples:
           application/json: {"error": "<value>"}
         "500":
           application/json: {"error": "<value>"}
-  reconfigure_basin:
-    speakeasy-default-reconfigure-basin:
-      parameters:
-        path:
-          basin: "<value>"
-      requestBody:
-        application/json: {"config": {}, "mask": ["<value>"]}
-      responses:
-        "200":
-          application/json: {}
   list_streams:
     speakeasy-default-list-streams:
       responses:
@@ -241,10 +237,9 @@ examples:
       parameters:
         path:
           stream: "<value>"
-        header: {}
       responses:
         "200":
-          application/json: {"storage_class": 79230}
+          application/json: {"storage_class": "unspecified"}
         "400":
           application/json: {"error": "<value>"}
         "500":
@@ -269,24 +264,10 @@ examples:
       parameters:
         path:
           stream: "<value>"
-        header: {}
       responses:
         "400":
           application/json: {"error": "<value>"}
         "500":
-          application/json: {"error": "<value>"}
-  reconfigure_stream:
-    speakeasy-default-reconfigure-stream:
-      parameters:
-        path:
-          stream: "<value>"
-        header: {}
-      requestBody:
-        application/json: {"mask": []}
-      responses:
-        "200":
-          application/json: {}
-        "400":
           application/json: {"error": "<value>"}
   read:
     speakeasy-default-read:
@@ -322,12 +303,12 @@ examples:
       parameters:
         path:
           stream: "<value>"
-        header: {}
       responses:
-        "400":
-          application/json: {"error": "<value>"}
         "200":
           application/json: {"next_seq_num": 483653}
+        "400":
+          application/json: {"error": "<value>"}
         "500":
           application/json: {"error": "<value>"}
+examplesVersion: 1.0.0
 generatedTests: {}

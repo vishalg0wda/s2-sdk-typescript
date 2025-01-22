@@ -11,15 +11,15 @@ let value: BasinInfo = {
   cell: "<value>",
   name: "<value>",
   scope: "<value>",
-  state: 891773,
+  state: "deleting",
 };
 ```
 
 ## Fields
 
-| Field              | Type               | Required           | Description        |
-| ------------------ | ------------------ | ------------------ | ------------------ |
-| `cell`             | *string*           | :heavy_check_mark: | Cell assignment.   |
-| `name`             | *string*           | :heavy_check_mark: | Basin name.        |
-| `scope`            | *string*           | :heavy_check_mark: | Basin scope.       |
-| `state`            | *number*           | :heavy_check_mark: | Basin state.       |
+| Field                                                          | Type                                                           | Required                                                       | Description                                                    |
+| -------------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------- |
+| `cell`                                                         | *string*                                                       | :heavy_check_mark:                                             | Cell assignment.                                               |
+| `name`                                                         | *string*                                                       | :heavy_check_mark:                                             | Basin name.                                                    |
+| `scope`                                                        | *string*                                                       | :heavy_check_mark:                                             | Basin scope.                                                   |
+| `state`                                                        | [components.BasinState](../../models/components/basinstate.md) | :heavy_check_mark:                                             | Current state of the basin.                                    |

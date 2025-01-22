@@ -10,7 +10,7 @@ If unspecified, the default is to retain records for 7 days.
 
 ```typescript
 const value: components.One = {
-  age: 79,
+  age: 57,
 };
 ```
 

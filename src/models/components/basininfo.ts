@@ -6,6 +6,11 @@ import * as z from "zod";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
+import {
+  BasinState,
+  BasinState$inboundSchema,
+  BasinState$outboundSchema,
+} from "./basinstate.js";
 
 /**
  * Basin information.
@@ -24,9 +29,9 @@ export type BasinInfo = {
    */
   scope: string;
   /**
-   * Basin state.
+   * Current state of the basin.
    */
-  state: number;
+  state: BasinState;
 };
 
 /** @internal */
@@ -38,7 +43,7 @@ export const BasinInfo$inboundSchema: z.ZodType<
   cell: z.string(),
   name: z.string(),
   scope: z.string(),
-  state: z.number().int(),
+  state: BasinState$inboundSchema,
 });
 
 /** @internal */
@@ -46,7 +51,7 @@ export type BasinInfo$Outbound = {
   cell: string;
   name: string;
   scope: string;
-  state: number;
+  state: string;
 };
 
 /** @internal */
@@ -58,7 +63,7 @@ export const BasinInfo$outboundSchema: z.ZodType<
   cell: z.string(),
   name: z.string(),
   scope: z.string(),
-  state: z.number().int(),
+  state: BasinState$outboundSchema,
 });
 
 /**
