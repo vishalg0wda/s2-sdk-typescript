@@ -15,7 +15,7 @@ let value: SequencedRecord = {
       value: "<value>",
     },
   ],
-  seqNum: 978619,
+  seqNum: 461479,
 };
 ```
 

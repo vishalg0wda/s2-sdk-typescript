@@ -13,6 +13,11 @@ import {
   RetentionPolicy$Outbound,
   RetentionPolicy$outboundSchema,
 } from "./retentionpolicy.js";
+import {
+  StorageClass,
+  StorageClass$inboundSchema,
+  StorageClass$outboundSchema,
+} from "./storageclass.js";
 
 /**
  * Stream configuration.
@@ -20,9 +25,9 @@ import {
 export type StreamConfig = {
   retentionPolicy?: RetentionPolicy | null | undefined;
   /**
-   * Storage class for recent writes. This is the main cost:performance knob in S2.
+   * Storage class for recent writes.
    */
-  storageClass: number;
+  storageClass: StorageClass;
 };
 
 /** @internal */
@@ -32,7 +37,7 @@ export const StreamConfig$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   retention_policy: z.nullable(RetentionPolicy$inboundSchema).optional(),
-  storage_class: z.number().int(),
+  storage_class: StorageClass$inboundSchema,
 }).transform((v) => {
   return remap$(v, {
     "retention_policy": "retentionPolicy",
@@ -43,7 +48,7 @@ export const StreamConfig$inboundSchema: z.ZodType<
 /** @internal */
 export type StreamConfig$Outbound = {
   retention_policy?: RetentionPolicy$Outbound | null | undefined;
-  storage_class: number;
+  storage_class: string;
 };
 
 /** @internal */
@@ -53,7 +58,7 @@ export const StreamConfig$outboundSchema: z.ZodType<
   StreamConfig
 > = z.object({
   retentionPolicy: z.nullable(RetentionPolicy$outboundSchema).optional(),
-  storageClass: z.number().int(),
+  storageClass: StorageClass$outboundSchema,
 }).transform((v) => {
   return remap$(v, {
     retentionPolicy: "retention_policy",
