@@ -5,7 +5,7 @@
 ```typescript
 import { Header1 } from "streamstore/models/operations";
 
-let value: Header1 = "json";
+let value: Header1 = "json-binsafe";
 ```
 
 ## Values

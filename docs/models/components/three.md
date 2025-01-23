@@ -9,7 +9,7 @@ If returned in a streaming read session, this will be a terminal reply.
 import { Three } from "streamstore/models/components";
 
 let value: Three = {
-  nextSeqNum: 87129,
+  nextSeqNum: 20218,
 };
 ```
 

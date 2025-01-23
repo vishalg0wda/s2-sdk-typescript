@@ -1,0 +1,21 @@
+# ReconfigureStreamRequest
+
+## Example Usage
+
+```typescript
+import { ReconfigureStreamRequest } from "streamstore/models/operations";
+
+let value: ReconfigureStreamRequest = {
+  stream: "<value>",
+  streamConfig: {
+    storageClass: "standard",
+  },
+};
+```
+
+## Fields
+
+| Field                                                              | Type                                                               | Required                                                           | Description                                                        |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ |
+| `stream`                                                           | *string*                                                           | :heavy_check_mark:                                                 | Name of the stream.                                                |
+| `streamConfig`                                                     | [components.StreamConfig](../../models/components/streamconfig.md) | :heavy_check_mark:                                                 | N/A                                                                |

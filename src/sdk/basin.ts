@@ -6,6 +6,7 @@ import { basinCreateStream } from "../funcs/basinCreateStream.js";
 import { basinDeleteStream } from "../funcs/basinDeleteStream.js";
 import { basinGetStreamConfig } from "../funcs/basinGetStreamConfig.js";
 import { basinListStreams } from "../funcs/basinListStreams.js";
+import { basinReconfigureStream } from "../funcs/basinReconfigureStream.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
 import * as components from "../models/components/index.js";
 import * as operations from "../models/operations/index.js";
@@ -63,6 +64,20 @@ export class Basin extends ClientSDK {
     options?: RequestOptions,
   ): Promise<void> {
     return unwrapAsync(basinDeleteStream(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Update stream configuration.
+   */
+  async reconfigureStream(
+    request: operations.ReconfigureStreamRequest,
+    options?: RequestOptions,
+  ): Promise<components.ReconfigureStreamResponse> {
+    return unwrapAsync(basinReconfigureStream(
       this,
       request,
       options,

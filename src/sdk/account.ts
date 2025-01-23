@@ -6,6 +6,7 @@ import { accountCreateBasin } from "../funcs/accountCreateBasin.js";
 import { accountDeleteBasin } from "../funcs/accountDeleteBasin.js";
 import { accountGetBasinConfig } from "../funcs/accountGetBasinConfig.js";
 import { accountListBasins } from "../funcs/accountListBasins.js";
+import { accountReconfigureBasin } from "../funcs/accountReconfigureBasin.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
 import * as components from "../models/components/index.js";
 import * as operations from "../models/operations/index.js";
@@ -63,6 +64,20 @@ export class Account extends ClientSDK {
     options?: RequestOptions,
   ): Promise<void> {
     return unwrapAsync(accountDeleteBasin(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Update basin configuration.
+   */
+  async reconfigureBasin(
+    request: operations.ReconfigureBasinRequest,
+    options?: RequestOptions,
+  ): Promise<components.ReconfigureBasinResponse> {
+    return unwrapAsync(accountReconfigureBasin(
       this,
       request,
       options,

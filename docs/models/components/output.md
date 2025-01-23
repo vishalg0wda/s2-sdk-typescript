@@ -19,7 +19,7 @@ const value: components.Output1 = {
             value: "<value>",
           },
         ],
-        seqNum: 778157,
+        seqNum: 870013,
       },
     ],
   },
@@ -30,7 +30,7 @@ const value: components.Output1 = {
 
 ```typescript
 const value: components.Output2 = {
-  firstSeqNum: 870013,
+  firstSeqNum: 978619,
 };
 ```
 
@@ -38,7 +38,7 @@ const value: components.Output2 = {
 
 ```typescript
 const value: components.Three = {
-  nextSeqNum: 978619,
+  nextSeqNum: 799159,
 };
 ```
 
