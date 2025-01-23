@@ -7,7 +7,7 @@ Storage class for recent writes.
 ```typescript
 import { StorageClass } from "streamstore/models/components";
 
-let value: StorageClass = "express";
+let value: StorageClass = "standard";
 ```
 
 ## Values

@@ -9,7 +9,7 @@ import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const DeleteStreamServerList = [
   /**
-   * Directly access the basin
+   * Endpoint for the basin
    */
   "https://{basin}.b.aws.s2.dev/v1alpha",
 ] as const;

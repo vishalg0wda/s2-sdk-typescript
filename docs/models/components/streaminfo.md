@@ -8,7 +8,7 @@ Stream information.
 import { StreamInfo } from "streamstore/models/components";
 
 let value: StreamInfo = {
-  createdAt: 71036,
+  createdAt: 87129,
   name: "<value>",
 };
 ```

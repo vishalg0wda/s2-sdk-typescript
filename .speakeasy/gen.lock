@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 2d20490e-9921-47d5-9711-d3c4b91c8cfa
 management:
-  docChecksum: fb8e0662a6c87f19c70e2e2001d107f1
+  docChecksum: bc0b0e0c23467f39bbf4f2ceeaf68e5c
   docVersion: 1.0.0
-  speakeasyVersion: 1.469.12
+  speakeasyVersion: 1.470.1
   generationVersion: 2.493.34
-  releaseVersion: 0.1.10
-  configChecksum: 20463f2664f3d1784db54a7a4cf0f654
+  releaseVersion: 0.1.11
+  configChecksum: f8e62fb80dd97e1cd40377a100ded6ef
   repoURL: https://github.com/s2-streamstore/s2-sdk-typescript.git
   installationURL: https://github.com/s2-streamstore/s2-sdk-typescript
 features:
@@ -57,6 +57,8 @@ generatedFiles:
   - docs/models/components/output.md
   - docs/models/components/output1.md
   - docs/models/components/output2.md
+  - docs/models/components/reconfigurebasinresponse.md
+  - docs/models/components/reconfigurestreamresponse.md
   - docs/models/components/retentionpolicy.md
   - docs/models/components/security.md
   - docs/models/components/sequencedrecord.md
@@ -84,6 +86,8 @@ generatedFiles:
   - docs/models/operations/liststreamsresponse.md
   - docs/models/operations/one.md
   - docs/models/operations/readrequest.md
+  - docs/models/operations/reconfigurebasinrequest.md
+  - docs/models/operations/reconfigurestreamrequest.md
   - docs/models/operations/s2format.md
   - docs/sdks/account/README.md
   - docs/sdks/basin/README.md
@@ -96,10 +100,12 @@ generatedFiles:
   - src/funcs/accountDeleteBasin.ts
   - src/funcs/accountGetBasinConfig.ts
   - src/funcs/accountListBasins.ts
+  - src/funcs/accountReconfigureBasin.ts
   - src/funcs/basinCreateStream.ts
   - src/funcs/basinDeleteStream.ts
   - src/funcs/basinGetStreamConfig.ts
   - src/funcs/basinListStreams.ts
+  - src/funcs/basinReconfigureStream.ts
   - src/funcs/streamAppend.ts
   - src/funcs/streamCheckTail.ts
   - src/funcs/streamRead.ts
@@ -138,6 +144,8 @@ generatedFiles:
   - src/models/components/listbasinsresponse.ts
   - src/models/components/liststreamsresponse.ts
   - src/models/components/output.ts
+  - src/models/components/reconfigurebasinresponse.ts
+  - src/models/components/reconfigurestreamresponse.ts
   - src/models/components/retentionpolicy.ts
   - src/models/components/security.ts
   - src/models/components/sequencedrecord.ts
@@ -162,6 +170,8 @@ generatedFiles:
   - src/models/operations/listbasins.ts
   - src/models/operations/liststreams.ts
   - src/models/operations/read.ts
+  - src/models/operations/reconfigurebasin.ts
+  - src/models/operations/reconfigurestream.ts
   - src/sdk/account.ts
   - src/sdk/basin.ts
   - src/sdk/index.ts
@@ -309,6 +319,28 @@ examples:
         "400":
           application/json: {"error": "<value>"}
         "500":
+          application/json: {"error": "<value>"}
+  reconfigure_basin:
+    speakeasy-default-reconfigure-basin:
+      parameters:
+        path:
+          basin: "<value>"
+      requestBody:
+        application/json: {}
+      responses:
+        "200":
+          application/json: {"config": {}}
+  reconfigure_stream:
+    speakeasy-default-reconfigure-stream:
+      parameters:
+        path:
+          stream: "<value>"
+      requestBody:
+        application/json: {"storage_class": "unspecified"}
+      responses:
+        "200":
+          application/json: {}
+        "400":
           application/json: {"error": "<value>"}
 examplesVersion: 1.0.0
 generatedTests: {}
