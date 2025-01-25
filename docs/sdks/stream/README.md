@@ -29,8 +29,10 @@ async function run() {
     stream: "<value>",
   });
 
-  // Handle the result
-  console.log(result);
+  for await (const event of result) {
+    // Handle the event
+    console.log(event);
+  }
 }
 
 run();
@@ -61,8 +63,10 @@ async function run() {
 
   const { value: result } = res;
 
-  // Handle the result
-  console.log(result);
+  for await (const event of result) {
+    // Handle the event
+    console.log(event);
+  }
 }
 
 run();
@@ -80,7 +84,7 @@ run();
 
 ### Response
 
-**Promise\<[components.Output](../../models/components/output.md)\>**
+**Promise\<[operations.ReadResponse](../../models/operations/readresponse.md)\>**
 
 ### Errors
 

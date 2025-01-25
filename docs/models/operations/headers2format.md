@@ -9,6 +9,6 @@ json-binsafe: base64 encoded binary data.
 ### `operations.Header1`
 
 ```typescript
-const value: operations.Header1 = "json";
+const value: operations.Header1 = "json-binsafe";
 ```
 

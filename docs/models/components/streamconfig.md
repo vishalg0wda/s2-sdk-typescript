@@ -8,7 +8,7 @@ Stream configuration.
 import { StreamConfig } from "streamstore/models/components";
 
 let value: StreamConfig = {
-  storageClass: "express",
+  storageClass: "standard",
 };
 ```
 

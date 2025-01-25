@@ -16,6 +16,7 @@ export * from "./header.js";
 export * from "./listbasinsresponse.js";
 export * from "./liststreamsresponse.js";
 export * from "./output.js";
+export * from "./readresponse.js";
 export * from "./reconfigurebasinresponse.js";
 export * from "./reconfigurestreamresponse.js";
 export * from "./retentionpolicy.js";

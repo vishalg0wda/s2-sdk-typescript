@@ -4,11 +4,13 @@
 
 import { streamAppend } from "../funcs/streamAppend.js";
 import { streamCheckTail } from "../funcs/streamCheckTail.js";
-import { streamRead } from "../funcs/streamRead.js";
+import { ReadAcceptEnum, streamRead } from "../funcs/streamRead.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
 import * as components from "../models/components/index.js";
 import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
+
+export { ReadAcceptEnum } from "../funcs/streamRead.js";
 
 export class Stream extends ClientSDK {
   /**
@@ -16,8 +18,8 @@ export class Stream extends ClientSDK {
    */
   async read(
     request: operations.ReadRequest,
-    options?: RequestOptions,
-  ): Promise<components.Output> {
+    options?: RequestOptions & { acceptHeaderOverride?: ReadAcceptEnum },
+  ): Promise<operations.ReadResponse> {
     return unwrapAsync(streamRead(
       this,
       request,
