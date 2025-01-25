@@ -9,7 +9,7 @@ If set to 0, the stream will have infinite retention.
 import { One } from "streamstore/models/components";
 
 let value: One = {
-  age: 57,
+  age: 7,
 };
 ```
 

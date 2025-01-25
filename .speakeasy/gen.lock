@@ -1,18 +1,19 @@
 lockVersion: 2.0.0
 id: 2d20490e-9921-47d5-9711-d3c4b91c8cfa
 management:
-  docChecksum: bc0b0e0c23467f39bbf4f2ceeaf68e5c
+  docChecksum: 8cdfadf24079b3209290a04c2b495269
   docVersion: 1.0.0
-  speakeasyVersion: 1.470.1
-  generationVersion: 2.493.34
-  releaseVersion: 0.1.11
-  configChecksum: f8e62fb80dd97e1cd40377a100ded6ef
+  speakeasyVersion: 1.476.0
+  generationVersion: 2.496.0
+  releaseVersion: 0.2.0
+  configChecksum: 66bd2f94cd9e3a746c42f653a54ad7bd
   repoURL: https://github.com/s2-streamstore/s2-sdk-typescript.git
   installationURL: https://github.com/s2-streamstore/s2-sdk-typescript
 features:
   typescript:
+    acceptHeaders: 2.81.2
     additionalDependencies: 0.1.0
-    core: 3.18.17
+    core: 3.18.18
     defaultEnabledRetries: 0.1.0
     devContainers: 2.90.0
     enumUnions: 0.1.0
@@ -27,6 +28,7 @@ features:
     responseFormat: 0.2.3
     retries: 2.83.0
     sdkHooks: 0.2.0
+    serverEvents: 0.1.5
     unions: 2.85.8
 generatedFiles:
   - .devcontainer/README.md
@@ -57,6 +59,9 @@ generatedFiles:
   - docs/models/components/output.md
   - docs/models/components/output1.md
   - docs/models/components/output2.md
+  - docs/models/components/readresponse.md
+  - docs/models/components/readresponse1.md
+  - docs/models/components/readresponse2.md
   - docs/models/components/reconfigurebasinresponse.md
   - docs/models/components/reconfigurestreamresponse.md
   - docs/models/components/retentionpolicy.md
@@ -86,6 +91,7 @@ generatedFiles:
   - docs/models/operations/liststreamsresponse.md
   - docs/models/operations/one.md
   - docs/models/operations/readrequest.md
+  - docs/models/operations/readresponse.md
   - docs/models/operations/reconfigurebasinrequest.md
   - docs/models/operations/reconfigurestreamrequest.md
   - docs/models/operations/s2format.md
@@ -118,6 +124,7 @@ generatedFiles:
   - src/lib/dlv.ts
   - src/lib/encodings.ts
   - src/lib/env.ts
+  - src/lib/event-streams.ts
   - src/lib/files.ts
   - src/lib/http.ts
   - src/lib/is-plain-object.ts
@@ -144,6 +151,7 @@ generatedFiles:
   - src/models/components/listbasinsresponse.ts
   - src/models/components/liststreamsresponse.ts
   - src/models/components/output.ts
+  - src/models/components/readresponse.ts
   - src/models/components/reconfigurebasinresponse.ts
   - src/models/components/reconfigurestreamresponse.ts
   - src/models/components/retentionpolicy.ts

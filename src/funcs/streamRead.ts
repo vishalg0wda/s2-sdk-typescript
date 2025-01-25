@@ -10,7 +10,6 @@ import { safeParse } from "../lib/schemas.js";
 import { RequestOptions } from "../lib/sdks.js";
 import { extractSecurity, resolveGlobalSecurity } from "../lib/security.js";
 import { pathToFunc } from "../lib/url.js";
-import * as components from "../models/components/index.js";
 import { APIError } from "../models/errors/apierror.js";
 import {
   ConnectionError,
@@ -25,16 +24,21 @@ import * as operations from "../models/operations/index.js";
 import { ReadServerList } from "../models/operations/read.js";
 import { Result } from "../types/fp.js";
 
+export enum ReadAcceptEnum {
+  applicationJson = "application/json",
+  textEventStream = "text/event-stream",
+}
+
 /**
  * Retrieve a batch of records.
  */
 export async function streamRead(
   client: StreamstoreCore,
   request: operations.ReadRequest,
-  options?: RequestOptions,
+  options?: RequestOptions & { acceptHeaderOverride?: ReadAcceptEnum },
 ): Promise<
   Result<
-    components.Output,
+    operations.ReadResponse,
     | errors.ErrorResponse
     | errors.ErrorResponse
     | APIError
@@ -77,7 +81,8 @@ export async function streamRead(
   });
 
   const headers = new Headers(compactMap({
-    Accept: "application/json",
+    Accept: options?.acceptHeaderOverride
+      || "application/json;q=1, text/event-stream;q=0",
     "s2-format": encodeSimple("s2-format", payload["s2-format"], {
       explode: false,
       charEncoding: "none",
@@ -132,7 +137,7 @@ export async function streamRead(
   };
 
   const [result] = await M.match<
-    components.Output,
+    operations.ReadResponse,
     | errors.ErrorResponse
     | errors.ErrorResponse
     | APIError
@@ -143,7 +148,8 @@ export async function streamRead(
     | RequestTimeoutError
     | ConnectionError
   >(
-    M.json(200, components.Output$inboundSchema),
+    M.json(200, operations.ReadResponse$inboundSchema),
+    M.sse(200, operations.ReadResponse$inboundSchema),
     M.jsonErr([400, 404, 409], errors.ErrorResponse$inboundSchema),
     M.jsonErr(500, errors.ErrorResponse$inboundSchema),
     M.fail("4XX"),

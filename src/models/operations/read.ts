@@ -3,15 +3,17 @@
  */
 
 import * as z from "zod";
+import { EventStream } from "../../lib/event-streams.js";
 import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
+import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const ReadServerList = [
   /**
-   * Directly access the basin
+   * Endpoint for the basin
    */
   "https://{basin}.b.aws.s2.dev/v1alpha",
 ] as const;
@@ -65,6 +67,10 @@ export type ReadRequest = {
    */
   stream: string;
 };
+
+export type ReadResponse =
+  | components.Output
+  | EventStream<components.ReadResponse>;
 
 /** @internal */
 export const Limit$inboundSchema: z.ZodType<Limit, z.ZodTypeDef, unknown> = z
@@ -244,5 +250,60 @@ export function readRequestFromJSON(
     jsonString,
     (x) => ReadRequest$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'ReadRequest' from JSON`,
+  );
+}
+
+/** @internal */
+export const ReadResponse$inboundSchema: z.ZodType<
+  ReadResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.union([
+  components.Output$inboundSchema,
+  z.instanceof(ReadableStream<Uint8Array>).transform(stream => {
+    return new EventStream({
+      stream,
+      decoder(rawEvent) {
+        const schema = components.ReadResponse$inboundSchema;
+        return schema.parse(rawEvent);
+      },
+    });
+  }),
+]);
+
+/** @internal */
+export type ReadResponse$Outbound = components.Output$Outbound | never;
+
+/** @internal */
+export const ReadResponse$outboundSchema: z.ZodType<
+  ReadResponse$Outbound,
+  z.ZodTypeDef,
+  ReadResponse
+> = z.union([components.Output$outboundSchema, z.never()]);
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace ReadResponse$ {
+  /** @deprecated use `ReadResponse$inboundSchema` instead. */
+  export const inboundSchema = ReadResponse$inboundSchema;
+  /** @deprecated use `ReadResponse$outboundSchema` instead. */
+  export const outboundSchema = ReadResponse$outboundSchema;
+  /** @deprecated use `ReadResponse$Outbound` instead. */
+  export type Outbound = ReadResponse$Outbound;
+}
+
+export function readResponseToJSON(readResponse: ReadResponse): string {
+  return JSON.stringify(ReadResponse$outboundSchema.parse(readResponse));
+}
+
+export function readResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<ReadResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ReadResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ReadResponse' from JSON`,
   );
 }

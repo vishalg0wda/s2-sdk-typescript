@@ -20,7 +20,7 @@ let value: Output1 = {
             value: "<value>",
           },
         ],
-        seqNum: 778157,
+        seqNum: 978619,
       },
     ],
   },
