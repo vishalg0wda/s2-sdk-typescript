@@ -404,7 +404,7 @@ run();
 
 ### Response
 
-**Promise\<[components.ReconfigureStreamResponse](../../models/components/reconfigurestreamresponse.md)\>**
+**Promise\<[components.StreamConfig](../../models/components/streamconfig.md)\>**
 
 ### Errors
 
