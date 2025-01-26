@@ -32,7 +32,7 @@ export async function accountReconfigureBasin(
   options?: RequestOptions,
 ): Promise<
   Result<
-    components.ReconfigureBasinResponse,
+    components.BasinConfig,
     | APIError
     | SDKValidationError
     | UnexpectedClientError
@@ -110,7 +110,7 @@ export async function accountReconfigureBasin(
   const response = doResult.value;
 
   const [result] = await M.match<
-    components.ReconfigureBasinResponse,
+    components.BasinConfig,
     | APIError
     | SDKValidationError
     | UnexpectedClientError
@@ -119,7 +119,7 @@ export async function accountReconfigureBasin(
     | RequestTimeoutError
     | ConnectionError
   >(
-    M.json(200, components.ReconfigureBasinResponse$inboundSchema),
+    M.json(200, components.BasinConfig$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response);

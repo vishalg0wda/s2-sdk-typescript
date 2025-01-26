@@ -34,7 +34,7 @@ export async function basinReconfigureStream(
   options?: RequestOptions,
 ): Promise<
   Result<
-    components.ReconfigureStreamResponse,
+    components.StreamConfig,
     | errors.ErrorResponse
     | APIError
     | SDKValidationError
@@ -122,7 +122,7 @@ export async function basinReconfigureStream(
   };
 
   const [result] = await M.match<
-    components.ReconfigureStreamResponse,
+    components.StreamConfig,
     | errors.ErrorResponse
     | APIError
     | SDKValidationError
@@ -132,7 +132,7 @@ export async function basinReconfigureStream(
     | RequestTimeoutError
     | ConnectionError
   >(
-    M.json(200, components.ReconfigureStreamResponse$inboundSchema),
+    M.json(200, components.StreamConfig$inboundSchema),
     M.jsonErr(400, errors.ErrorResponse$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),

@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: 2d20490e-9921-47d5-9711-d3c4b91c8cfa
 management:
-  docChecksum: 8cdfadf24079b3209290a04c2b495269
+  docChecksum: 8dee17ae0b87bb67d21f13c34ef70b6e
   docVersion: 1.0.0
-  speakeasyVersion: 1.476.0
-  generationVersion: 2.496.0
-  releaseVersion: 0.2.0
-  configChecksum: 66bd2f94cd9e3a746c42f653a54ad7bd
+  speakeasyVersion: 1.476.1
+  generationVersion: 2.495.1
+  releaseVersion: 0.2.1
+  configChecksum: 0729f2f117afb0704b0cc61d123d74fb
   repoURL: https://github.com/s2-streamstore/s2-sdk-typescript.git
   installationURL: https://github.com/s2-streamstore/s2-sdk-typescript
 features:
   typescript:
     acceptHeaders: 2.81.2
     additionalDependencies: 0.1.0
-    core: 3.18.18
+    core: 3.18.17
     defaultEnabledRetries: 0.1.0
     devContainers: 2.90.0
     enumUnions: 0.1.0
@@ -62,8 +62,6 @@ generatedFiles:
   - docs/models/components/readresponse.md
   - docs/models/components/readresponse1.md
   - docs/models/components/readresponse2.md
-  - docs/models/components/reconfigurebasinresponse.md
-  - docs/models/components/reconfigurestreamresponse.md
   - docs/models/components/retentionpolicy.md
   - docs/models/components/security.md
   - docs/models/components/sequencedrecord.md
@@ -152,8 +150,6 @@ generatedFiles:
   - src/models/components/liststreamsresponse.ts
   - src/models/components/output.ts
   - src/models/components/readresponse.ts
-  - src/models/components/reconfigurebasinresponse.ts
-  - src/models/components/reconfigurestreamresponse.ts
   - src/models/components/retentionpolicy.ts
   - src/models/components/security.ts
   - src/models/components/sequencedrecord.ts
@@ -337,7 +333,7 @@ examples:
         application/json: {}
       responses:
         "200":
-          application/json: {"config": {}}
+          application/json: {}
   reconfigure_stream:
     speakeasy-default-reconfigure-stream:
       parameters:

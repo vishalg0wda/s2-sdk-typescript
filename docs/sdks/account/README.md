@@ -395,7 +395,7 @@ run();
 
 ### Response
 
-**Promise\<[components.ReconfigureBasinResponse](../../models/components/reconfigurebasinresponse.md)\>**
+**Promise\<[components.BasinConfig](../../models/components/basinconfig.md)\>**
 
 ### Errors
 

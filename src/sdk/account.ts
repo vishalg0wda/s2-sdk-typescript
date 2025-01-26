@@ -76,7 +76,7 @@ export class Account extends ClientSDK {
   async reconfigureBasin(
     request: operations.ReconfigureBasinRequest,
     options?: RequestOptions,
-  ): Promise<components.ReconfigureBasinResponse> {
+  ): Promise<components.BasinConfig> {
     return unwrapAsync(accountReconfigureBasin(
       this,
       request,

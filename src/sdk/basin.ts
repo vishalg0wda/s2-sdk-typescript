@@ -76,7 +76,7 @@ export class Basin extends ClientSDK {
   async reconfigureStream(
     request: operations.ReconfigureStreamRequest,
     options?: RequestOptions,
-  ): Promise<components.ReconfigureStreamResponse> {
+  ): Promise<components.StreamConfig> {
     return unwrapAsync(basinReconfigureStream(
       this,
       request,
