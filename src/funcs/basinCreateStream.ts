@@ -116,7 +116,7 @@ export async function basinCreateStream(
 
   const doResult = await client._do(req, {
     context,
-    errorCodes: ["400", "404", "409", "4XX", "500", "5XX"],
+    errorCodes: ["400", "401", "404", "409", "4XX", "500", "5XX"],
     retryConfig: context.retryConfig,
     retryCodes: context.retryCodes,
   });
@@ -142,7 +142,7 @@ export async function basinCreateStream(
     | ConnectionError
   >(
     M.json(201, components.StreamInfo$inboundSchema),
-    M.jsonErr([400, 404, 409], errors.ErrorResponse$inboundSchema),
+    M.jsonErr([400, 401, 404, 409], errors.ErrorResponse$inboundSchema),
     M.jsonErr(500, errors.ErrorResponse$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),

@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: 2d20490e-9921-47d5-9711-d3c4b91c8cfa
 management:
-  docChecksum: 8dee17ae0b87bb67d21f13c34ef70b6e
+  docChecksum: 7dc3525c89a194b31c5af7e00bc39000
   docVersion: 1.0.0
-  speakeasyVersion: 1.476.1
-  generationVersion: 2.495.1
-  releaseVersion: 0.2.1
-  configChecksum: 0729f2f117afb0704b0cc61d123d74fb
+  speakeasyVersion: 1.477.0
+  generationVersion: 2.497.0
+  releaseVersion: 0.2.2
+  configChecksum: bdbe1190b6d15e5ed41bb46ab9f10fff
   repoURL: https://github.com/s2-streamstore/s2-sdk-typescript.git
   installationURL: https://github.com/s2-streamstore/s2-sdk-typescript
 features:
   typescript:
     acceptHeaders: 2.81.2
     additionalDependencies: 0.1.0
-    core: 3.18.17
+    core: 3.18.18
     defaultEnabledRetries: 0.1.0
     devContainers: 2.90.0
     enumUnions: 0.1.0
@@ -334,6 +334,10 @@ examples:
       responses:
         "200":
           application/json: {}
+        "400":
+          application/json: {"error": "<value>"}
+        "500":
+          application/json: {"error": "<value>"}
   reconfigure_stream:
     speakeasy-default-reconfigure-stream:
       parameters:
@@ -345,6 +349,8 @@ examples:
         "200":
           application/json: {}
         "400":
+          application/json: {"error": "<value>"}
+        "500":
           application/json: {"error": "<value>"}
 examplesVersion: 1.0.0
 generatedTests: {}
