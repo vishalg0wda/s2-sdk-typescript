@@ -10,6 +10,9 @@ targets:
     streamstore:
         target: typescript
         source: S2 API
+        publish:
+            npm:
+                token: $npm_token
         codeSamples:
             registry:
                 location: registry.speakeasyapi.dev/stream-store/s2/s-2-api-typescript-code-samples
