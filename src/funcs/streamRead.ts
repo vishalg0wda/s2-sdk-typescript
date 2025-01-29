@@ -123,7 +123,7 @@ export async function streamRead(
 
   const doResult = await client._do(req, {
     context,
-    errorCodes: ["400", "404", "409", "4XX", "500", "5XX"],
+    errorCodes: ["400", "401", "404", "4XX", "500", "5XX"],
     retryConfig: context.retryConfig,
     retryCodes: context.retryCodes,
   });
@@ -150,7 +150,7 @@ export async function streamRead(
   >(
     M.json(200, operations.ReadResponse$inboundSchema),
     M.sse(200, operations.ReadResponse$inboundSchema),
-    M.jsonErr([400, 404, 409], errors.ErrorResponse$inboundSchema),
+    M.jsonErr([400, 401, 404], errors.ErrorResponse$inboundSchema),
     M.jsonErr(500, errors.ErrorResponse$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
