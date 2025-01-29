@@ -19,18 +19,18 @@ specific category of applications.
 ## Example
 
 ```typescript
-import { StreamstoreCore } from "streamstore/core.js";
-import { accountListBasins } from "streamstore/funcs/accountListBasins.js";
-import { SDKValidationError } from "streamstore/models/errors/sdkvalidationerror.js";
+import { S2Core } from "@s2-dev/streamstore/core.js";
+import { accountListBasins } from "@s2-dev/streamstore/funcs/accountListBasins.js";
+import { SDKValidationError } from "@s2-dev/streamstore/models/errors/sdkvalidationerror.js";
 
-// Use `StreamstoreCore` for best tree-shaking performance.
+// Use `S2Core` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const streamstore = new StreamstoreCore({
-  bearerAuth: process.env["STREAMSTORE_BEARER_AUTH"] ?? "",
+const s2 = new S2Core({
+  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
 });
 
 async function run() {
-  const res = await accountListBasins(streamstore, {});
+  const res = await accountListBasins(s2, {});
 
   switch (true) {
     case res.ok:

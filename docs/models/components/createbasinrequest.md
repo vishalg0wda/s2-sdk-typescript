@@ -5,7 +5,7 @@ Create basin request.
 ## Example Usage
 
 ```typescript
-import { CreateBasinRequest } from "streamstore/models/components";
+import { CreateBasinRequest } from "@s2-dev/streamstore/models/components";
 
 let value: CreateBasinRequest = {};
 ```

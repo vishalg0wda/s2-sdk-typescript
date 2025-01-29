@@ -1,4 +1,4 @@
-# Streamstore SDK
+# S2 SDK
 
 ## Overview
 

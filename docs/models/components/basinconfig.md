@@ -5,7 +5,7 @@ Basin configuration.
 ## Example Usage
 
 ```typescript
-import { BasinConfig } from "streamstore/models/components";
+import { BasinConfig } from "@s2-dev/streamstore/models/components";
 
 let value: BasinConfig = {};
 ```

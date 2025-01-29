@@ -46,34 +46,30 @@ S2 API: Serverless API for streaming data backed by object storage.
 <!-- Start SDK Installation [installation] -->
 ## SDK Installation
 
-> [!TIP]
-> To finish publishing your SDK to npm and others you must [run your first generation action](https://www.speakeasy.com/docs/github-setup#step-by-step-guide).
-
-
 The SDK can be installed with either [npm](https://www.npmjs.com/), [pnpm](https://pnpm.io/), [bun](https://bun.sh/) or [yarn](https://classic.yarnpkg.com/en/) package managers.
 
 ### NPM
 
 ```bash
-npm add https://github.com/s2-streamstore/s2-sdk-typescript
+npm add @s2-dev/streamstore
 ```
 
 ### PNPM
 
 ```bash
-pnpm add https://github.com/s2-streamstore/s2-sdk-typescript
+pnpm add @s2-dev/streamstore
 ```
 
 ### Bun
 
 ```bash
-bun add https://github.com/s2-streamstore/s2-sdk-typescript
+bun add @s2-dev/streamstore
 ```
 
 ### Yarn
 
 ```bash
-yarn add https://github.com/s2-streamstore/s2-sdk-typescript zod
+yarn add @s2-dev/streamstore zod
 
 # Note that Yarn does not install peer dependencies automatically. You will need
 # to install zod as shown above.
@@ -92,14 +88,14 @@ For supported JavaScript runtimes, please consult [RUNTIMES.md](RUNTIMES.md).
 ### Example
 
 ```typescript
-import { Streamstore } from "streamstore";
+import { S2 } from "@s2-dev/streamstore";
 
-const streamstore = new Streamstore({
-  bearerAuth: process.env["STREAMSTORE_BEARER_AUTH"] ?? "",
+const s2 = new S2({
+  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
 });
 
 async function run() {
-  const result = await streamstore.account.listBasins({});
+  const result = await s2.account.listBasins({});
 
   for await (const page of result) {
     // Handle the page
@@ -119,20 +115,20 @@ run();
 
 This SDK supports the following security scheme globally:
 
-| Name         | Type | Scheme      | Environment Variable      |
-| ------------ | ---- | ----------- | ------------------------- |
-| `bearerAuth` | http | HTTP Bearer | `STREAMSTORE_BEARER_AUTH` |
+| Name         | Type | Scheme      | Environment Variable |
+| ------------ | ---- | ----------- | -------------------- |
+| `bearerAuth` | http | HTTP Bearer | `S2_BEARER_AUTH`     |
 
 To authenticate with the API the `bearerAuth` parameter must be set when initializing the SDK client instance. For example:
 ```typescript
-import { Streamstore } from "streamstore";
+import { S2 } from "@s2-dev/streamstore";
 
-const streamstore = new Streamstore({
-  bearerAuth: process.env["STREAMSTORE_BEARER_AUTH"] ?? "",
+const s2 = new S2({
+  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
 });
 
 async function run() {
-  const result = await streamstore.account.listBasins({});
+  const result = await s2.account.listBasins({});
 
   for await (const page of result) {
     // Handle the page
@@ -167,12 +163,12 @@ run();
 * [deleteStream](docs/sdks/basin/README.md#deletestream) - Delete a stream.
 * [reconfigureStream](docs/sdks/basin/README.md#reconfigurestream) - Update stream configuration.
 
+
 ### [stream](docs/sdks/stream/README.md)
 
 * [read](docs/sdks/stream/README.md#read) - Retrieve a batch of records.
 * [append](docs/sdks/stream/README.md#append) - Append a batch of records.
 * [checkTail](docs/sdks/stream/README.md#checktail) - Check the tail.
-
 
 </details>
 <!-- End Available Resources and Operations [operations] -->
@@ -219,14 +215,14 @@ terminate when the server no longer has any events to send and closes the
 underlying connection.
 
 ```typescript
-import { Streamstore } from "streamstore";
+import { S2 } from "@s2-dev/streamstore";
 
-const streamstore = new Streamstore({
-  bearerAuth: process.env["STREAMSTORE_BEARER_AUTH"] ?? "",
+const s2 = new S2({
+  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
 });
 
 async function run() {
-  const result = await streamstore.stream.read({
+  const result = await s2.stream.read({
     stream: "<value>",
   });
 
@@ -257,14 +253,14 @@ syntax.
 Here's an example of one such pagination call:
 
 ```typescript
-import { Streamstore } from "streamstore";
+import { S2 } from "@s2-dev/streamstore";
 
-const streamstore = new Streamstore({
-  bearerAuth: process.env["STREAMSTORE_BEARER_AUTH"] ?? "",
+const s2 = new S2({
+  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
 });
 
 async function run() {
-  const result = await streamstore.account.listBasins({});
+  const result = await s2.account.listBasins({});
 
   for await (const page of result) {
     // Handle the page
@@ -284,14 +280,14 @@ Some of the endpoints in this SDK support retries.  If you use the SDK without a
 
 To change the default retry strategy for a single API call, simply provide a retryConfig object to the call:
 ```typescript
-import { Streamstore } from "streamstore";
+import { S2 } from "@s2-dev/streamstore";
 
-const streamstore = new Streamstore({
-  bearerAuth: process.env["STREAMSTORE_BEARER_AUTH"] ?? "",
+const s2 = new S2({
+  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
 });
 
 async function run() {
-  const result = await streamstore.account.listBasins({}, {
+  const result = await s2.account.listBasins({}, {
     retries: {
       strategy: "backoff",
       backoff: {
@@ -316,9 +312,9 @@ run();
 
 If you'd like to override the default retry strategy for all operations that support retries, you can provide a retryConfig at SDK initialization:
 ```typescript
-import { Streamstore } from "streamstore";
+import { S2 } from "@s2-dev/streamstore";
 
-const streamstore = new Streamstore({
+const s2 = new S2({
   retryConfig: {
     strategy: "backoff",
     backoff: {
@@ -329,11 +325,11 @@ const streamstore = new Streamstore({
     },
     retryConnectionErrors: false,
   },
-  bearerAuth: process.env["STREAMSTORE_BEARER_AUTH"] ?? "",
+  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
 });
 
 async function run() {
-  const result = await streamstore.account.listBasins({});
+  const result = await s2.account.listBasins({});
 
   for await (const page of result) {
     // Handle the page
@@ -360,17 +356,20 @@ Some methods specify known errors which can be thrown. All the known errors are 
 If the method throws an error and it is not captured by the known errors, it will default to throwing a `APIError`.
 
 ```typescript
-import { Streamstore } from "streamstore";
-import { ErrorResponse, SDKValidationError } from "streamstore/models/errors";
+import { S2 } from "@s2-dev/streamstore";
+import {
+  ErrorResponse,
+  SDKValidationError,
+} from "@s2-dev/streamstore/models/errors";
 
-const streamstore = new Streamstore({
-  bearerAuth: process.env["STREAMSTORE_BEARER_AUTH"] ?? "",
+const s2 = new S2({
+  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
 });
 
 async function run() {
   let result;
   try {
-    result = await streamstore.account.listBasins({});
+    result = await s2.account.listBasins({});
 
     for await (const page of result) {
       // Handle the page
@@ -428,15 +427,15 @@ In some rare cases, the SDK can fail to get a response from the server or even m
 
 The default server can also be overridden globally by passing a URL to the `serverURL: string` optional parameter when initializing the SDK client instance. For example:
 ```typescript
-import { Streamstore } from "streamstore";
+import { S2 } from "@s2-dev/streamstore";
 
-const streamstore = new Streamstore({
+const s2 = new S2({
   serverURL: "https://aws.s2.dev/v1alpha",
-  bearerAuth: process.env["STREAMSTORE_BEARER_AUTH"] ?? "",
+  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
 });
 
 async function run() {
-  const result = await streamstore.account.listBasins({});
+  const result = await s2.account.listBasins({});
 
   for await (const page of result) {
     // Handle the page
@@ -452,14 +451,14 @@ run();
 
 The server URL can also be overridden on a per-operation basis, provided a server list was specified for the operation. For example:
 ```typescript
-import { Streamstore } from "streamstore";
+import { S2 } from "@s2-dev/streamstore";
 
-const streamstore = new Streamstore({
-  bearerAuth: process.env["STREAMSTORE_BEARER_AUTH"] ?? "",
+const s2 = new S2({
+  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
 });
 
 async function run() {
-  const result = await streamstore.basin.listStreams({}, {
+  const result = await s2.basin.listStreams({}, {
     serverURL: "https://my-favorite-basin.b.aws.s2.dev/v1alpha",
   });
 
@@ -492,8 +491,8 @@ custom header and a timeout to requests and how to use the `"requestError"` hook
 to log errors:
 
 ```typescript
-import { Streamstore } from "streamstore";
-import { HTTPClient } from "streamstore/lib/http";
+import { S2 } from "@s2-dev/streamstore";
+import { HTTPClient } from "@s2-dev/streamstore/lib/http";
 
 const httpClient = new HTTPClient({
   // fetcher takes a function that has the same signature as native `fetch`.
@@ -519,7 +518,7 @@ httpClient.addHook("requestError", (error, request) => {
   console.groupEnd();
 });
 
-const sdk = new Streamstore({ httpClient });
+const sdk = new S2({ httpClient });
 ```
 <!-- End Custom HTTP Client [http-client] -->
 
@@ -534,12 +533,12 @@ You can pass a logger that matches `console`'s interface as an SDK option.
 > Beware that debug logging will reveal secrets, like API tokens in headers, in log messages printed to a console or files. It's recommended to use this feature only during local development and not in production.
 
 ```typescript
-import { Streamstore } from "streamstore";
+import { S2 } from "@s2-dev/streamstore";
 
-const sdk = new Streamstore({ debugLogger: console });
+const sdk = new S2({ debugLogger: console });
 ```
 
-You can also enable a default debug logger by setting an environment variable `STREAMSTORE_DEBUG` to true.
+You can also enable a default debug logger by setting an environment variable `S2_DEBUG` to true.
 <!-- End Debugging [debug] -->
 
 <!-- Placeholder for Future Speakeasy SDK Sections -->

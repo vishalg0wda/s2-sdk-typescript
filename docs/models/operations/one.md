@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { One } from "streamstore/models/operations";
+import { One } from "@s2-dev/streamstore/models/operations";
 
 let value: One = "json-binsafe";
 ```

@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { ReadResponse2 } from "streamstore/models/components";
+import { ReadResponse2 } from "@s2-dev/streamstore/models/components";
 
 let value: ReadResponse2 = {
   data: "<value>",

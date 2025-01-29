@@ -5,7 +5,7 @@ Stream information.
 ## Example Usage
 
 ```typescript
-import { StreamInfo } from "streamstore/models/components";
+import { StreamInfo } from "@s2-dev/streamstore/models/components";
 
 let value: StreamInfo = {
   createdAt: 832620,

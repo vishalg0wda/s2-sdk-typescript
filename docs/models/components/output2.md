@@ -7,7 +7,7 @@ The client can re-establish the session starting at this sequence number.
 ## Example Usage
 
 ```typescript
-import { Output2 } from "streamstore/models/components";
+import { Output2 } from "@s2-dev/streamstore/models/components";
 
 let value: Output2 = {
   firstSeqNum: 870013,

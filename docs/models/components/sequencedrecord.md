@@ -5,7 +5,7 @@ Record retrieved from a stream.
 ## Example Usage
 
 ```typescript
-import { SequencedRecord } from "streamstore/models/components";
+import { SequencedRecord } from "@s2-dev/streamstore/models/components";
 
 let value: SequencedRecord = {
   body: "<value>",

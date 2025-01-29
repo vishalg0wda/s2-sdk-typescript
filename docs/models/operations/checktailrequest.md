@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { CheckTailRequest } from "streamstore/models/operations";
+import { CheckTailRequest } from "@s2-dev/streamstore/models/operations";
 
 let value: CheckTailRequest = {
   stream: "<value>",

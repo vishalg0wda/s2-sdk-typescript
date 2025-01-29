@@ -5,7 +5,7 @@ Basin scope. It should be formatted as "{cloud}:{region}", e.g. "aws:us-east-1".
 ## Example Usage
 
 ```typescript
-import { Assignment1 } from "streamstore/models/components";
+import { Assignment1 } from "@s2-dev/streamstore/models/components";
 
 let value: Assignment1 = {
   scope: "<value>",

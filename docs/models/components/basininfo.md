@@ -5,7 +5,7 @@ Basin information.
 ## Example Usage
 
 ```typescript
-import { BasinInfo } from "streamstore/models/components";
+import { BasinInfo } from "@s2-dev/streamstore/models/components";
 
 let value: BasinInfo = {
   cell: "<value>",

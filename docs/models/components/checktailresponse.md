@@ -5,7 +5,7 @@ Check tail response.
 ## Example Usage
 
 ```typescript
-import { CheckTailResponse } from "streamstore/models/components";
+import { CheckTailResponse } from "@s2-dev/streamstore/models/components";
 
 let value: CheckTailResponse = {
   nextSeqNum: 568434,

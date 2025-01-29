@@ -7,7 +7,7 @@ import { Account } from "./account.js";
 import { Basin } from "./basin.js";
 import { Stream } from "./stream.js";
 
-export class Streamstore extends ClientSDK {
+export class S2 extends ClientSDK {
   private _account?: Account;
   get account(): Account {
     return (this._account ??= new Account(this._options));

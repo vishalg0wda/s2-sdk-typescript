@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { CreateBasinRequest } from "streamstore/models/operations";
+import { CreateBasinRequest } from "@s2-dev/streamstore/models/operations";
 
 let value: CreateBasinRequest = {
   basin: "<value>",

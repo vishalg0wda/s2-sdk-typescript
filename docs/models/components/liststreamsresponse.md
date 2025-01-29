@@ -5,7 +5,7 @@ List streams response.
 ## Example Usage
 
 ```typescript
-import { ListStreamsResponse } from "streamstore/models/components";
+import { ListStreamsResponse } from "@s2-dev/streamstore/models/components";
 
 let value: ListStreamsResponse = {
   hasMore: false,

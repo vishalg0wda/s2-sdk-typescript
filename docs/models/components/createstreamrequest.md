@@ -5,7 +5,7 @@ Create stream request.
 ## Example Usage
 
 ```typescript
-import { CreateStreamRequest } from "streamstore/models/components";
+import { CreateStreamRequest } from "@s2-dev/streamstore/models/components";
 
 let value: CreateStreamRequest = {};
 ```

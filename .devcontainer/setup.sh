@@ -10,7 +10,7 @@ mkdir samples
 npm install
 npm install -g ts-node
 npm link
-npm link streamstore
+npm link @s2-dev/streamstore
 TS_CONFIG_CONTENT=$(cat <<EOL
 {
   "compilerOptions": {

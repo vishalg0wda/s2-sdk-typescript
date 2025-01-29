@@ -5,7 +5,7 @@ List basins response.
 ## Example Usage
 
 ```typescript
-import { ListBasinsResponse } from "streamstore/models/components";
+import { ListBasinsResponse } from "@s2-dev/streamstore/models/components";
 
 let value: ListBasinsResponse = {
   basins: [

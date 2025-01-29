@@ -1,21 +1,20 @@
-speakeasyVersion: 1.477.0
+speakeasyVersion: 1.477.2
 sources:
     S2 API:
         sourceNamespace: s-2-api
-        sourceRevisionDigest: sha256:d1de7070f4c718c28086e5b188491b101046f8520186f00b84998d357fc1b69c
+        sourceRevisionDigest: sha256:64c5f51eefa2e22cb205d6a808a0d2886f3b32343ba02cdd4b03b153e7c98eab
         sourceBlobDigest: sha256:5df6a26e7b4537d883f917648f272c11dddd982a38384050fb1828e9bb7f4297
         tags:
             - latest
-            - speakeasy-sdk-regen-1737937203
             - 1.0.0
 targets:
     streamstore:
         source: S2 API
         sourceNamespace: s-2-api
-        sourceRevisionDigest: sha256:d1de7070f4c718c28086e5b188491b101046f8520186f00b84998d357fc1b69c
+        sourceRevisionDigest: sha256:64c5f51eefa2e22cb205d6a808a0d2886f3b32343ba02cdd4b03b153e7c98eab
         sourceBlobDigest: sha256:5df6a26e7b4537d883f917648f272c11dddd982a38384050fb1828e9bb7f4297
         codeSamplesNamespace: s-2-api-typescript-code-samples
-        codeSamplesRevisionDigest: sha256:b810a3db95507cdb39aaea7808b0d57958ac7ceda1d107044a8e2e05f6c530a4
+        codeSamplesRevisionDigest: sha256:a771dadd8971d9c2016e7f767f21adbc2d0c684257c0b183796edb36f6481aa0
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest
@@ -29,6 +28,9 @@ workflow:
         streamstore:
             target: typescript
             source: S2 API
+            publish:
+                npm:
+                    token: $npm_token
             codeSamples:
                 registry:
                     location: registry.speakeasyapi.dev/stream-store/s2/s-2-api-typescript-code-samples

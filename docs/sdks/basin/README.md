@@ -20,14 +20,14 @@ List Streams.
 ### Example Usage
 
 ```typescript
-import { Streamstore } from "streamstore";
+import { S2 } from "@s2-dev/streamstore";
 
-const streamstore = new Streamstore({
-  bearerAuth: process.env["STREAMSTORE_BEARER_AUTH"] ?? "",
+const s2 = new S2({
+  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
 });
 
 async function run() {
-  const result = await streamstore.basin.listStreams({});
+  const result = await s2.basin.listStreams({});
 
   for await (const page of result) {
     // Handle the page
@@ -43,17 +43,17 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { StreamstoreCore } from "streamstore/core.js";
-import { basinListStreams } from "streamstore/funcs/basinListStreams.js";
+import { S2Core } from "@s2-dev/streamstore/core.js";
+import { basinListStreams } from "@s2-dev/streamstore/funcs/basinListStreams.js";
 
-// Use `StreamstoreCore` for best tree-shaking performance.
+// Use `S2Core` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const streamstore = new StreamstoreCore({
-  bearerAuth: process.env["STREAMSTORE_BEARER_AUTH"] ?? "",
+const s2 = new S2Core({
+  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
 });
 
 async function run() {
-  const res = await basinListStreams(streamstore, {});
+  const res = await basinListStreams(s2, {});
 
   if (!res.ok) {
     throw res.error;
@@ -99,14 +99,14 @@ Get stream configuration.
 ### Example Usage
 
 ```typescript
-import { Streamstore } from "streamstore";
+import { S2 } from "@s2-dev/streamstore";
 
-const streamstore = new Streamstore({
-  bearerAuth: process.env["STREAMSTORE_BEARER_AUTH"] ?? "",
+const s2 = new S2({
+  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
 });
 
 async function run() {
-  const result = await streamstore.basin.getStreamConfig({
+  const result = await s2.basin.getStreamConfig({
     stream: "<value>",
   });
 
@@ -122,17 +122,17 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { StreamstoreCore } from "streamstore/core.js";
-import { basinGetStreamConfig } from "streamstore/funcs/basinGetStreamConfig.js";
+import { S2Core } from "@s2-dev/streamstore/core.js";
+import { basinGetStreamConfig } from "@s2-dev/streamstore/funcs/basinGetStreamConfig.js";
 
-// Use `StreamstoreCore` for best tree-shaking performance.
+// Use `S2Core` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const streamstore = new StreamstoreCore({
-  bearerAuth: process.env["STREAMSTORE_BEARER_AUTH"] ?? "",
+const s2 = new S2Core({
+  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
 });
 
 async function run() {
-  const res = await basinGetStreamConfig(streamstore, {
+  const res = await basinGetStreamConfig(s2, {
     stream: "<value>",
   });
 
@@ -178,14 +178,14 @@ Create a stream.
 ### Example Usage
 
 ```typescript
-import { Streamstore } from "streamstore";
+import { S2 } from "@s2-dev/streamstore";
 
-const streamstore = new Streamstore({
-  bearerAuth: process.env["STREAMSTORE_BEARER_AUTH"] ?? "",
+const s2 = new S2({
+  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
 });
 
 async function run() {
-  const result = await streamstore.basin.createStream({
+  const result = await s2.basin.createStream({
     stream: "<value>",
     createStreamRequest: {},
   });
@@ -202,17 +202,17 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { StreamstoreCore } from "streamstore/core.js";
-import { basinCreateStream } from "streamstore/funcs/basinCreateStream.js";
+import { S2Core } from "@s2-dev/streamstore/core.js";
+import { basinCreateStream } from "@s2-dev/streamstore/funcs/basinCreateStream.js";
 
-// Use `StreamstoreCore` for best tree-shaking performance.
+// Use `S2Core` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const streamstore = new StreamstoreCore({
-  bearerAuth: process.env["STREAMSTORE_BEARER_AUTH"] ?? "",
+const s2 = new S2Core({
+  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
 });
 
 async function run() {
-  const res = await basinCreateStream(streamstore, {
+  const res = await basinCreateStream(s2, {
     stream: "<value>",
     createStreamRequest: {},
   });
@@ -259,14 +259,14 @@ Delete a stream.
 ### Example Usage
 
 ```typescript
-import { Streamstore } from "streamstore";
+import { S2 } from "@s2-dev/streamstore";
 
-const streamstore = new Streamstore({
-  bearerAuth: process.env["STREAMSTORE_BEARER_AUTH"] ?? "",
+const s2 = new S2({
+  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
 });
 
 async function run() {
-  await streamstore.basin.deleteStream({
+  await s2.basin.deleteStream({
     stream: "<value>",
   });
 
@@ -281,17 +281,17 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { StreamstoreCore } from "streamstore/core.js";
-import { basinDeleteStream } from "streamstore/funcs/basinDeleteStream.js";
+import { S2Core } from "@s2-dev/streamstore/core.js";
+import { basinDeleteStream } from "@s2-dev/streamstore/funcs/basinDeleteStream.js";
 
-// Use `StreamstoreCore` for best tree-shaking performance.
+// Use `S2Core` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const streamstore = new StreamstoreCore({
-  bearerAuth: process.env["STREAMSTORE_BEARER_AUTH"] ?? "",
+const s2 = new S2Core({
+  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
 });
 
 async function run() {
-  const res = await basinDeleteStream(streamstore, {
+  const res = await basinDeleteStream(s2, {
     stream: "<value>",
   });
 
@@ -336,14 +336,14 @@ Update stream configuration.
 ### Example Usage
 
 ```typescript
-import { Streamstore } from "streamstore";
+import { S2 } from "@s2-dev/streamstore";
 
-const streamstore = new Streamstore({
-  bearerAuth: process.env["STREAMSTORE_BEARER_AUTH"] ?? "",
+const s2 = new S2({
+  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
 });
 
 async function run() {
-  const result = await streamstore.basin.reconfigureStream({
+  const result = await s2.basin.reconfigureStream({
     stream: "<value>",
     streamConfig: {
       storageClass: "unspecified",
@@ -362,17 +362,17 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { StreamstoreCore } from "streamstore/core.js";
-import { basinReconfigureStream } from "streamstore/funcs/basinReconfigureStream.js";
+import { S2Core } from "@s2-dev/streamstore/core.js";
+import { basinReconfigureStream } from "@s2-dev/streamstore/funcs/basinReconfigureStream.js";
 
-// Use `StreamstoreCore` for best tree-shaking performance.
+// Use `S2Core` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const streamstore = new StreamstoreCore({
-  bearerAuth: process.env["STREAMSTORE_BEARER_AUTH"] ?? "",
+const s2 = new S2Core({
+  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
 });
 
 async function run() {
-  const res = await basinReconfigureStream(streamstore, {
+  const res = await basinReconfigureStream(s2, {
     stream: "<value>",
     streamConfig: {
       storageClass: "unspecified",

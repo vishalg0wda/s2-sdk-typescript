@@ -5,7 +5,7 @@ Headers add structured information to a record as name-value pairs.
 ## Example Usage
 
 ```typescript
-import { Header } from "streamstore/models/components";
+import { Header } from "@s2-dev/streamstore/models/components";
 
 let value: Header = {
   name: "<value>",

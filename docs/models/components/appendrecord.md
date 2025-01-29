@@ -5,7 +5,7 @@ Record to be appended to a stream.
 ## Example Usage
 
 ```typescript
-import { AppendRecord } from "streamstore/models/components";
+import { AppendRecord } from "@s2-dev/streamstore/models/components";
 
 let value: AppendRecord = {
   body: "<value>",

@@ -3,7 +3,7 @@
  */
 
 import jp from "jsonpath";
-import { StreamstoreCore } from "../core.js";
+import { S2Core } from "../core.js";
 import { encodeFormQuery } from "../lib/encodings.js";
 import * as M from "../lib/matchers.js";
 import { compactMap } from "../lib/primitives.js";
@@ -35,7 +35,7 @@ import {
  * List Streams.
  */
 export async function basinListStreams(
-  client: StreamstoreCore,
+  client: S2Core,
   request: operations.ListStreamsRequest,
   options?: RequestOptions,
 ): Promise<

@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { GetStreamConfigRequest } from "streamstore/models/operations";
+import { GetStreamConfigRequest } from "@s2-dev/streamstore/models/operations";
 
 let value: GetStreamConfigRequest = {
   stream: "<value>",

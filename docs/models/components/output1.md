@@ -7,7 +7,7 @@ that could have been returned would violate the limit.
 ## Example Usage
 
 ```typescript
-import { Output1 } from "streamstore/models/components";
+import { Output1 } from "@s2-dev/streamstore/models/components";
 
 let value: Output1 = {
   batch: {

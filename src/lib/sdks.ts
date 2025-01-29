@@ -107,7 +107,7 @@ export class ClientSDK {
     this._baseURL = baseURL;
     this.#httpClient = client;
     this.#logger = options.debugLogger;
-    if (!this.#logger && env().STREAMSTORE_DEBUG) {
+    if (!this.#logger && env().S2_DEBUG) {
       this.#logger = console;
     }
   }

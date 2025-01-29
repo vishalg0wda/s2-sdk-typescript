@@ -3,17 +3,18 @@ id: 2d20490e-9921-47d5-9711-d3c4b91c8cfa
 management:
   docChecksum: 7dc3525c89a194b31c5af7e00bc39000
   docVersion: 1.0.0
-  speakeasyVersion: 1.477.0
-  generationVersion: 2.497.0
-  releaseVersion: 0.2.2
-  configChecksum: bdbe1190b6d15e5ed41bb46ab9f10fff
+  speakeasyVersion: 1.477.2
+  generationVersion: 2.497.8
+  releaseVersion: 0.2.5
+  configChecksum: a3c0799f215296cda0f2b1ca71a3b263
   repoURL: https://github.com/s2-streamstore/s2-sdk-typescript.git
   installationURL: https://github.com/s2-streamstore/s2-sdk-typescript
+  published: true
 features:
   typescript:
     acceptHeaders: 2.81.2
     additionalDependencies: 0.1.0
-    core: 3.18.18
+    core: 3.18.19
     defaultEnabledRetries: 0.1.0
     devContainers: 2.90.0
     enumUnions: 0.1.0
@@ -95,8 +96,8 @@ generatedFiles:
   - docs/models/operations/s2format.md
   - docs/sdks/account/README.md
   - docs/sdks/basin/README.md
+  - docs/sdks/s2/README.md
   - docs/sdks/stream/README.md
-  - docs/sdks/streamstore/README.md
   - jsr.json
   - package.json
   - src/core.ts

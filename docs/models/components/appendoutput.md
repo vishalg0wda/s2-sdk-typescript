@@ -5,7 +5,7 @@ Output from append response.
 ## Example Usage
 
 ```typescript
-import { AppendOutput } from "streamstore/models/components";
+import { AppendOutput } from "@s2-dev/streamstore/models/components";
 
 let value: AppendOutput = {
   endSeqNum: 264555,

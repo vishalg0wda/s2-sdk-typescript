@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod";
-import { StreamstoreCore } from "../core.js";
+import { S2Core } from "../core.js";
 import { encodeSimple } from "../lib/encodings.js";
 import * as M from "../lib/matchers.js";
 import { compactMap } from "../lib/primitives.js";
@@ -29,7 +29,7 @@ import { Result } from "../types/fp.js";
  * Delete a stream.
  */
 export async function basinDeleteStream(
-  client: StreamstoreCore,
+  client: S2Core,
   request: operations.DeleteStreamRequest,
   options?: RequestOptions,
 ): Promise<

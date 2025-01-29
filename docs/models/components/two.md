@@ -5,7 +5,7 @@ Explicit cell assignment, if it is owned by the account.
 ## Example Usage
 
 ```typescript
-import { Two } from "streamstore/models/components";
+import { Two } from "@s2-dev/streamstore/models/components";
 
 let value: Two = {
   cell: "<value>",

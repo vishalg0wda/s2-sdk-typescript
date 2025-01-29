@@ -6,7 +6,7 @@ If returned in a streaming read session, this will be a terminal reply.
 ## Example Usage
 
 ```typescript
-import { Three } from "streamstore/models/components";
+import { Three } from "@s2-dev/streamstore/models/components";
 
 let value: Three = {
   nextSeqNum: 778157,

@@ -5,7 +5,7 @@ Limit on how many records can be returned upto a maximum of 1000, or 1MiB of met
 ## Example Usage
 
 ```typescript
-import { Limit } from "streamstore/models/operations";
+import { Limit } from "@s2-dev/streamstore/models/operations";
 
 let value: Limit = {};
 ```

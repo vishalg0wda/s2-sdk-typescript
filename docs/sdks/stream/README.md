@@ -18,14 +18,14 @@ Retrieve a batch of records.
 ### Example Usage
 
 ```typescript
-import { Streamstore } from "streamstore";
+import { S2 } from "@s2-dev/streamstore";
 
-const streamstore = new Streamstore({
-  bearerAuth: process.env["STREAMSTORE_BEARER_AUTH"] ?? "",
+const s2 = new S2({
+  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
 });
 
 async function run() {
-  const result = await streamstore.stream.read({
+  const result = await s2.stream.read({
     stream: "<value>",
   });
 
@@ -43,17 +43,17 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { StreamstoreCore } from "streamstore/core.js";
-import { streamRead } from "streamstore/funcs/streamRead.js";
+import { S2Core } from "@s2-dev/streamstore/core.js";
+import { streamRead } from "@s2-dev/streamstore/funcs/streamRead.js";
 
-// Use `StreamstoreCore` for best tree-shaking performance.
+// Use `S2Core` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const streamstore = new StreamstoreCore({
-  bearerAuth: process.env["STREAMSTORE_BEARER_AUTH"] ?? "",
+const s2 = new S2Core({
+  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
 });
 
 async function run() {
-  const res = await streamRead(streamstore, {
+  const res = await streamRead(s2, {
     stream: "<value>",
   });
 
@@ -101,14 +101,14 @@ Append a batch of records.
 ### Example Usage
 
 ```typescript
-import { Streamstore } from "streamstore";
+import { S2 } from "@s2-dev/streamstore";
 
-const streamstore = new Streamstore({
-  bearerAuth: process.env["STREAMSTORE_BEARER_AUTH"] ?? "",
+const s2 = new S2({
+  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
 });
 
 async function run() {
-  const result = await streamstore.stream.append({
+  const result = await s2.stream.append({
     stream: "<value>",
     appendInput: {
       records: [
@@ -131,17 +131,17 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { StreamstoreCore } from "streamstore/core.js";
-import { streamAppend } from "streamstore/funcs/streamAppend.js";
+import { S2Core } from "@s2-dev/streamstore/core.js";
+import { streamAppend } from "@s2-dev/streamstore/funcs/streamAppend.js";
 
-// Use `StreamstoreCore` for best tree-shaking performance.
+// Use `S2Core` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const streamstore = new StreamstoreCore({
-  bearerAuth: process.env["STREAMSTORE_BEARER_AUTH"] ?? "",
+const s2 = new S2Core({
+  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
 });
 
 async function run() {
-  const res = await streamAppend(streamstore, {
+  const res = await streamAppend(s2, {
     stream: "<value>",
     appendInput: {
       records: [
@@ -194,14 +194,14 @@ Check the tail.
 ### Example Usage
 
 ```typescript
-import { Streamstore } from "streamstore";
+import { S2 } from "@s2-dev/streamstore";
 
-const streamstore = new Streamstore({
-  bearerAuth: process.env["STREAMSTORE_BEARER_AUTH"] ?? "",
+const s2 = new S2({
+  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
 });
 
 async function run() {
-  const result = await streamstore.stream.checkTail({
+  const result = await s2.stream.checkTail({
     stream: "<value>",
   });
 
@@ -217,17 +217,17 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { StreamstoreCore } from "streamstore/core.js";
-import { streamCheckTail } from "streamstore/funcs/streamCheckTail.js";
+import { S2Core } from "@s2-dev/streamstore/core.js";
+import { streamCheckTail } from "@s2-dev/streamstore/funcs/streamCheckTail.js";
 
-// Use `StreamstoreCore` for best tree-shaking performance.
+// Use `S2Core` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const streamstore = new StreamstoreCore({
-  bearerAuth: process.env["STREAMSTORE_BEARER_AUTH"] ?? "",
+const s2 = new S2Core({
+  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
 });
 
 async function run() {
-  const res = await streamCheckTail(streamstore, {
+  const res = await streamCheckTail(s2, {
     stream: "<value>",
   });
 

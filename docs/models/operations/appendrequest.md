@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { AppendRequest } from "streamstore/models/operations";
+import { AppendRequest } from "@s2-dev/streamstore/models/operations";
 
 let value: AppendRequest = {
   stream: "<value>",

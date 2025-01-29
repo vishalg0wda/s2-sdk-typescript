@@ -237,7 +237,7 @@ export function resolveGlobalSecurity(
       {
         fieldName: "Authorization",
         type: "http:bearer",
-        value: security?.bearerAuth ?? env().STREAMSTORE_BEARER_AUTH,
+        value: security?.bearerAuth ?? env().S2_BEARER_AUTH,
       },
     ],
   );

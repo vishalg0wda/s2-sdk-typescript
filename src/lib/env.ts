@@ -7,15 +7,15 @@ import { dlv } from "./dlv.js";
 import * as z from "zod";
 
 export interface Env {
-  STREAMSTORE_BEARER_AUTH?: string | undefined;
+  S2_BEARER_AUTH?: string | undefined;
 
-  STREAMSTORE_DEBUG?: boolean | undefined;
+  S2_DEBUG?: boolean | undefined;
 }
 
 export const envSchema: z.ZodType<Env, z.ZodTypeDef, unknown> = z.object({
-  STREAMSTORE_BEARER_AUTH: z.string().optional(),
+  S2_BEARER_AUTH: z.string().optional(),
 
-  STREAMSTORE_DEBUG: z.coerce.boolean().optional(),
+  S2_DEBUG: z.coerce.boolean().optional(),
 });
 
 let envMemo: Env | undefined = undefined;

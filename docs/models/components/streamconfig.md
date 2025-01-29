@@ -5,7 +5,7 @@ Stream configuration.
 ## Example Usage
 
 ```typescript
-import { StreamConfig } from "streamstore/models/components";
+import { StreamConfig } from "@s2-dev/streamstore/models/components";
 
 let value: StreamConfig = {
   storageClass: "standard",

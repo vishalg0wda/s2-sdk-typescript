@@ -6,7 +6,7 @@ If set to 0, the stream will have infinite retention.
 ## Example Usage
 
 ```typescript
-import { One } from "streamstore/models/components";
+import { One } from "@s2-dev/streamstore/models/components";
 
 let value: One = {
   age: 7,

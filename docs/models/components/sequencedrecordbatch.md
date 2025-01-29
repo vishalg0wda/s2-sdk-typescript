@@ -5,7 +5,7 @@ A batch of sequenced records.
 ## Example Usage
 
 ```typescript
-import { SequencedRecordBatch } from "streamstore/models/components";
+import { SequencedRecordBatch } from "@s2-dev/streamstore/models/components";
 
 let value: SequencedRecordBatch = {
   records: [
