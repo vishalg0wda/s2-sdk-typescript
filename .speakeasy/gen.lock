@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 2d20490e-9921-47d5-9711-d3c4b91c8cfa
 management:
-  docChecksum: 7dc3525c89a194b31c5af7e00bc39000
+  docChecksum: 24649fada58afae630307af3fabf3506
   docVersion: 1.0.0
-  speakeasyVersion: 1.477.2
-  generationVersion: 2.497.8
-  releaseVersion: 0.2.5
-  configChecksum: a3c0799f215296cda0f2b1ca71a3b263
+  speakeasyVersion: 1.481.1
+  generationVersion: 2.500.5
+  releaseVersion: 0.2.6
+  configChecksum: ccdf8003f6cccf53fe8a8c63f21f9494
   repoURL: https://github.com/s2-streamstore/s2-sdk-typescript.git
   installationURL: https://github.com/s2-streamstore/s2-sdk-typescript
   published: true
@@ -14,7 +14,7 @@ features:
   typescript:
     acceptHeaders: 2.81.2
     additionalDependencies: 0.1.0
-    core: 3.18.19
+    core: 3.18.22
     defaultEnabledRetries: 0.1.0
     devContainers: 2.90.0
     enumUnions: 0.1.0
@@ -35,7 +35,6 @@ generatedFiles:
   - .devcontainer/README.md
   - .devcontainer/devcontainer.json
   - .devcontainer/setup.sh
-  - .eslintrc.cjs
   - .gitattributes
   - .npmignore
   - FUNCTIONS.md
@@ -98,6 +97,7 @@ generatedFiles:
   - docs/sdks/basin/README.md
   - docs/sdks/s2/README.md
   - docs/sdks/stream/README.md
+  - eslint.config.mjs
   - jsr.json
   - package.json
   - src/core.ts

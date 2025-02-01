@@ -26,7 +26,10 @@ import * as operations from "../models/operations/index.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Append a batch of records.
+ * Append records.
+ *
+ * @remarks
+ * Append a batch of records to a stream.
  */
 export async function streamAppend(
   client: S2Core,

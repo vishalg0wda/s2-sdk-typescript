@@ -27,6 +27,9 @@ import { Result } from "../types/fp.js";
 
 /**
  * Check the tail.
+ *
+ * @remarks
+ * Check the sequence number that will be assigned to the next record on a stream.
  */
 export async function streamCheckTail(
   client: S2Core,

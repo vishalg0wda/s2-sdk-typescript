@@ -14,7 +14,10 @@ export { ReadAcceptEnum } from "../funcs/streamRead.js";
 
 export class Stream extends ClientSDK {
   /**
-   * Retrieve a batch of records.
+   * Retrieve records.
+   *
+   * @remarks
+   * Retrieve a batch of records, or set `Accept: text/event-stream` to stream using server-sent events.
    */
   async read(
     request: operations.ReadRequest,
@@ -28,7 +31,10 @@ export class Stream extends ClientSDK {
   }
 
   /**
-   * Append a batch of records.
+   * Append records.
+   *
+   * @remarks
+   * Append a batch of records to a stream.
    */
   async append(
     request: operations.AppendRequest,
@@ -43,6 +49,9 @@ export class Stream extends ClientSDK {
 
   /**
    * Check the tail.
+   *
+   * @remarks
+   * Check the sequence number that will be assigned to the next record on a stream.
    */
   async checkTail(
     request: operations.CheckTailRequest,
