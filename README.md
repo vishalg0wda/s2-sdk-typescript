@@ -166,8 +166,8 @@ run();
 
 ### [stream](docs/sdks/stream/README.md)
 
-* [read](docs/sdks/stream/README.md#read) - Retrieve a batch of records.
-* [append](docs/sdks/stream/README.md#append) - Append a batch of records.
+* [read](docs/sdks/stream/README.md#read) - Retrieve records.
+* [append](docs/sdks/stream/README.md#append) - Append records.
 * [checkTail](docs/sdks/stream/README.md#checktail) - Check the tail.
 
 </details>
@@ -198,9 +198,9 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`basinGetStreamConfig`](docs/sdks/basin/README.md#getstreamconfig) - Get stream configuration.
 - [`basinListStreams`](docs/sdks/basin/README.md#liststreams) - List Streams.
 - [`basinReconfigureStream`](docs/sdks/basin/README.md#reconfigurestream) - Update stream configuration.
-- [`streamAppend`](docs/sdks/stream/README.md#append) - Append a batch of records.
+- [`streamAppend`](docs/sdks/stream/README.md#append) - Append records.
 - [`streamCheckTail`](docs/sdks/stream/README.md#checktail) - Check the tail.
-- [`streamRead`](docs/sdks/stream/README.md#read) - Retrieve a batch of records.
+- [`streamRead`](docs/sdks/stream/README.md#read) - Retrieve records.
 
 </details>
 <!-- End Standalone functions [standalone-funcs] -->

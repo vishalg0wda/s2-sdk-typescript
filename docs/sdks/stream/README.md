@@ -7,13 +7,13 @@ Operate on an S2 stream
 
 ### Available Operations
 
-* [read](#read) - Retrieve a batch of records.
-* [append](#append) - Append a batch of records.
+* [read](#read) - Retrieve records.
+* [append](#append) - Append records.
 * [checkTail](#checktail) - Check the tail.
 
 ## read
 
-Retrieve a batch of records.
+Retrieve a batch of records, or set `Accept: text/event-stream` to stream using server-sent events.
 
 ### Example Usage
 
@@ -96,7 +96,7 @@ run();
 
 ## append
 
-Append a batch of records.
+Append a batch of records to a stream.
 
 ### Example Usage
 
@@ -189,7 +189,7 @@ run();
 
 ## checkTail
 
-Check the tail.
+Check the sequence number that will be assigned to the next record on a stream.
 
 ### Example Usage
 
