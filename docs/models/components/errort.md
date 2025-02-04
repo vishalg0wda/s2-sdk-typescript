@@ -1,11 +1,11 @@
-# ReadResponse2
+# ErrorT
 
 ## Example Usage
 
 ```typescript
-import { ReadResponse2 } from "@s2-dev/streamstore/models/components";
+import { ErrorT } from "@s2-dev/streamstore/models/components";
 
-let value: ReadResponse2 = {
+let value: ErrorT = {
   data: "<value>",
   event: "<value>",
 };

@@ -1,13 +1,13 @@
-# Assignment1
+# Scope
 
 Basin scope. It should be formatted as "{cloud}:{region}", e.g. "aws:us-east-1".
 
 ## Example Usage
 
 ```typescript
-import { Assignment1 } from "@s2-dev/streamstore/models/components";
+import { Scope } from "@s2-dev/streamstore/models/components";
 
-let value: Assignment1 = {
+let value: Scope = {
   scope: "<value>",
 };
 ```

@@ -13,12 +13,12 @@ import {
   Output$outboundSchema,
 } from "./output.js";
 
-export type ReadResponse2 = {
+export type ErrorT = {
   data: string;
   event: string;
 };
 
-export type ReadResponse1 = {
+export type ReadResponseOutput = {
   /**
    * Reply which can be a batch of records, or a sequence number if the request could not be satisfied.
    */
@@ -26,29 +26,26 @@ export type ReadResponse1 = {
   event: string;
 };
 
-export type ReadResponse = ReadResponse1 | ReadResponse2;
+export type ReadResponse = ReadResponseOutput | ErrorT;
 
 /** @internal */
-export const ReadResponse2$inboundSchema: z.ZodType<
-  ReadResponse2,
-  z.ZodTypeDef,
-  unknown
-> = z.object({
-  data: z.string(),
-  event: z.string(),
-});
+export const ErrorT$inboundSchema: z.ZodType<ErrorT, z.ZodTypeDef, unknown> = z
+  .object({
+    data: z.string(),
+    event: z.string(),
+  });
 
 /** @internal */
-export type ReadResponse2$Outbound = {
+export type ErrorT$Outbound = {
   data: string;
   event: string;
 };
 
 /** @internal */
-export const ReadResponse2$outboundSchema: z.ZodType<
-  ReadResponse2$Outbound,
+export const ErrorT$outboundSchema: z.ZodType<
+  ErrorT$Outbound,
   z.ZodTypeDef,
-  ReadResponse2
+  ErrorT
 > = z.object({
   data: z.string(),
   event: z.string(),
@@ -58,32 +55,32 @@ export const ReadResponse2$outboundSchema: z.ZodType<
  * @internal
  * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
  */
-export namespace ReadResponse2$ {
-  /** @deprecated use `ReadResponse2$inboundSchema` instead. */
-  export const inboundSchema = ReadResponse2$inboundSchema;
-  /** @deprecated use `ReadResponse2$outboundSchema` instead. */
-  export const outboundSchema = ReadResponse2$outboundSchema;
-  /** @deprecated use `ReadResponse2$Outbound` instead. */
-  export type Outbound = ReadResponse2$Outbound;
+export namespace ErrorT$ {
+  /** @deprecated use `ErrorT$inboundSchema` instead. */
+  export const inboundSchema = ErrorT$inboundSchema;
+  /** @deprecated use `ErrorT$outboundSchema` instead. */
+  export const outboundSchema = ErrorT$outboundSchema;
+  /** @deprecated use `ErrorT$Outbound` instead. */
+  export type Outbound = ErrorT$Outbound;
 }
 
-export function readResponse2ToJSON(readResponse2: ReadResponse2): string {
-  return JSON.stringify(ReadResponse2$outboundSchema.parse(readResponse2));
+export function errorToJSON(errorT: ErrorT): string {
+  return JSON.stringify(ErrorT$outboundSchema.parse(errorT));
 }
 
-export function readResponse2FromJSON(
+export function errorFromJSON(
   jsonString: string,
-): SafeParseResult<ReadResponse2, SDKValidationError> {
+): SafeParseResult<ErrorT, SDKValidationError> {
   return safeParse(
     jsonString,
-    (x) => ReadResponse2$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ReadResponse2' from JSON`,
+    (x) => ErrorT$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ErrorT' from JSON`,
   );
 }
 
 /** @internal */
-export const ReadResponse1$inboundSchema: z.ZodType<
-  ReadResponse1,
+export const ReadResponseOutput$inboundSchema: z.ZodType<
+  ReadResponseOutput,
   z.ZodTypeDef,
   unknown
 > = z.object({
@@ -102,16 +99,16 @@ export const ReadResponse1$inboundSchema: z.ZodType<
 });
 
 /** @internal */
-export type ReadResponse1$Outbound = {
+export type ReadResponseOutput$Outbound = {
   data: Output$Outbound;
   event: string;
 };
 
 /** @internal */
-export const ReadResponse1$outboundSchema: z.ZodType<
-  ReadResponse1$Outbound,
+export const ReadResponseOutput$outboundSchema: z.ZodType<
+  ReadResponseOutput$Outbound,
   z.ZodTypeDef,
-  ReadResponse1
+  ReadResponseOutput
 > = z.object({
   data: Output$outboundSchema,
   event: z.string(),
@@ -121,26 +118,30 @@ export const ReadResponse1$outboundSchema: z.ZodType<
  * @internal
  * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
  */
-export namespace ReadResponse1$ {
-  /** @deprecated use `ReadResponse1$inboundSchema` instead. */
-  export const inboundSchema = ReadResponse1$inboundSchema;
-  /** @deprecated use `ReadResponse1$outboundSchema` instead. */
-  export const outboundSchema = ReadResponse1$outboundSchema;
-  /** @deprecated use `ReadResponse1$Outbound` instead. */
-  export type Outbound = ReadResponse1$Outbound;
+export namespace ReadResponseOutput$ {
+  /** @deprecated use `ReadResponseOutput$inboundSchema` instead. */
+  export const inboundSchema = ReadResponseOutput$inboundSchema;
+  /** @deprecated use `ReadResponseOutput$outboundSchema` instead. */
+  export const outboundSchema = ReadResponseOutput$outboundSchema;
+  /** @deprecated use `ReadResponseOutput$Outbound` instead. */
+  export type Outbound = ReadResponseOutput$Outbound;
 }
 
-export function readResponse1ToJSON(readResponse1: ReadResponse1): string {
-  return JSON.stringify(ReadResponse1$outboundSchema.parse(readResponse1));
+export function readResponseOutputToJSON(
+  readResponseOutput: ReadResponseOutput,
+): string {
+  return JSON.stringify(
+    ReadResponseOutput$outboundSchema.parse(readResponseOutput),
+  );
 }
 
-export function readResponse1FromJSON(
+export function readResponseOutputFromJSON(
   jsonString: string,
-): SafeParseResult<ReadResponse1, SDKValidationError> {
+): SafeParseResult<ReadResponseOutput, SDKValidationError> {
   return safeParse(
     jsonString,
-    (x) => ReadResponse1$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ReadResponse1' from JSON`,
+    (x) => ReadResponseOutput$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ReadResponseOutput' from JSON`,
   );
 }
 
@@ -150,14 +151,14 @@ export const ReadResponse$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.union([
-  z.lazy(() => ReadResponse1$inboundSchema),
-  z.lazy(() => ReadResponse2$inboundSchema),
+  z.lazy(() => ReadResponseOutput$inboundSchema),
+  z.lazy(() => ErrorT$inboundSchema),
 ]);
 
 /** @internal */
 export type ReadResponse$Outbound =
-  | ReadResponse1$Outbound
-  | ReadResponse2$Outbound;
+  | ReadResponseOutput$Outbound
+  | ErrorT$Outbound;
 
 /** @internal */
 export const ReadResponse$outboundSchema: z.ZodType<
@@ -165,8 +166,8 @@ export const ReadResponse$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   ReadResponse
 > = z.union([
-  z.lazy(() => ReadResponse1$outboundSchema),
-  z.lazy(() => ReadResponse2$outboundSchema),
+  z.lazy(() => ReadResponseOutput$outboundSchema),
+  z.lazy(() => ErrorT$outboundSchema),
 ]);
 
 /**

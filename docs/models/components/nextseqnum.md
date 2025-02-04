@@ -1,4 +1,4 @@
-# Three
+# NextSeqNum
 
 Sequence number for the next record on this stream, in case the requested `start_seq_num` was larger.
 If returned in a streaming read session, this will be a terminal reply.
@@ -6,9 +6,9 @@ If returned in a streaming read session, this will be a terminal reply.
 ## Example Usage
 
 ```typescript
-import { Three } from "@s2-dev/streamstore/models/components";
+import { NextSeqNum } from "@s2-dev/streamstore/models/components";
 
-let value: Three = {
+let value: NextSeqNum = {
   nextSeqNum: 778157,
 };
 ```

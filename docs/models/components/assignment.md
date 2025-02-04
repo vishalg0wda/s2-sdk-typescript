@@ -5,18 +5,18 @@ Assignment of the basin to a cloud and region, or an explicit cell.
 
 ## Supported Types
 
-### `components.Assignment1`
+### `components.Scope`
 
 ```typescript
-const value: components.Assignment1 = {
+const value: components.Scope = {
   scope: "<value>",
 };
 ```
 
-### `components.Two`
+### `components.Cell`
 
 ```typescript
-const value: components.Two = {
+const value: components.Cell = {
   cell: "<value>",
 };
 ```

@@ -1,13 +1,13 @@
-# Two
+# Cell
 
 Explicit cell assignment, if it is owned by the account.
 
 ## Example Usage
 
 ```typescript
-import { Two } from "@s2-dev/streamstore/models/components";
+import { Cell } from "@s2-dev/streamstore/models/components";
 
-let value: Two = {
+let value: Cell = {
   cell: "<value>",
 };
 ```

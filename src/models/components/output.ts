@@ -20,7 +20,7 @@ import {
  * @remarks
  * If returned in a streaming read session, this will be a terminal reply.
  */
-export type Three = {
+export type NextSeqNum = {
   /**
    * Sequence number for the next record on this stream, in case the requested `start_seq_num` was larger.
    *
@@ -37,7 +37,7 @@ export type Three = {
  * If returned in a streaming read session, this will be a terminal reply, to signal that there is uncertainty about whether some records may be omitted.
  * The client can re-establish the session starting at this sequence number.
  */
-export type Output2 = {
+export type FirstSeqNum = {
   /**
    * Sequence number for the first record on this stream, in case the requested `start_seq_num` is smaller.
    *
@@ -55,7 +55,7 @@ export type Output2 = {
  * This batch can be empty only if a `ReadLimit` was provided in the associated read request, but the first record
  * that could have been returned would violate the limit.
  */
-export type Output1 = {
+export type Batch = {
   /**
    * A batch of sequenced records.
    */
@@ -65,28 +65,31 @@ export type Output1 = {
 /**
  * Reply which can be a batch of records, or a sequence number if the request could not be satisfied.
  */
-export type Output = Output1 | Output2 | Three;
+export type Output = Batch | FirstSeqNum | NextSeqNum;
 
 /** @internal */
-export const Three$inboundSchema: z.ZodType<Three, z.ZodTypeDef, unknown> = z
-  .object({
-    next_seq_num: z.number().int(),
-  }).transform((v) => {
-    return remap$(v, {
-      "next_seq_num": "nextSeqNum",
-    });
+export const NextSeqNum$inboundSchema: z.ZodType<
+  NextSeqNum,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  next_seq_num: z.number().int(),
+}).transform((v) => {
+  return remap$(v, {
+    "next_seq_num": "nextSeqNum",
   });
+});
 
 /** @internal */
-export type Three$Outbound = {
+export type NextSeqNum$Outbound = {
   next_seq_num: number;
 };
 
 /** @internal */
-export const Three$outboundSchema: z.ZodType<
-  Three$Outbound,
+export const NextSeqNum$outboundSchema: z.ZodType<
+  NextSeqNum$Outbound,
   z.ZodTypeDef,
-  Three
+  NextSeqNum
 > = z.object({
   nextSeqNum: z.number().int(),
 }).transform((v) => {
@@ -99,49 +102,52 @@ export const Three$outboundSchema: z.ZodType<
  * @internal
  * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
  */
-export namespace Three$ {
-  /** @deprecated use `Three$inboundSchema` instead. */
-  export const inboundSchema = Three$inboundSchema;
-  /** @deprecated use `Three$outboundSchema` instead. */
-  export const outboundSchema = Three$outboundSchema;
-  /** @deprecated use `Three$Outbound` instead. */
-  export type Outbound = Three$Outbound;
+export namespace NextSeqNum$ {
+  /** @deprecated use `NextSeqNum$inboundSchema` instead. */
+  export const inboundSchema = NextSeqNum$inboundSchema;
+  /** @deprecated use `NextSeqNum$outboundSchema` instead. */
+  export const outboundSchema = NextSeqNum$outboundSchema;
+  /** @deprecated use `NextSeqNum$Outbound` instead. */
+  export type Outbound = NextSeqNum$Outbound;
 }
 
-export function threeToJSON(three: Three): string {
-  return JSON.stringify(Three$outboundSchema.parse(three));
+export function nextSeqNumToJSON(nextSeqNum: NextSeqNum): string {
+  return JSON.stringify(NextSeqNum$outboundSchema.parse(nextSeqNum));
 }
 
-export function threeFromJSON(
+export function nextSeqNumFromJSON(
   jsonString: string,
-): SafeParseResult<Three, SDKValidationError> {
+): SafeParseResult<NextSeqNum, SDKValidationError> {
   return safeParse(
     jsonString,
-    (x) => Three$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'Three' from JSON`,
+    (x) => NextSeqNum$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'NextSeqNum' from JSON`,
   );
 }
 
 /** @internal */
-export const Output2$inboundSchema: z.ZodType<Output2, z.ZodTypeDef, unknown> =
-  z.object({
-    first_seq_num: z.number().int(),
-  }).transform((v) => {
-    return remap$(v, {
-      "first_seq_num": "firstSeqNum",
-    });
+export const FirstSeqNum$inboundSchema: z.ZodType<
+  FirstSeqNum,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  first_seq_num: z.number().int(),
+}).transform((v) => {
+  return remap$(v, {
+    "first_seq_num": "firstSeqNum",
   });
+});
 
 /** @internal */
-export type Output2$Outbound = {
+export type FirstSeqNum$Outbound = {
   first_seq_num: number;
 };
 
 /** @internal */
-export const Output2$outboundSchema: z.ZodType<
-  Output2$Outbound,
+export const FirstSeqNum$outboundSchema: z.ZodType<
+  FirstSeqNum$Outbound,
   z.ZodTypeDef,
-  Output2
+  FirstSeqNum
 > = z.object({
   firstSeqNum: z.number().int(),
 }).transform((v) => {
@@ -154,45 +160,45 @@ export const Output2$outboundSchema: z.ZodType<
  * @internal
  * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
  */
-export namespace Output2$ {
-  /** @deprecated use `Output2$inboundSchema` instead. */
-  export const inboundSchema = Output2$inboundSchema;
-  /** @deprecated use `Output2$outboundSchema` instead. */
-  export const outboundSchema = Output2$outboundSchema;
-  /** @deprecated use `Output2$Outbound` instead. */
-  export type Outbound = Output2$Outbound;
+export namespace FirstSeqNum$ {
+  /** @deprecated use `FirstSeqNum$inboundSchema` instead. */
+  export const inboundSchema = FirstSeqNum$inboundSchema;
+  /** @deprecated use `FirstSeqNum$outboundSchema` instead. */
+  export const outboundSchema = FirstSeqNum$outboundSchema;
+  /** @deprecated use `FirstSeqNum$Outbound` instead. */
+  export type Outbound = FirstSeqNum$Outbound;
 }
 
-export function output2ToJSON(output2: Output2): string {
-  return JSON.stringify(Output2$outboundSchema.parse(output2));
+export function firstSeqNumToJSON(firstSeqNum: FirstSeqNum): string {
+  return JSON.stringify(FirstSeqNum$outboundSchema.parse(firstSeqNum));
 }
 
-export function output2FromJSON(
+export function firstSeqNumFromJSON(
   jsonString: string,
-): SafeParseResult<Output2, SDKValidationError> {
+): SafeParseResult<FirstSeqNum, SDKValidationError> {
   return safeParse(
     jsonString,
-    (x) => Output2$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'Output2' from JSON`,
+    (x) => FirstSeqNum$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'FirstSeqNum' from JSON`,
   );
 }
 
 /** @internal */
-export const Output1$inboundSchema: z.ZodType<Output1, z.ZodTypeDef, unknown> =
-  z.object({
+export const Batch$inboundSchema: z.ZodType<Batch, z.ZodTypeDef, unknown> = z
+  .object({
     batch: SequencedRecordBatch$inboundSchema,
   });
 
 /** @internal */
-export type Output1$Outbound = {
+export type Batch$Outbound = {
   batch: SequencedRecordBatch$Outbound;
 };
 
 /** @internal */
-export const Output1$outboundSchema: z.ZodType<
-  Output1$Outbound,
+export const Batch$outboundSchema: z.ZodType<
+  Batch$Outbound,
   z.ZodTypeDef,
-  Output1
+  Batch
 > = z.object({
   batch: SequencedRecordBatch$outboundSchema,
 });
@@ -201,42 +207,42 @@ export const Output1$outboundSchema: z.ZodType<
  * @internal
  * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
  */
-export namespace Output1$ {
-  /** @deprecated use `Output1$inboundSchema` instead. */
-  export const inboundSchema = Output1$inboundSchema;
-  /** @deprecated use `Output1$outboundSchema` instead. */
-  export const outboundSchema = Output1$outboundSchema;
-  /** @deprecated use `Output1$Outbound` instead. */
-  export type Outbound = Output1$Outbound;
+export namespace Batch$ {
+  /** @deprecated use `Batch$inboundSchema` instead. */
+  export const inboundSchema = Batch$inboundSchema;
+  /** @deprecated use `Batch$outboundSchema` instead. */
+  export const outboundSchema = Batch$outboundSchema;
+  /** @deprecated use `Batch$Outbound` instead. */
+  export type Outbound = Batch$Outbound;
 }
 
-export function output1ToJSON(output1: Output1): string {
-  return JSON.stringify(Output1$outboundSchema.parse(output1));
+export function batchToJSON(batch: Batch): string {
+  return JSON.stringify(Batch$outboundSchema.parse(batch));
 }
 
-export function output1FromJSON(
+export function batchFromJSON(
   jsonString: string,
-): SafeParseResult<Output1, SDKValidationError> {
+): SafeParseResult<Batch, SDKValidationError> {
   return safeParse(
     jsonString,
-    (x) => Output1$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'Output1' from JSON`,
+    (x) => Batch$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'Batch' from JSON`,
   );
 }
 
 /** @internal */
 export const Output$inboundSchema: z.ZodType<Output, z.ZodTypeDef, unknown> = z
   .union([
-    z.lazy(() => Output1$inboundSchema),
-    z.lazy(() => Output2$inboundSchema),
-    z.lazy(() => Three$inboundSchema),
+    z.lazy(() => Batch$inboundSchema),
+    z.lazy(() => FirstSeqNum$inboundSchema),
+    z.lazy(() => NextSeqNum$inboundSchema),
   ]);
 
 /** @internal */
 export type Output$Outbound =
-  | Output1$Outbound
-  | Output2$Outbound
-  | Three$Outbound;
+  | Batch$Outbound
+  | FirstSeqNum$Outbound
+  | NextSeqNum$Outbound;
 
 /** @internal */
 export const Output$outboundSchema: z.ZodType<
@@ -244,9 +250,9 @@ export const Output$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   Output
 > = z.union([
-  z.lazy(() => Output1$outboundSchema),
-  z.lazy(() => Output2$outboundSchema),
-  z.lazy(() => Three$outboundSchema),
+  z.lazy(() => Batch$outboundSchema),
+  z.lazy(() => FirstSeqNum$outboundSchema),
+  z.lazy(() => NextSeqNum$outboundSchema),
 ]);
 
 /**

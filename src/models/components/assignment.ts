@@ -10,7 +10,7 @@ import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 /**
  * Explicit cell assignment, if it is owned by the account.
  */
-export type Two = {
+export type Cell = {
   /**
    * Explicit cell assignment, if it is owned by the account.
    */
@@ -20,7 +20,7 @@ export type Two = {
 /**
  * Basin scope. It should be formatted as "{cloud}:{region}", e.g. "aws:us-east-1".
  */
-export type Assignment1 = {
+export type Scope = {
   /**
    * Basin scope. It should be formatted as "{cloud}:{region}", e.g. "aws:us-east-1".
    */
@@ -30,22 +30,22 @@ export type Assignment1 = {
 /**
  * Assignment of the basin to a cloud and region, or an explicit cell.
  */
-export type Assignment = Assignment1 | Two;
+export type Assignment = Scope | Cell;
 
 /** @internal */
-export const Two$inboundSchema: z.ZodType<Two, z.ZodTypeDef, unknown> = z
+export const Cell$inboundSchema: z.ZodType<Cell, z.ZodTypeDef, unknown> = z
   .object({
     cell: z.string(),
   });
 
 /** @internal */
-export type Two$Outbound = {
+export type Cell$Outbound = {
   cell: string;
 };
 
 /** @internal */
-export const Two$outboundSchema: z.ZodType<Two$Outbound, z.ZodTypeDef, Two> = z
-  .object({
+export const Cell$outboundSchema: z.ZodType<Cell$Outbound, z.ZodTypeDef, Cell> =
+  z.object({
     cell: z.string(),
   });
 
@@ -53,48 +53,45 @@ export const Two$outboundSchema: z.ZodType<Two$Outbound, z.ZodTypeDef, Two> = z
  * @internal
  * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
  */
-export namespace Two$ {
-  /** @deprecated use `Two$inboundSchema` instead. */
-  export const inboundSchema = Two$inboundSchema;
-  /** @deprecated use `Two$outboundSchema` instead. */
-  export const outboundSchema = Two$outboundSchema;
-  /** @deprecated use `Two$Outbound` instead. */
-  export type Outbound = Two$Outbound;
+export namespace Cell$ {
+  /** @deprecated use `Cell$inboundSchema` instead. */
+  export const inboundSchema = Cell$inboundSchema;
+  /** @deprecated use `Cell$outboundSchema` instead. */
+  export const outboundSchema = Cell$outboundSchema;
+  /** @deprecated use `Cell$Outbound` instead. */
+  export type Outbound = Cell$Outbound;
 }
 
-export function twoToJSON(two: Two): string {
-  return JSON.stringify(Two$outboundSchema.parse(two));
+export function cellToJSON(cell: Cell): string {
+  return JSON.stringify(Cell$outboundSchema.parse(cell));
 }
 
-export function twoFromJSON(
+export function cellFromJSON(
   jsonString: string,
-): SafeParseResult<Two, SDKValidationError> {
+): SafeParseResult<Cell, SDKValidationError> {
   return safeParse(
     jsonString,
-    (x) => Two$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'Two' from JSON`,
+    (x) => Cell$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'Cell' from JSON`,
   );
 }
 
 /** @internal */
-export const Assignment1$inboundSchema: z.ZodType<
-  Assignment1,
-  z.ZodTypeDef,
-  unknown
-> = z.object({
-  scope: z.string(),
-});
+export const Scope$inboundSchema: z.ZodType<Scope, z.ZodTypeDef, unknown> = z
+  .object({
+    scope: z.string(),
+  });
 
 /** @internal */
-export type Assignment1$Outbound = {
+export type Scope$Outbound = {
   scope: string;
 };
 
 /** @internal */
-export const Assignment1$outboundSchema: z.ZodType<
-  Assignment1$Outbound,
+export const Scope$outboundSchema: z.ZodType<
+  Scope$Outbound,
   z.ZodTypeDef,
-  Assignment1
+  Scope
 > = z.object({
   scope: z.string(),
 });
@@ -103,26 +100,26 @@ export const Assignment1$outboundSchema: z.ZodType<
  * @internal
  * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
  */
-export namespace Assignment1$ {
-  /** @deprecated use `Assignment1$inboundSchema` instead. */
-  export const inboundSchema = Assignment1$inboundSchema;
-  /** @deprecated use `Assignment1$outboundSchema` instead. */
-  export const outboundSchema = Assignment1$outboundSchema;
-  /** @deprecated use `Assignment1$Outbound` instead. */
-  export type Outbound = Assignment1$Outbound;
+export namespace Scope$ {
+  /** @deprecated use `Scope$inboundSchema` instead. */
+  export const inboundSchema = Scope$inboundSchema;
+  /** @deprecated use `Scope$outboundSchema` instead. */
+  export const outboundSchema = Scope$outboundSchema;
+  /** @deprecated use `Scope$Outbound` instead. */
+  export type Outbound = Scope$Outbound;
 }
 
-export function assignment1ToJSON(assignment1: Assignment1): string {
-  return JSON.stringify(Assignment1$outboundSchema.parse(assignment1));
+export function scopeToJSON(scope: Scope): string {
+  return JSON.stringify(Scope$outboundSchema.parse(scope));
 }
 
-export function assignment1FromJSON(
+export function scopeFromJSON(
   jsonString: string,
-): SafeParseResult<Assignment1, SDKValidationError> {
+): SafeParseResult<Scope, SDKValidationError> {
   return safeParse(
     jsonString,
-    (x) => Assignment1$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'Assignment1' from JSON`,
+    (x) => Scope$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'Scope' from JSON`,
   );
 }
 
@@ -132,12 +129,12 @@ export const Assignment$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.union([
-  z.lazy(() => Assignment1$inboundSchema),
-  z.lazy(() => Two$inboundSchema),
+  z.lazy(() => Scope$inboundSchema),
+  z.lazy(() => Cell$inboundSchema),
 ]);
 
 /** @internal */
-export type Assignment$Outbound = Assignment1$Outbound | Two$Outbound;
+export type Assignment$Outbound = Scope$Outbound | Cell$Outbound;
 
 /** @internal */
 export const Assignment$outboundSchema: z.ZodType<
@@ -145,8 +142,8 @@ export const Assignment$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   Assignment
 > = z.union([
-  z.lazy(() => Assignment1$outboundSchema),
-  z.lazy(() => Two$outboundSchema),
+  z.lazy(() => Scope$outboundSchema),
+  z.lazy(() => Cell$outboundSchema),
 ]);
 
 /**
