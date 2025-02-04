@@ -1,11 +1,11 @@
-# ReadResponse1
+# ReadResponseOutput
 
 ## Example Usage
 
 ```typescript
-import { ReadResponse1 } from "@s2-dev/streamstore/models/components";
+import { ReadResponseOutput } from "@s2-dev/streamstore/models/components";
 
-let value: ReadResponse1 = {
+let value: ReadResponseOutput = {
   data: {
     batch: {
       records: [

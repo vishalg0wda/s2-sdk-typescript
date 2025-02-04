@@ -1,4 +1,4 @@
-# Output2
+# FirstSeqNum
 
 Sequence number for the first record on this stream, in case the requested `start_seq_num` is smaller.
 If returned in a streaming read session, this will be a terminal reply, to signal that there is uncertainty about whether some records may be omitted.
@@ -7,9 +7,9 @@ The client can re-establish the session starting at this sequence number.
 ## Example Usage
 
 ```typescript
-import { Output2 } from "@s2-dev/streamstore/models/components";
+import { FirstSeqNum } from "@s2-dev/streamstore/models/components";
 
-let value: Output2 = {
+let value: FirstSeqNum = {
   firstSeqNum: 870013,
 };
 ```

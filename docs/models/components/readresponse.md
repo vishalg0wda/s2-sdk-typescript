@@ -3,10 +3,10 @@
 
 ## Supported Types
 
-### `components.ReadResponse1`
+### `components.ReadResponseOutput`
 
 ```typescript
-const value: components.ReadResponse1 = {
+const value: components.ReadResponseOutput = {
   data: {
     firstSeqNum: 414662,
   },
@@ -14,10 +14,10 @@ const value: components.ReadResponse1 = {
 };
 ```
 
-### `components.ReadResponse2`
+### `components.ErrorT`
 
 ```typescript
-const value: components.ReadResponse2 = {
+const value: components.ErrorT = {
   data: "<value>",
   event: "<value>",
 };

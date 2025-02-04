@@ -6,10 +6,10 @@ If unspecified, the default is to retain records for 7 days.
 
 ## Supported Types
 
-### `components.One`
+### `components.Age`
 
 ```typescript
-const value: components.One = {
+const value: components.Age = {
   age: 8,
 };
 ```

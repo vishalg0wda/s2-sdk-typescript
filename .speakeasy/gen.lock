@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 2d20490e-9921-47d5-9711-d3c4b91c8cfa
 management:
-  docChecksum: 24649fada58afae630307af3fabf3506
+  docChecksum: 7cc019421979ef8d27ba0947a075b2c9
   docVersion: 1.0.0
-  speakeasyVersion: 1.481.1
-  generationVersion: 2.500.5
-  releaseVersion: 0.2.6
-  configChecksum: ccdf8003f6cccf53fe8a8c63f21f9494
+  speakeasyVersion: 1.484.0
+  generationVersion: 2.503.0
+  releaseVersion: 0.2.7
+  configChecksum: 3a4689c34f3aa5930c6b351c745cf0fa
   repoURL: https://github.com/s2-streamstore/s2-sdk-typescript.git
   installationURL: https://github.com/s2-streamstore/s2-sdk-typescript
   published: true
@@ -41,36 +41,36 @@ generatedFiles:
   - RUNTIMES.md
   - USAGE.md
   - docs/lib/utils/retryconfig.md
+  - docs/models/components/age.md
   - docs/models/components/appendinput.md
   - docs/models/components/appendoutput.md
   - docs/models/components/appendrecord.md
   - docs/models/components/assignment.md
-  - docs/models/components/assignment1.md
   - docs/models/components/basinconfig.md
   - docs/models/components/basininfo.md
   - docs/models/components/basinstate.md
+  - docs/models/components/batch.md
+  - docs/models/components/cell.md
   - docs/models/components/checktailresponse.md
   - docs/models/components/createbasinrequest.md
   - docs/models/components/createstreamrequest.md
+  - docs/models/components/errort.md
+  - docs/models/components/firstseqnum.md
   - docs/models/components/header.md
   - docs/models/components/listbasinsresponse.md
   - docs/models/components/liststreamsresponse.md
-  - docs/models/components/one.md
+  - docs/models/components/nextseqnum.md
   - docs/models/components/output.md
-  - docs/models/components/output1.md
-  - docs/models/components/output2.md
   - docs/models/components/readresponse.md
-  - docs/models/components/readresponse1.md
-  - docs/models/components/readresponse2.md
+  - docs/models/components/readresponseoutput.md
   - docs/models/components/retentionpolicy.md
+  - docs/models/components/scope.md
   - docs/models/components/security.md
   - docs/models/components/sequencedrecord.md
   - docs/models/components/sequencedrecordbatch.md
   - docs/models/components/storageclass.md
   - docs/models/components/streamconfig.md
   - docs/models/components/streaminfo.md
-  - docs/models/components/three.md
-  - docs/models/components/two.md
   - docs/models/errors/errorresponse.md
   - docs/models/operations/appendrequest.md
   - docs/models/operations/checktailrequest.md

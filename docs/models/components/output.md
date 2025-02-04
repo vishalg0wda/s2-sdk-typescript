@@ -5,10 +5,10 @@ Reply which can be a batch of records, or a sequence number if the request could
 
 ## Supported Types
 
-### `components.Output1`
+### `components.Batch`
 
 ```typescript
-const value: components.Output1 = {
+const value: components.Batch = {
   batch: {
     records: [
       {
@@ -26,18 +26,18 @@ const value: components.Output1 = {
 };
 ```
 
-### `components.Output2`
+### `components.FirstSeqNum`
 
 ```typescript
-const value: components.Output2 = {
+const value: components.FirstSeqNum = {
   firstSeqNum: 461479,
 };
 ```
 
-### `components.Three`
+### `components.NextSeqNum`
 
 ```typescript
-const value: components.Three = {
+const value: components.NextSeqNum = {
   nextSeqNum: 780529,
 };
 ```

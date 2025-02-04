@@ -1,4 +1,4 @@
-# Output1
+# Batch
 
 Batch of records.
 This batch can be empty only if a `ReadLimit` was provided in the associated read request, but the first record
@@ -7,9 +7,9 @@ that could have been returned would violate the limit.
 ## Example Usage
 
 ```typescript
-import { Output1 } from "@s2-dev/streamstore/models/components";
+import { Batch } from "@s2-dev/streamstore/models/components";
 
-let value: Output1 = {
+let value: Batch = {
   batch: {
     records: [
       {
