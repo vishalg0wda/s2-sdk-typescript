@@ -5,7 +5,6 @@
 import * as z from "zod";
 import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
-import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
@@ -17,19 +16,13 @@ export const AppendServerList = [
   "https://{basin}.b.aws.s2.dev/v1alpha",
 ] as const;
 
-export const Header1 = {
-  Json: "json",
-  JsonBinsafe: "json-binsafe",
-} as const;
-export type Header1 = ClosedEnum<typeof Header1>;
-
 /**
  * json: utf-8 plaintext data.
  *
  * @remarks
  * json-binsafe: base64 encoded binary data.
  */
-export type HeaderS2Format = Header1;
+export type HeaderS2Format = components.FormatOption;
 
 export type AppendRequest = {
   /**
@@ -38,7 +31,7 @@ export type AppendRequest = {
    * @remarks
    * json-binsafe: base64 encoded binary data.
    */
-  s2Format?: Header1 | undefined;
+  s2Format?: components.FormatOption | undefined;
   /**
    * Name of the stream.
    */
@@ -47,30 +40,11 @@ export type AppendRequest = {
 };
 
 /** @internal */
-export const Header1$inboundSchema: z.ZodNativeEnum<typeof Header1> = z
-  .nativeEnum(Header1);
-
-/** @internal */
-export const Header1$outboundSchema: z.ZodNativeEnum<typeof Header1> =
-  Header1$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Header1$ {
-  /** @deprecated use `Header1$inboundSchema` instead. */
-  export const inboundSchema = Header1$inboundSchema;
-  /** @deprecated use `Header1$outboundSchema` instead. */
-  export const outboundSchema = Header1$outboundSchema;
-}
-
-/** @internal */
 export const HeaderS2Format$inboundSchema: z.ZodType<
   HeaderS2Format,
   z.ZodTypeDef,
   unknown
-> = Header1$inboundSchema;
+> = components.FormatOption$inboundSchema;
 
 /** @internal */
 export type HeaderS2Format$Outbound = string;
@@ -80,7 +54,7 @@ export const HeaderS2Format$outboundSchema: z.ZodType<
   HeaderS2Format$Outbound,
   z.ZodTypeDef,
   HeaderS2Format
-> = Header1$outboundSchema;
+> = components.FormatOption$outboundSchema;
 
 /**
  * @internal
@@ -115,7 +89,7 @@ export const AppendRequest$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.object({
-  "s2-format": Header1$inboundSchema.optional(),
+  "s2-format": components.FormatOption$inboundSchema.optional(),
   stream: z.string(),
   AppendInput: components.AppendInput$inboundSchema,
 }).transform((v) => {
@@ -138,7 +112,7 @@ export const AppendRequest$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   AppendRequest
 > = z.object({
-  s2Format: Header1$outboundSchema.optional(),
+  s2Format: components.FormatOption$outboundSchema.optional(),
   stream: z.string(),
   appendInput: components.AppendInput$outboundSchema,
 }).transform((v) => {

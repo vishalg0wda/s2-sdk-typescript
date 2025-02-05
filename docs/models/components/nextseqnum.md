@@ -9,7 +9,7 @@ If returned in a streaming read session, this will be a terminal reply.
 import { NextSeqNum } from "@s2-dev/streamstore/models/components";
 
 let value: NextSeqNum = {
-  nextSeqNum: 778157,
+  nextSeqNum: 20218,
 };
 ```
 

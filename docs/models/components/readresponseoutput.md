@@ -17,7 +17,7 @@ let value: ReadResponseOutput = {
               value: "<value>",
             },
           ],
-          seqNum: 944669,
+          seqNum: 639921,
         },
       ],
     },
