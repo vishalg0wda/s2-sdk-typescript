@@ -39,6 +39,11 @@ export type AppendRequest = {
   appendInput: components.AppendInput;
 };
 
+export type AppendResponse = {
+  httpMeta: components.HTTPMetadata;
+  appendOutput?: components.AppendOutput | undefined;
+};
+
 /** @internal */
 export const HeaderS2Format$inboundSchema: z.ZodType<
   HeaderS2Format,
@@ -146,5 +151,68 @@ export function appendRequestFromJSON(
     jsonString,
     (x) => AppendRequest$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'AppendRequest' from JSON`,
+  );
+}
+
+/** @internal */
+export const AppendResponse$inboundSchema: z.ZodType<
+  AppendResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  HttpMeta: components.HTTPMetadata$inboundSchema,
+  AppendOutput: components.AppendOutput$inboundSchema.optional(),
+}).transform((v) => {
+  return remap$(v, {
+    "HttpMeta": "httpMeta",
+    "AppendOutput": "appendOutput",
+  });
+});
+
+/** @internal */
+export type AppendResponse$Outbound = {
+  HttpMeta: components.HTTPMetadata$Outbound;
+  AppendOutput?: components.AppendOutput$Outbound | undefined;
+};
+
+/** @internal */
+export const AppendResponse$outboundSchema: z.ZodType<
+  AppendResponse$Outbound,
+  z.ZodTypeDef,
+  AppendResponse
+> = z.object({
+  httpMeta: components.HTTPMetadata$outboundSchema,
+  appendOutput: components.AppendOutput$outboundSchema.optional(),
+}).transform((v) => {
+  return remap$(v, {
+    httpMeta: "HttpMeta",
+    appendOutput: "AppendOutput",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace AppendResponse$ {
+  /** @deprecated use `AppendResponse$inboundSchema` instead. */
+  export const inboundSchema = AppendResponse$inboundSchema;
+  /** @deprecated use `AppendResponse$outboundSchema` instead. */
+  export const outboundSchema = AppendResponse$outboundSchema;
+  /** @deprecated use `AppendResponse$Outbound` instead. */
+  export type Outbound = AppendResponse$Outbound;
+}
+
+export function appendResponseToJSON(appendResponse: AppendResponse): string {
+  return JSON.stringify(AppendResponse$outboundSchema.parse(appendResponse));
+}
+
+export function appendResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<AppendResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => AppendResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'AppendResponse' from JSON`,
   );
 }

@@ -61,9 +61,11 @@ export type ReadRequest = {
   stream: string;
 };
 
-export type ReadResponse =
-  | components.Output
-  | EventStream<components.ReadResponse>;
+export type ReadResponse = {
+  httpMeta: components.HTTPMetadata;
+  output?: components.Output | undefined;
+  readResponse?: EventStream<components.ReadResponse> | undefined;
+};
 
 /** @internal */
 export const Limit$inboundSchema: z.ZodType<Limit, z.ZodTypeDef, unknown> = z
@@ -233,9 +235,10 @@ export const ReadResponse$inboundSchema: z.ZodType<
   ReadResponse,
   z.ZodTypeDef,
   unknown
-> = z.union([
-  components.Output$inboundSchema,
-  z.instanceof(ReadableStream<Uint8Array>).transform(stream => {
+> = z.object({
+  HttpMeta: components.HTTPMetadata$inboundSchema,
+  Output: components.Output$inboundSchema.optional(),
+  ReadResponse: z.instanceof(ReadableStream<Uint8Array>).transform(stream => {
     return new EventStream({
       stream,
       decoder(rawEvent) {
@@ -243,18 +246,38 @@ export const ReadResponse$inboundSchema: z.ZodType<
         return schema.parse(rawEvent);
       },
     });
-  }),
-]);
+  }).optional(),
+}).transform((v) => {
+  return remap$(v, {
+    "HttpMeta": "httpMeta",
+    "Output": "output",
+    "ReadResponse": "readResponse",
+  });
+});
 
 /** @internal */
-export type ReadResponse$Outbound = components.Output$Outbound | never;
+export type ReadResponse$Outbound = {
+  HttpMeta: components.HTTPMetadata$Outbound;
+  Output?: components.Output$Outbound | undefined;
+  ReadResponse?: never | undefined;
+};
 
 /** @internal */
 export const ReadResponse$outboundSchema: z.ZodType<
   ReadResponse$Outbound,
   z.ZodTypeDef,
   ReadResponse
-> = z.union([components.Output$outboundSchema, z.never()]);
+> = z.object({
+  httpMeta: components.HTTPMetadata$outboundSchema,
+  output: components.Output$outboundSchema.optional(),
+  readResponse: z.never().optional(),
+}).transform((v) => {
+  return remap$(v, {
+    httpMeta: "HttpMeta",
+    output: "Output",
+    readResponse: "ReadResponse",
+  });
+});
 
 /**
  * @internal

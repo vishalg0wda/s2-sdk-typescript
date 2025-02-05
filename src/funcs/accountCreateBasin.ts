@@ -10,7 +10,6 @@ import { safeParse } from "../lib/schemas.js";
 import { RequestOptions } from "../lib/sdks.js";
 import { extractSecurity, resolveGlobalSecurity } from "../lib/security.js";
 import { pathToFunc } from "../lib/url.js";
-import * as components from "../models/components/index.js";
 import { APIError } from "../models/errors/apierror.js";
 import {
   ConnectionError,
@@ -33,7 +32,7 @@ export async function accountCreateBasin(
   options?: RequestOptions,
 ): Promise<
   Result<
-    components.BasinInfo,
+    operations.CreateBasinResponse,
     | errors.ErrorResponse
     | errors.ErrorResponse
     | APIError
@@ -124,7 +123,7 @@ export async function accountCreateBasin(
   };
 
   const [result] = await M.match<
-    components.BasinInfo,
+    operations.CreateBasinResponse,
     | errors.ErrorResponse
     | errors.ErrorResponse
     | APIError
@@ -135,12 +134,14 @@ export async function accountCreateBasin(
     | RequestTimeoutError
     | ConnectionError
   >(
-    M.json(201, components.BasinInfo$inboundSchema),
+    M.json(201, operations.CreateBasinResponse$inboundSchema, {
+      key: "BasinInfo",
+    }),
     M.jsonErr([400, 401, 409], errors.ErrorResponse$inboundSchema),
     M.jsonErr(500, errors.ErrorResponse$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
-  )(response, { extraFields: responseFields });
+  )(response, req, { extraFields: responseFields });
   if (!result.ok) {
     return result;
   }

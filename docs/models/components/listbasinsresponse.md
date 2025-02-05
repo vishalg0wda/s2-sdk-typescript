@@ -13,7 +13,7 @@ let value: ListBasinsResponse = {
       cell: "<value>",
       name: "<value>",
       scope: "<value>",
-      state: "deleting",
+      state: "creating",
     },
   ],
   hasMore: false,

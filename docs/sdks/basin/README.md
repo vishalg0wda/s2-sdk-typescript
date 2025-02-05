@@ -161,7 +161,7 @@ run();
 
 ### Response
 
-**Promise\<[components.StreamConfig](../../models/components/streamconfig.md)\>**
+**Promise\<[operations.GetStreamConfigResponse](../../models/operations/getstreamconfigresponse.md)\>**
 
 ### Errors
 
@@ -242,7 +242,7 @@ run();
 
 ### Response
 
-**Promise\<[components.StreamInfo](../../models/components/streaminfo.md)\>**
+**Promise\<[operations.CreateStreamResponse](../../models/operations/createstreamresponse.md)\>**
 
 ### Errors
 
@@ -266,11 +266,12 @@ const s2 = new S2({
 });
 
 async function run() {
-  await s2.basin.deleteStream({
+  const result = await s2.basin.deleteStream({
     stream: "<value>",
   });
 
-
+  // Handle the result
+  console.log(result);
 }
 
 run();
@@ -301,7 +302,8 @@ async function run() {
 
   const { value: result } = res;
 
-  
+  // Handle the result
+  console.log(result);
 }
 
 run();
@@ -319,7 +321,7 @@ run();
 
 ### Response
 
-**Promise\<void\>**
+**Promise\<[operations.DeleteStreamResponse](../../models/operations/deletestreamresponse.md)\>**
 
 ### Errors
 
@@ -404,7 +406,7 @@ run();
 
 ### Response
 
-**Promise\<[components.StreamConfig](../../models/components/streamconfig.md)\>**
+**Promise\<[operations.ReconfigureStreamResponse](../../models/operations/reconfigurestreamresponse.md)\>**
 
 ### Errors
 

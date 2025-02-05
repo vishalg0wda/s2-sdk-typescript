@@ -29,7 +29,11 @@ async function run() {
     stream: "<value>",
   });
 
-  for await (const event of result) {
+  if (result.readResponse == null) {
+    throw new Error("failed to create stream: received null value");
+  }
+
+  for await (const event of result.readResponse) {
     // Handle the event
     console.log(event);
   }
@@ -63,7 +67,11 @@ async function run() {
 
   const { value: result } = res;
 
-  for await (const event of result) {
+  if (result.readResponse == null) {
+    throw new Error("failed to create stream: received null value");
+  }
+  
+  for await (const event of result.readResponse) {
     // Handle the event
     console.log(event);
   }
@@ -177,7 +185,7 @@ run();
 
 ### Response
 
-**Promise\<[components.AppendOutput](../../models/components/appendoutput.md)\>**
+**Promise\<[operations.AppendResponse](../../models/operations/appendresponse.md)\>**
 
 ### Errors
 
@@ -256,7 +264,7 @@ run();
 
 ### Response
 
-**Promise\<[components.CheckTailResponse](../../models/components/checktailresponse.md)\>**
+**Promise\<[operations.CheckTailResponse](../../models/operations/checktailresponse.md)\>**
 
 ### Errors
 

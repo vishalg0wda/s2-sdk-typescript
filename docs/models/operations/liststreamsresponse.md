@@ -6,14 +6,11 @@
 import { ListStreamsResponse } from "@s2-dev/streamstore/models/operations";
 
 let value: ListStreamsResponse = {
-  result: {
-    hasMore: false,
-    streams: [
-      {
-        createdAt: 715190,
-        name: "<value>",
-      },
-    ],
+  httpMeta: {
+    response: new Response("{\"message\": \"hello world\"}", {
+      headers: { "Content-Type": "application/json" },
+    }),
+    request: new Request("https://example.com"),
   },
 };
 ```
@@ -22,4 +19,5 @@ let value: ListStreamsResponse = {
 
 | Field                                                                            | Type                                                                             | Required                                                                         | Description                                                                      |
 | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| `result`                                                                         | [components.ListStreamsResponse](../../models/components/liststreamsresponse.md) | :heavy_check_mark:                                                               | N/A                                                                              |
+| `httpMeta`                                                                       | [components.HTTPMetadata](../../models/components/httpmetadata.md)               | :heavy_check_mark:                                                               | N/A                                                                              |
+| `listStreamsResponse`                                                            | [components.ListStreamsResponse](../../models/components/liststreamsresponse.md) | :heavy_minus_sign:                                                               | N/A                                                                              |

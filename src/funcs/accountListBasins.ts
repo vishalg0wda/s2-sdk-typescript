@@ -136,12 +136,14 @@ export async function accountListBasins(
     | RequestTimeoutError
     | ConnectionError
   >(
-    M.json(200, operations.ListBasinsResponse$inboundSchema, { key: "Result" }),
+    M.json(200, operations.ListBasinsResponse$inboundSchema, {
+      key: "ListBasinsResponse",
+    }),
     M.jsonErr([400, 401], errors.ErrorResponse$inboundSchema),
     M.jsonErr(500, errors.ErrorResponse$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
-  )(response, { extraFields: responseFields });
+  )(response, req, { extraFields: responseFields });
   if (!result.ok) {
     return haltIterator(result);
   }

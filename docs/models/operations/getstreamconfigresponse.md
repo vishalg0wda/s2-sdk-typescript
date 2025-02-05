@@ -1,11 +1,18 @@
-# ReadResponse
+# GetStreamConfigResponse
 
 ## Example Usage
 
 ```typescript
-import { ReadResponse } from "@s2-dev/streamstore/models/operations";
+import { GetStreamConfigResponse } from "@s2-dev/streamstore/models/operations";
 
-// No examples available for this model
+let value: GetStreamConfigResponse = {
+  httpMeta: {
+    response: new Response("{\"message\": \"hello world\"}", {
+      headers: { "Content-Type": "application/json" },
+    }),
+    request: new Request("https://example.com"),
+  },
+};
 ```
 
 ## Fields
@@ -13,5 +20,4 @@ import { ReadResponse } from "@s2-dev/streamstore/models/operations";
 | Field                                                              | Type                                                               | Required                                                           | Description                                                        |
 | ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ |
 | `httpMeta`                                                         | [components.HTTPMetadata](../../models/components/httpmetadata.md) | :heavy_check_mark:                                                 | N/A                                                                |
-| `output`                                                           | *components.Output*                                                | :heavy_minus_sign:                                                 | N/A                                                                |
-| `readResponse`                                                     | *EventStream<components.ReadResponse>*                             | :heavy_minus_sign:                                                 | N/A                                                                |
+| `streamConfig`                                                     | [components.StreamConfig](../../models/components/streamconfig.md) | :heavy_minus_sign:                                                 | N/A                                                                |

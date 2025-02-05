@@ -11,7 +11,7 @@ let value: BasinInfo = {
   cell: "<value>",
   name: "<value>",
   scope: "<value>",
-  state: "deleting",
+  state: "active",
 };
 ```
 

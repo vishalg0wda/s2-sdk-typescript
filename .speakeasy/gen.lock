@@ -5,8 +5,8 @@ management:
   docVersion: 1.0.0
   speakeasyVersion: 1.484.1
   generationVersion: 2.503.2
-  releaseVersion: 0.2.8
-  configChecksum: ca81af809cb5b55941f5cb6b77fa1ef6
+  releaseVersion: 0.2.10
+  configChecksum: 2e0ce3a678ea9151cac5176c36b2b15e
   repoURL: https://github.com/s2-streamstore/s2-sdk-typescript.git
   installationURL: https://github.com/s2-streamstore/s2-sdk-typescript
   published: true
@@ -58,6 +58,7 @@ generatedFiles:
   - docs/models/components/firstseqnum.md
   - docs/models/components/formatoption.md
   - docs/models/components/header.md
+  - docs/models/components/httpmetadata.md
   - docs/models/components/listbasinsresponse.md
   - docs/models/components/liststreamsresponse.md
   - docs/models/components/nextseqnum.md
@@ -74,13 +75,21 @@ generatedFiles:
   - docs/models/components/streaminfo.md
   - docs/models/errors/errorresponse.md
   - docs/models/operations/appendrequest.md
+  - docs/models/operations/appendresponse.md
   - docs/models/operations/checktailrequest.md
+  - docs/models/operations/checktailresponse.md
   - docs/models/operations/createbasinrequest.md
+  - docs/models/operations/createbasinresponse.md
   - docs/models/operations/createstreamrequest.md
+  - docs/models/operations/createstreamresponse.md
   - docs/models/operations/deletebasinrequest.md
+  - docs/models/operations/deletebasinresponse.md
   - docs/models/operations/deletestreamrequest.md
+  - docs/models/operations/deletestreamresponse.md
   - docs/models/operations/getbasinconfigrequest.md
+  - docs/models/operations/getbasinconfigresponse.md
   - docs/models/operations/getstreamconfigrequest.md
+  - docs/models/operations/getstreamconfigresponse.md
   - docs/models/operations/headers2format.md
   - docs/models/operations/limit.md
   - docs/models/operations/listbasinsrequest.md
@@ -90,7 +99,9 @@ generatedFiles:
   - docs/models/operations/readrequest.md
   - docs/models/operations/readresponse.md
   - docs/models/operations/reconfigurebasinrequest.md
+  - docs/models/operations/reconfigurebasinresponse.md
   - docs/models/operations/reconfigurestreamrequest.md
+  - docs/models/operations/reconfigurestreamresponse.md
   - docs/models/operations/s2format.md
   - docs/sdks/account/README.md
   - docs/sdks/basin/README.md
@@ -146,6 +157,7 @@ generatedFiles:
   - src/models/components/createstreamrequest.ts
   - src/models/components/formatoption.ts
   - src/models/components/header.ts
+  - src/models/components/httpmetadata.ts
   - src/models/components/index.ts
   - src/models/components/listbasinsresponse.ts
   - src/models/components/liststreamsresponse.ts

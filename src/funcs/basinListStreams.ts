@@ -143,13 +143,13 @@ export async function basinListStreams(
     | ConnectionError
   >(
     M.json(200, operations.ListStreamsResponse$inboundSchema, {
-      key: "Result",
+      key: "ListStreamsResponse",
     }),
     M.jsonErr([400, 401], errors.ErrorResponse$inboundSchema),
     M.jsonErr(500, errors.ErrorResponse$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
-  )(response, { extraFields: responseFields });
+  )(response, req, { extraFields: responseFields });
   if (!result.ok) {
     return haltIterator(result);
   }

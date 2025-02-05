@@ -16,7 +16,7 @@ generation:
     oAuth2ClientCredentialsEnabled: true
     oAuth2PasswordEnabled: true
 typescript:
-  version: 0.2.8
+  version: 0.2.10
   additionalDependencies:
     dependencies: {}
     devDependencies: {}
@@ -45,6 +45,6 @@ typescript:
   moduleFormat: commonjs
   outputModelSuffix: output
   packageName: '@s2-dev/streamstore'
-  responseFormat: flat
+  responseFormat: envelope-http
   templateVersion: v2
   useIndexModules: true

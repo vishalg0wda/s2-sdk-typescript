@@ -1,6 +1,6 @@
 {
   "name": "@s2-dev/streamstore",
-  "version": "0.2.8",
+  "version": "0.2.10",
   "author": "Speakeasy",
   "main": "./index.js",
   "sideEffects": false,

@@ -223,7 +223,11 @@ async function run() {
     stream: "<value>",
   });
 
-  for await (const event of result) {
+  if (result.readResponse == null) {
+    throw new Error("failed to create stream: received null value");
+  }
+
+  for await (const event of result.readResponse) {
     // Handle the event
     console.log(event);
   }

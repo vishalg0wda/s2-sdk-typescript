@@ -3,8 +3,10 @@
  */
 
 import * as z from "zod";
+import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
+import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type DeleteBasinRequest = {
@@ -12,6 +14,10 @@ export type DeleteBasinRequest = {
    * Name of the basin.
    */
   basin: string;
+};
+
+export type DeleteBasinResponse = {
+  httpMeta: components.HTTPMetadata;
 };
 
 /** @internal */
@@ -65,5 +71,67 @@ export function deleteBasinRequestFromJSON(
     jsonString,
     (x) => DeleteBasinRequest$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'DeleteBasinRequest' from JSON`,
+  );
+}
+
+/** @internal */
+export const DeleteBasinResponse$inboundSchema: z.ZodType<
+  DeleteBasinResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  HttpMeta: components.HTTPMetadata$inboundSchema,
+}).transform((v) => {
+  return remap$(v, {
+    "HttpMeta": "httpMeta",
+  });
+});
+
+/** @internal */
+export type DeleteBasinResponse$Outbound = {
+  HttpMeta: components.HTTPMetadata$Outbound;
+};
+
+/** @internal */
+export const DeleteBasinResponse$outboundSchema: z.ZodType<
+  DeleteBasinResponse$Outbound,
+  z.ZodTypeDef,
+  DeleteBasinResponse
+> = z.object({
+  httpMeta: components.HTTPMetadata$outboundSchema,
+}).transform((v) => {
+  return remap$(v, {
+    httpMeta: "HttpMeta",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace DeleteBasinResponse$ {
+  /** @deprecated use `DeleteBasinResponse$inboundSchema` instead. */
+  export const inboundSchema = DeleteBasinResponse$inboundSchema;
+  /** @deprecated use `DeleteBasinResponse$outboundSchema` instead. */
+  export const outboundSchema = DeleteBasinResponse$outboundSchema;
+  /** @deprecated use `DeleteBasinResponse$Outbound` instead. */
+  export type Outbound = DeleteBasinResponse$Outbound;
+}
+
+export function deleteBasinResponseToJSON(
+  deleteBasinResponse: DeleteBasinResponse,
+): string {
+  return JSON.stringify(
+    DeleteBasinResponse$outboundSchema.parse(deleteBasinResponse),
+  );
+}
+
+export function deleteBasinResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<DeleteBasinResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => DeleteBasinResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'DeleteBasinResponse' from JSON`,
   );
 }

@@ -17,6 +17,11 @@ export type ReconfigureBasinRequest = {
   basinConfig: components.BasinConfig;
 };
 
+export type ReconfigureBasinResponse = {
+  httpMeta: components.HTTPMetadata;
+  basinConfig?: components.BasinConfig | undefined;
+};
+
 /** @internal */
 export const ReconfigureBasinRequest$inboundSchema: z.ZodType<
   ReconfigureBasinRequest,
@@ -79,5 +84,72 @@ export function reconfigureBasinRequestFromJSON(
     jsonString,
     (x) => ReconfigureBasinRequest$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'ReconfigureBasinRequest' from JSON`,
+  );
+}
+
+/** @internal */
+export const ReconfigureBasinResponse$inboundSchema: z.ZodType<
+  ReconfigureBasinResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  HttpMeta: components.HTTPMetadata$inboundSchema,
+  BasinConfig: components.BasinConfig$inboundSchema.optional(),
+}).transform((v) => {
+  return remap$(v, {
+    "HttpMeta": "httpMeta",
+    "BasinConfig": "basinConfig",
+  });
+});
+
+/** @internal */
+export type ReconfigureBasinResponse$Outbound = {
+  HttpMeta: components.HTTPMetadata$Outbound;
+  BasinConfig?: components.BasinConfig$Outbound | undefined;
+};
+
+/** @internal */
+export const ReconfigureBasinResponse$outboundSchema: z.ZodType<
+  ReconfigureBasinResponse$Outbound,
+  z.ZodTypeDef,
+  ReconfigureBasinResponse
+> = z.object({
+  httpMeta: components.HTTPMetadata$outboundSchema,
+  basinConfig: components.BasinConfig$outboundSchema.optional(),
+}).transform((v) => {
+  return remap$(v, {
+    httpMeta: "HttpMeta",
+    basinConfig: "BasinConfig",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace ReconfigureBasinResponse$ {
+  /** @deprecated use `ReconfigureBasinResponse$inboundSchema` instead. */
+  export const inboundSchema = ReconfigureBasinResponse$inboundSchema;
+  /** @deprecated use `ReconfigureBasinResponse$outboundSchema` instead. */
+  export const outboundSchema = ReconfigureBasinResponse$outboundSchema;
+  /** @deprecated use `ReconfigureBasinResponse$Outbound` instead. */
+  export type Outbound = ReconfigureBasinResponse$Outbound;
+}
+
+export function reconfigureBasinResponseToJSON(
+  reconfigureBasinResponse: ReconfigureBasinResponse,
+): string {
+  return JSON.stringify(
+    ReconfigureBasinResponse$outboundSchema.parse(reconfigureBasinResponse),
+  );
+}
+
+export function reconfigureBasinResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<ReconfigureBasinResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ReconfigureBasinResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ReconfigureBasinResponse' from JSON`,
   );
 }

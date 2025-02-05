@@ -7,20 +7,7 @@ import { ReadResponseOutput } from "@s2-dev/streamstore/models/components";
 
 let value: ReadResponseOutput = {
   data: {
-    batch: {
-      records: [
-        {
-          body: "<value>",
-          headers: [
-            {
-              name: "<value>",
-              value: "<value>",
-            },
-          ],
-          seqNum: 639921,
-        },
-      ],
-    },
+    firstSeqNum: 925597,
   },
   event: "<value>",
 };

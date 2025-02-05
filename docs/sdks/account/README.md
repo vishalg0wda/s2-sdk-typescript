@@ -159,7 +159,7 @@ run();
 
 ### Response
 
-**Promise\<[components.BasinConfig](../../models/components/basinconfig.md)\>**
+**Promise\<[operations.GetBasinConfigResponse](../../models/operations/getbasinconfigresponse.md)\>**
 
 ### Errors
 
@@ -239,7 +239,7 @@ run();
 
 ### Response
 
-**Promise\<[components.BasinInfo](../../models/components/basininfo.md)\>**
+**Promise\<[operations.CreateBasinResponse](../../models/operations/createbasinresponse.md)\>**
 
 ### Errors
 
@@ -263,11 +263,12 @@ const s2 = new S2({
 });
 
 async function run() {
-  await s2.account.deleteBasin({
+  const result = await s2.account.deleteBasin({
     basin: "<value>",
   });
 
-
+  // Handle the result
+  console.log(result);
 }
 
 run();
@@ -298,7 +299,8 @@ async function run() {
 
   const { value: result } = res;
 
-  
+  // Handle the result
+  console.log(result);
 }
 
 run();
@@ -315,7 +317,7 @@ run();
 
 ### Response
 
-**Promise\<void\>**
+**Promise\<[operations.DeleteBasinResponse](../../models/operations/deletebasinresponse.md)\>**
 
 ### Errors
 
@@ -395,7 +397,7 @@ run();
 
 ### Response
 
-**Promise\<[components.BasinConfig](../../models/components/basinconfig.md)\>**
+**Promise\<[operations.ReconfigureBasinResponse](../../models/operations/reconfigurebasinresponse.md)\>**
 
 ### Errors
 

@@ -10,7 +10,6 @@ import { safeParse } from "../lib/schemas.js";
 import { RequestOptions } from "../lib/sdks.js";
 import { extractSecurity, resolveGlobalSecurity } from "../lib/security.js";
 import { pathToFunc } from "../lib/url.js";
-import * as components from "../models/components/index.js";
 import { APIError } from "../models/errors/apierror.js";
 import {
   ConnectionError,
@@ -37,7 +36,7 @@ export async function streamAppend(
   options?: RequestOptions,
 ): Promise<
   Result<
-    components.AppendOutput,
+    operations.AppendResponse,
     | errors.ErrorResponse
     | errors.ErrorResponse
     | APIError
@@ -130,7 +129,7 @@ export async function streamAppend(
   };
 
   const [result] = await M.match<
-    components.AppendOutput,
+    operations.AppendResponse,
     | errors.ErrorResponse
     | errors.ErrorResponse
     | APIError
@@ -141,12 +140,14 @@ export async function streamAppend(
     | RequestTimeoutError
     | ConnectionError
   >(
-    M.json(200, components.AppendOutput$inboundSchema),
+    M.json(200, operations.AppendResponse$inboundSchema, {
+      key: "AppendOutput",
+    }),
     M.jsonErr([400, 401, 404], errors.ErrorResponse$inboundSchema),
     M.jsonErr(500, errors.ErrorResponse$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
-  )(response, { extraFields: responseFields });
+  )(response, req, { extraFields: responseFields });
   if (!result.ok) {
     return result;
   }

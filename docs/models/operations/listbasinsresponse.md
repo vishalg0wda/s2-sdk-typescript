@@ -6,16 +6,11 @@
 import { ListBasinsResponse } from "@s2-dev/streamstore/models/operations";
 
 let value: ListBasinsResponse = {
-  result: {
-    basins: [
-      {
-        cell: "<value>",
-        name: "<value>",
-        scope: "<value>",
-        state: "creating",
-      },
-    ],
-    hasMore: false,
+  httpMeta: {
+    response: new Response("{\"message\": \"hello world\"}", {
+      headers: { "Content-Type": "application/json" },
+    }),
+    request: new Request("https://example.com"),
   },
 };
 ```
@@ -24,4 +19,5 @@ let value: ListBasinsResponse = {
 
 | Field                                                                          | Type                                                                           | Required                                                                       | Description                                                                    |
 | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
-| `result`                                                                       | [components.ListBasinsResponse](../../models/components/listbasinsresponse.md) | :heavy_check_mark:                                                             | N/A                                                                            |
+| `httpMeta`                                                                     | [components.HTTPMetadata](../../models/components/httpmetadata.md)             | :heavy_check_mark:                                                             | N/A                                                                            |
+| `listBasinsResponse`                                                           | [components.ListBasinsResponse](../../models/components/listbasinsresponse.md) | :heavy_minus_sign:                                                             | N/A                                                                            |

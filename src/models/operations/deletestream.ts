@@ -3,8 +3,10 @@
  */
 
 import * as z from "zod";
+import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
+import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const DeleteStreamServerList = [
@@ -19,6 +21,10 @@ export type DeleteStreamRequest = {
    * Name of the stream.
    */
   stream: string;
+};
+
+export type DeleteStreamResponse = {
+  httpMeta: components.HTTPMetadata;
 };
 
 /** @internal */
@@ -72,5 +78,67 @@ export function deleteStreamRequestFromJSON(
     jsonString,
     (x) => DeleteStreamRequest$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'DeleteStreamRequest' from JSON`,
+  );
+}
+
+/** @internal */
+export const DeleteStreamResponse$inboundSchema: z.ZodType<
+  DeleteStreamResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  HttpMeta: components.HTTPMetadata$inboundSchema,
+}).transform((v) => {
+  return remap$(v, {
+    "HttpMeta": "httpMeta",
+  });
+});
+
+/** @internal */
+export type DeleteStreamResponse$Outbound = {
+  HttpMeta: components.HTTPMetadata$Outbound;
+};
+
+/** @internal */
+export const DeleteStreamResponse$outboundSchema: z.ZodType<
+  DeleteStreamResponse$Outbound,
+  z.ZodTypeDef,
+  DeleteStreamResponse
+> = z.object({
+  httpMeta: components.HTTPMetadata$outboundSchema,
+}).transform((v) => {
+  return remap$(v, {
+    httpMeta: "HttpMeta",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace DeleteStreamResponse$ {
+  /** @deprecated use `DeleteStreamResponse$inboundSchema` instead. */
+  export const inboundSchema = DeleteStreamResponse$inboundSchema;
+  /** @deprecated use `DeleteStreamResponse$outboundSchema` instead. */
+  export const outboundSchema = DeleteStreamResponse$outboundSchema;
+  /** @deprecated use `DeleteStreamResponse$Outbound` instead. */
+  export type Outbound = DeleteStreamResponse$Outbound;
+}
+
+export function deleteStreamResponseToJSON(
+  deleteStreamResponse: DeleteStreamResponse,
+): string {
+  return JSON.stringify(
+    DeleteStreamResponse$outboundSchema.parse(deleteStreamResponse),
+  );
+}
+
+export function deleteStreamResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<DeleteStreamResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => DeleteStreamResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'DeleteStreamResponse' from JSON`,
   );
 }

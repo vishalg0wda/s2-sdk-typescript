@@ -10,7 +10,6 @@ import { safeParse } from "../lib/schemas.js";
 import { RequestOptions } from "../lib/sdks.js";
 import { extractSecurity, resolveGlobalSecurity } from "../lib/security.js";
 import { pathToFunc } from "../lib/url.js";
-import * as components from "../models/components/index.js";
 import { APIError } from "../models/errors/apierror.js";
 import {
   ConnectionError,
@@ -37,7 +36,7 @@ export async function streamCheckTail(
   options?: RequestOptions,
 ): Promise<
   Result<
-    components.CheckTailResponse,
+    operations.CheckTailResponse,
     | errors.ErrorResponse
     | errors.ErrorResponse
     | APIError
@@ -125,7 +124,7 @@ export async function streamCheckTail(
   };
 
   const [result] = await M.match<
-    components.CheckTailResponse,
+    operations.CheckTailResponse,
     | errors.ErrorResponse
     | errors.ErrorResponse
     | APIError
@@ -136,12 +135,14 @@ export async function streamCheckTail(
     | RequestTimeoutError
     | ConnectionError
   >(
-    M.json(200, components.CheckTailResponse$inboundSchema),
+    M.json(200, operations.CheckTailResponse$inboundSchema, {
+      key: "CheckTailResponse",
+    }),
     M.jsonErr([400, 401, 404], errors.ErrorResponse$inboundSchema),
     M.jsonErr(500, errors.ErrorResponse$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
-  )(response, { extraFields: responseFields });
+  )(response, req, { extraFields: responseFields });
   if (!result.ok) {
     return result;
   }
