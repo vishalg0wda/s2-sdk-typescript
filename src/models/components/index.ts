@@ -12,6 +12,7 @@ export * from "./basinstate.js";
 export * from "./checktailresponse.js";
 export * from "./createbasinrequest.js";
 export * from "./createstreamrequest.js";
+export * from "./formatoption.js";
 export * from "./header.js";
 export * from "./listbasinsresponse.js";
 export * from "./liststreamsresponse.js";

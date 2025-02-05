@@ -8,9 +8,9 @@ Output from append response.
 import { AppendOutput } from "@s2-dev/streamstore/models/components";
 
 let value: AppendOutput = {
-  endSeqNum: 264555,
-  nextSeqNum: 774234,
-  startSeqNum: 456150,
+  endSeqNum: 414662,
+  nextSeqNum: 264555,
+  startSeqNum: 774234,
 };
 ```
 

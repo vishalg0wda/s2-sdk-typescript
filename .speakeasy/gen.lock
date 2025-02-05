@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 2d20490e-9921-47d5-9711-d3c4b91c8cfa
 management:
-  docChecksum: 7cc019421979ef8d27ba0947a075b2c9
+  docChecksum: a5d8155cd87d3aadd0862ccb9edc20e1
   docVersion: 1.0.0
-  speakeasyVersion: 1.484.0
-  generationVersion: 2.503.0
-  releaseVersion: 0.2.7
-  configChecksum: 3a4689c34f3aa5930c6b351c745cf0fa
+  speakeasyVersion: 1.484.1
+  generationVersion: 2.503.2
+  releaseVersion: 0.2.8
+  configChecksum: ca81af809cb5b55941f5cb6b77fa1ef6
   repoURL: https://github.com/s2-streamstore/s2-sdk-typescript.git
   installationURL: https://github.com/s2-streamstore/s2-sdk-typescript
   published: true
@@ -56,6 +56,7 @@ generatedFiles:
   - docs/models/components/createstreamrequest.md
   - docs/models/components/errort.md
   - docs/models/components/firstseqnum.md
+  - docs/models/components/formatoption.md
   - docs/models/components/header.md
   - docs/models/components/listbasinsresponse.md
   - docs/models/components/liststreamsresponse.md
@@ -80,14 +81,12 @@ generatedFiles:
   - docs/models/operations/deletestreamrequest.md
   - docs/models/operations/getbasinconfigrequest.md
   - docs/models/operations/getstreamconfigrequest.md
-  - docs/models/operations/header1.md
   - docs/models/operations/headers2format.md
   - docs/models/operations/limit.md
   - docs/models/operations/listbasinsrequest.md
   - docs/models/operations/listbasinsresponse.md
   - docs/models/operations/liststreamsrequest.md
   - docs/models/operations/liststreamsresponse.md
-  - docs/models/operations/one.md
   - docs/models/operations/readrequest.md
   - docs/models/operations/readresponse.md
   - docs/models/operations/reconfigurebasinrequest.md
@@ -145,6 +144,7 @@ generatedFiles:
   - src/models/components/checktailresponse.ts
   - src/models/components/createbasinrequest.ts
   - src/models/components/createstreamrequest.ts
+  - src/models/components/formatoption.ts
   - src/models/components/header.ts
   - src/models/components/index.ts
   - src/models/components/listbasinsresponse.ts

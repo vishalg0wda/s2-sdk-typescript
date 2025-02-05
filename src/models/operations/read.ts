@@ -6,7 +6,6 @@ import * as z from "zod";
 import { EventStream } from "../../lib/event-streams.js";
 import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
-import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
@@ -32,19 +31,13 @@ export type Limit = {
   count?: number | null | undefined;
 };
 
-export const One = {
-  Json: "json",
-  JsonBinsafe: "json-binsafe",
-} as const;
-export type One = ClosedEnum<typeof One>;
-
 /**
  * json: utf-8 plaintext data.
  *
  * @remarks
  * json-binsafe: base64 encoded binary data.
  */
-export type S2Format = One;
+export type S2Format = components.FormatOption;
 
 export type ReadRequest = {
   /**
@@ -61,7 +54,7 @@ export type ReadRequest = {
    * @remarks
    * json-binsafe: base64 encoded binary data.
    */
-  s2Format?: One | undefined;
+  s2Format?: components.FormatOption | undefined;
   /**
    * Name of the stream.
    */
@@ -123,29 +116,11 @@ export function limitFromJSON(
 }
 
 /** @internal */
-export const One$inboundSchema: z.ZodNativeEnum<typeof One> = z.nativeEnum(One);
-
-/** @internal */
-export const One$outboundSchema: z.ZodNativeEnum<typeof One> =
-  One$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace One$ {
-  /** @deprecated use `One$inboundSchema` instead. */
-  export const inboundSchema = One$inboundSchema;
-  /** @deprecated use `One$outboundSchema` instead. */
-  export const outboundSchema = One$outboundSchema;
-}
-
-/** @internal */
 export const S2Format$inboundSchema: z.ZodType<
   S2Format,
   z.ZodTypeDef,
   unknown
-> = One$inboundSchema;
+> = components.FormatOption$inboundSchema;
 
 /** @internal */
 export type S2Format$Outbound = string;
@@ -155,7 +130,7 @@ export const S2Format$outboundSchema: z.ZodType<
   S2Format$Outbound,
   z.ZodTypeDef,
   S2Format
-> = One$outboundSchema;
+> = components.FormatOption$outboundSchema;
 
 /**
  * @internal
@@ -192,7 +167,7 @@ export const ReadRequest$inboundSchema: z.ZodType<
 > = z.object({
   start_seq_num: z.number().int().optional(),
   limit: z.lazy(() => Limit$inboundSchema).optional(),
-  "s2-format": One$inboundSchema.optional(),
+  "s2-format": components.FormatOption$inboundSchema.optional(),
   stream: z.string(),
 }).transform((v) => {
   return remap$(v, {
@@ -217,7 +192,7 @@ export const ReadRequest$outboundSchema: z.ZodType<
 > = z.object({
   startSeqNum: z.number().int().optional(),
   limit: z.lazy(() => Limit$outboundSchema).optional(),
-  s2Format: One$outboundSchema.optional(),
+  s2Format: components.FormatOption$outboundSchema.optional(),
   stream: z.string(),
 }).transform((v) => {
   return remap$(v, {

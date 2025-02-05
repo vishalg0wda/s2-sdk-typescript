@@ -20,7 +20,7 @@ let value: Batch = {
             value: "<value>",
           },
         ],
-        seqNum: 978619,
+        seqNum: 778157,
       },
     ],
   },

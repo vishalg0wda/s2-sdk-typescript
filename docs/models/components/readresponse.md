@@ -8,7 +8,20 @@
 ```typescript
 const value: components.ReadResponseOutput = {
   data: {
-    firstSeqNum: 414662,
+    batch: {
+      records: [
+        {
+          body: "<value>",
+          headers: [
+            {
+              name: "<value>",
+              value: "<value>",
+            },
+          ],
+          seqNum: 944669,
+        },
+      ],
+    },
   },
   event: "<value>",
 };
