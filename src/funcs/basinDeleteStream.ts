@@ -35,6 +35,7 @@ export async function basinDeleteStream(
   Result<
     operations.DeleteStreamResponse,
     | errors.ErrorResponse
+    | errors.NotFoundError
     | errors.ErrorResponse
     | APIError
     | SDKValidationError
@@ -123,6 +124,7 @@ export async function basinDeleteStream(
   const [result] = await M.match<
     operations.DeleteStreamResponse,
     | errors.ErrorResponse
+    | errors.NotFoundError
     | errors.ErrorResponse
     | APIError
     | SDKValidationError
@@ -133,7 +135,8 @@ export async function basinDeleteStream(
     | ConnectionError
   >(
     M.nil(202, operations.DeleteStreamResponse$inboundSchema),
-    M.jsonErr([400, 401, 404], errors.ErrorResponse$inboundSchema),
+    M.jsonErr([400, 401], errors.ErrorResponse$inboundSchema),
+    M.jsonErr(404, errors.NotFoundError$inboundSchema),
     M.jsonErr(500, errors.ErrorResponse$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),

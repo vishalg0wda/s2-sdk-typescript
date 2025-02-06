@@ -34,6 +34,7 @@ export async function accountDeleteBasin(
   Result<
     operations.DeleteBasinResponse,
     | errors.ErrorResponse
+    | errors.NotFoundError
     | errors.ErrorResponse
     | APIError
     | SDKValidationError
@@ -117,6 +118,7 @@ export async function accountDeleteBasin(
   const [result] = await M.match<
     operations.DeleteBasinResponse,
     | errors.ErrorResponse
+    | errors.NotFoundError
     | errors.ErrorResponse
     | APIError
     | SDKValidationError
@@ -127,7 +129,8 @@ export async function accountDeleteBasin(
     | ConnectionError
   >(
     M.nil(202, operations.DeleteBasinResponse$inboundSchema),
-    M.jsonErr([400, 401, 404], errors.ErrorResponse$inboundSchema),
+    M.jsonErr([400, 401], errors.ErrorResponse$inboundSchema),
+    M.jsonErr(404, errors.NotFoundError$inboundSchema),
     M.jsonErr(500, errors.ErrorResponse$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),

@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 2d20490e-9921-47d5-9711-d3c4b91c8cfa
 management:
-  docChecksum: a5d8155cd87d3aadd0862ccb9edc20e1
+  docChecksum: bbcb28d2548a56b38ad64847eb7a88d2
   docVersion: 1.0.0
   speakeasyVersion: 1.484.1
   generationVersion: 2.503.2
-  releaseVersion: 0.2.10
-  configChecksum: 2e0ce3a678ea9151cac5176c36b2b15e
+  releaseVersion: 0.2.11
+  configChecksum: 1b9367f983da2e0bae68b6850f5fd2b0
   repoURL: https://github.com/s2-streamstore/s2-sdk-typescript.git
   installationURL: https://github.com/s2-streamstore/s2-sdk-typescript
   published: true
@@ -74,6 +74,7 @@ generatedFiles:
   - docs/models/components/streamconfig.md
   - docs/models/components/streaminfo.md
   - docs/models/errors/errorresponse.md
+  - docs/models/errors/notfounderror.md
   - docs/models/operations/appendrequest.md
   - docs/models/operations/appendresponse.md
   - docs/models/operations/checktailrequest.md
@@ -174,6 +175,7 @@ generatedFiles:
   - src/models/errors/errorresponse.ts
   - src/models/errors/httpclienterrors.ts
   - src/models/errors/index.ts
+  - src/models/errors/notfounderror.ts
   - src/models/errors/sdkvalidationerror.ts
   - src/models/operations/append.ts
   - src/models/operations/checktail.ts
@@ -250,6 +252,8 @@ examples:
           application/json: {"error": "<value>"}
         "500":
           application/json: {"error": "<value>"}
+        "404":
+          application/json: {"error": "<value>"}
   list_streams:
     speakeasy-default-list-streams:
       responses:
@@ -295,6 +299,8 @@ examples:
         "400":
           application/json: {"error": "<value>"}
         "500":
+          application/json: {"error": "<value>"}
+        "404":
           application/json: {"error": "<value>"}
   read:
     speakeasy-default-read:

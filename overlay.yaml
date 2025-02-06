@@ -1,0 +1,45 @@
+overlay: 1.0.0
+x-speakeasy-jsonpath: rfc9535
+info:
+  title: Overlay
+  version: 0.0.0
+actions:
+  - target: $["paths"]["/basins"]["get"]
+    update:
+      x-speakeasy-pagination:
+        inputs:
+          - in: parameters
+            name: start_after
+            type: cursor
+          - in: parameters
+            name: limit
+            type: limit
+        outputs:
+          nextCursor: "$.basins[(@.length-1)].name"
+        type: cursor
+  - target: $["paths"]["/streams"]["get"]
+    update:
+      x-speakeasy-pagination:
+        inputs:
+          - in: parameters
+            name: start_after
+            type: cursor
+          - in: parameters
+            name: limit
+            type: limit
+        outputs:
+          nextCursor: "$.streams[(@.length-1)].name"
+        type: cursor
+  - target: $.components.schemas
+    description: Add NotFoundError schema
+    update:
+      NotFoundError:
+        type: object
+        required:
+          - error
+        properties:
+          error:
+            type: string  
+  - target: $['paths'][*]['delete']['responses']['404']['content']['application/json']['schema']
+    update: 
+      $ref: "#/components/schemas/NotFoundError"
