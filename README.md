@@ -23,6 +23,7 @@ S2 API: Serverless API for streaming data backed by object storage.
 * [streamstore](#streamstore)
   * [SDK Installation](#sdk-installation)
   * [Requirements](#requirements)
+  * [SDK Recommended Usage](#sdk-recommended-usage)
   * [SDK Example Usage](#sdk-example-usage)
   * [Authentication](#authentication)
   * [Available Resources and Operations](#available-resources-and-operations)
@@ -78,6 +79,24 @@ yarn add @s2-dev/streamstore zod
 
 For supported JavaScript runtimes, please consult [RUNTIMES.md](RUNTIMES.md).
 <!-- End Requirements [requirements] -->
+
+## SDK Recommended Usage
+
+The `S2Client` class provides a lot of convenience over the generated methods and is the recommended way to interact with the SDK. If you need finer control over the internal functions, you may use [Generated functions](#available-resources-and-operations)
+ or [Standalone functions](#standalone-functions).
+
+```typescript
+import { ReadRequest, S2Client } from "@s2-dev/streamstore";
+
+const s2 = new S2Client("<AUTH_TOKEN>");
+
+async function run() {
+  await s2.account.createBasin("my-favorite-basin");  
+  await s2.account.basin("my-favorite-basin").stream("test").append({ appendInput: { records: [{ body: "hello" }] } });  
+}
+
+run();
+```
 
 <!-- Start SDK Example Usage [usage] -->
 ## SDK Example Usage

@@ -1,8 +1,8 @@
 import { accountDeleteBasin } from "./funcs/accountDeleteBasin";
 import { RequestOptions } from "./lib/sdks";
-import { BasinConfig, BasinInfo, CheckTailResponse, CreateBasinRequest, CreateStreamRequest, StreamConfig, StreamInfo } from "./models/components";
+import { AppendOutput, BasinConfig, BasinInfo, CheckTailResponse, CreateBasinRequest, CreateStreamRequest, Output, ReadResponse, StreamConfig, StreamInfo } from "./models/components";
 import { NotFoundError } from "./models/errors";
-import {    
+import {
     GetBasinConfigRequest,
     ListBasinsRequest,
     ListBasinsResponse,
@@ -10,16 +10,31 @@ import {
     ListStreamsResponse,
     ReconfigureBasinRequest,
     CreateBasinRequest as CreateBasinRequestInner,
-    CreateStreamRequest as CreateStreamRequestInner
+    CreateStreamRequest as CreateStreamRequestInner,
+    ReadRequest as ReadRequestInner,
+    AppendRequest as AppendRequestInner,
 } from "./models/operations";
 import { PageIterator } from "./types";
 
-import { Stream as InnerStream } from "./sdk/stream";
+import { Stream as InnerStream, ReadAcceptEnum } from "./sdk/stream";
 import { Basin as InnerBasin } from "./sdk/basin";
 import { Account as InnerAccount } from "./sdk/account";
 
 import { v4 } from 'uuid';
 import { basinDeleteStream } from "./funcs/basinDeleteStream";
+import { EventStream } from "./lib/event-streams";
+
+export type ReadRequest = Omit<ReadRequestInner, 'stream'>;
+export type AppendRequest = Omit<AppendRequestInner, 'stream'>;
+export type {
+    GetBasinConfigRequest,
+    ListBasinsRequest,
+    ListBasinsResponse,
+    ListStreamsRequest,
+    ListStreamsResponse,
+    ReconfigureBasinRequest,
+} from "./models/operations";
+export type { BasinConfig, BasinInfo, CheckTailResponse, CreateBasinRequest, CreateStreamRequest, Output, ReadResponse, StreamConfig, StreamInfo } from "./models/components";
 
 export function genS2RequestToken(): string {
     return v4().replace(/-/g, '');
@@ -45,9 +60,11 @@ export class S2Client {
 class S2Account {
     private _account: InnerAccount;
     private requestOptions: RequestOptions;
+    private authToken: string;
 
     constructor(authToken: string) {
         this._account = new InnerAccount({ bearerAuth: authToken });
+        this.authToken = authToken;
         this.requestOptions = {
             timeoutMs: 3000,
             retries: {
@@ -64,9 +81,10 @@ class S2Account {
         };
     }
 
-    /**
-    * List basins.
-    */
+    basin(basinName: string): S2Basin {
+        return new S2Basin(this.authToken, basinName);
+    }
+
     async listBasins(
         request?: ListBasinsRequest,
     ): Promise<PageIterator<ListBasinsResponse, { cursor: string }>> {
@@ -132,7 +150,7 @@ class S2Basin {
     }
 
     stream(streamName: string): Stream {
-        return (this._stream ??= new Stream(streamName, this.basinName));
+        return (this._stream ??= new Stream(this.basinName, streamName));
     }
 
     async listStreams(
@@ -151,13 +169,13 @@ class S2Basin {
 
     async createStream(
         stream: string,
-        request: CreateStreamRequest,
+        request?: CreateStreamRequest,
     ): Promise<StreamInfo | undefined> {
         const basinURL = `${this.basinName}.${this.basinURLSuffx}`;
         const _request: CreateStreamRequestInner = {
             stream,
             s2RequestToken: genS2RequestToken(),
-            createStreamRequest: request,
+            createStreamRequest: request ?? {},
         };
 
         return (
@@ -170,7 +188,7 @@ class S2Basin {
         const response = await basinDeleteStream(this._basin, { stream }, { serverURL: basinURL, ...this.requestOptions });
         if (if_exists && response instanceof NotFoundError) return;
         if (response.error) throw new Error(response.error.message);
-        return;        
+        return;
     }
 
     async reconfigureStream(stream: string, config: StreamConfig): Promise<StreamConfig | undefined> {
@@ -184,15 +202,16 @@ class S2Basin {
     }
 }
 
+
 class Stream {
     private _stream: InnerStream;
-    private streamName: string;
     private basinName: string;
+    private streamName: string;
     private readonly basinURLSuffx = 'b.aws.s2.dev/v1alpha';
 
-    constructor(streamName: string, basinName: string) {
-        this.streamName = streamName;
+    constructor(basinName: string, streamName: string) {
         this.basinName = basinName;
+        this.streamName = streamName;
         this._stream = new InnerStream();
     }
 
@@ -200,5 +219,29 @@ class Stream {
         const basinURL = `${this.basinName}.${this.basinURLSuffx}`;
         return (await this._stream.checkTail({ stream: this.streamName }, { serverURL: basinURL }))
             .checkTailResponse;
+    }
+
+    async read(
+        request: ReadRequest,
+        stream?: boolean
+    ): Promise<EventStream<ReadResponse> | Output | undefined> {
+        const basinURL = `${this.basinName}.${this.basinURLSuffx}`;
+        return (await this._stream.read(
+            { ...request, stream: this.streamName },
+            stream
+                ? { serverURL: basinURL, acceptHeaderOverride: ReadAcceptEnum.textEventStream }
+                : { serverURL: basinURL }
+        ))
+            .readResponse;
+    }
+
+    async append(
+        request: AppendRequest,        
+    ): Promise<AppendOutput | undefined> {
+        const basinURL = `${this.basinName}.${this.basinURLSuffx}`;
+        return (await this._stream.append(
+            { ...request, stream: this.streamName },
+            { serverURL: basinURL }
+        )).appendOutput;
     }
 }
