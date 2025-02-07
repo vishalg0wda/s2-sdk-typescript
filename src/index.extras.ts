@@ -33,7 +33,7 @@ import { Stream as InnerStream, ReadAcceptEnum } from "./sdk/stream";
 import { Basin as InnerBasin } from "./sdk/basin";
 import { Account as InnerAccount } from "./sdk/account";
 
-import { v4 } from "uuid";
+import { v4 as uuidv4 } from "uuid";
 import { basinDeleteStream } from "./funcs/basinDeleteStream";
 import { EventStream } from "./lib/event-streams";
 import { ClientKind, S2Cloud, S2Endpoints } from "./endpoints";
@@ -302,7 +302,7 @@ class Stream {
                                     currentRequest.limit.count = Math.max(0, currentRequest.limit.count - batch.records.length);
                                 }
                                 if (currentRequest.limit.bytes != null) {
-                                    currentRequest.limit.bytes = Math.max(0, currentRequest.limit.bytes - meteredBatch(batch));
+                                    currentRequest.limit.bytes = Math.max(0, currentRequest.limit.bytes - meteredBatchSize(batch));
                                 }
                             }
                         }
@@ -322,7 +322,7 @@ class Stream {
     }
 }
 
-function meteredRecord(batch: SequencedRecord): number {
+function meteredRecordSize(batch: SequencedRecord): number {
     const fixed = 8 + (2 * batch.headers.length);
     const headerSize = batch.headers.reduce((acc, header) => acc + header.name.length + header.value.length, 0);
     const bodySize = batch.body.length;
@@ -330,10 +330,10 @@ function meteredRecord(batch: SequencedRecord): number {
     return fixed + headerSize + bodySize;
 }
 
-function meteredBatch(batch: SequencedRecordBatch): number {
-    return batch.records.reduce((acc, record) => acc + meteredRecord(record), 0);
+function meteredBatchSize(batch: SequencedRecordBatch): number {
+    return batch.records.reduce((acc, record) => acc + meteredRecordSize(record), 0);
 }
 
 export function genS2RequestToken(): string {
-    return v4().replace(/-/g, "");
+    return uuidv4().replace(/-/g, "");
 }

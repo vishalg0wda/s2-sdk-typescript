@@ -2,7 +2,7 @@ speakeasyVersion: 1.487.0
 sources:
     S2 API:
         sourceNamespace: s-2-api
-        sourceRevisionDigest: sha256:66a149fc312cb9f820ffd854f9309c69612ee8620c5dbde3c29c73dab3f04d36
+        sourceRevisionDigest: sha256:d03ee4e15b5b1ab905c13df4f9f09d9add26b87a0e23eacd68ae64a999c7b37b
         sourceBlobDigest: sha256:eda67f586b78ceb1300a3662669e008175f0667b68ff804d4de23fcab20998d1
         tags:
             - latest
@@ -11,10 +11,10 @@ targets:
     streamstore:
         source: S2 API
         sourceNamespace: s-2-api
-        sourceRevisionDigest: sha256:66a149fc312cb9f820ffd854f9309c69612ee8620c5dbde3c29c73dab3f04d36
+        sourceRevisionDigest: sha256:d03ee4e15b5b1ab905c13df4f9f09d9add26b87a0e23eacd68ae64a999c7b37b
         sourceBlobDigest: sha256:eda67f586b78ceb1300a3662669e008175f0667b68ff804d4de23fcab20998d1
         codeSamplesNamespace: s-2-api-typescript-code-samples
-        codeSamplesRevisionDigest: sha256:363ebcc961d9681148a7bae02a1f0173fc1642cbfd957e6ad6006636443da852
+        codeSamplesRevisionDigest: sha256:2fdd955e5e57b6d282f7b6c9254454745e1430ba10fb78cfcde38d37d57a43d2
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest
