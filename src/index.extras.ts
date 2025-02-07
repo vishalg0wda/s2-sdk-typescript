@@ -1,5 +1,4 @@
 import { accountDeleteBasin } from "./funcs/accountDeleteBasin";
-import { RequestOptions } from "./lib/sdks";
 import {
     AppendOutput,
     BasinConfig,
@@ -9,6 +8,7 @@ import {
     CreateStreamRequest,
     Output,
     ReadResponse,
+    ReadResponseOutput,
     StreamConfig,
     StreamInfo,
 } from "./models/components";
@@ -34,6 +34,7 @@ import { Account as InnerAccount } from "./sdk/account";
 import { v4 } from "uuid";
 import { basinDeleteStream } from "./funcs/basinDeleteStream";
 import { EventStream } from "./lib/event-streams";
+import { ClientKind, S2Cloud, S2Endpoints } from "./endpoints";
 
 export type ReadRequest = Omit<ReadRequestInner, "stream">;
 export type AppendRequest = Omit<AppendRequestInner, "stream">;
@@ -57,64 +58,71 @@ export type {
     StreamInfo,
 } from "./models/components";
 
-export function genS2RequestToken(): string {
-    return v4().replace(/-/g, "");
-}
+export * from "./endpoints";
+
+export type S2ClientConfig = {
+    authToken?: string;
+    requestTimeout?: number;
+    endpoints?: S2Endpoints;
+};
+
+const defaultS2ClientConfig: S2ClientConfig = {
+    requestTimeout: 3000,
+    endpoints: S2Endpoints.forCloud(S2Cloud.Aws),
+};
 
 export class S2Client {
-    private authToken: string;
+    private config: S2ClientConfig;
     private _account?: S2Account;
     get account(): S2Account {
-        return (this._account ??= new S2Account(this.authToken));
+        return (this._account ??= new S2Account(this.config));
     }
 
     private _basin?: S2Basin;
     basin(basinName: string): S2Basin {
-        return (this._basin ??= new S2Basin(this.authToken, basinName));
+        return (this._basin ??= new S2Basin(basinName, this.config));
     }
 
-    constructor(authToken: string) {
-        this.authToken = authToken;
+    constructor(config?: S2ClientConfig) {
+        this.config = { ...defaultS2ClientConfig, ...config };
     }
 }
 
 class S2Account {
     private _account: InnerAccount;
-    private requestOptions: RequestOptions;
-    private authToken: string;
+    private config: S2ClientConfig;
+    private readonly accountURLSuffx = "/v1alpha";
 
-    constructor(authToken: string) {
-        this._account = new InnerAccount({ bearerAuth: authToken });
-        this.authToken = authToken;
-        this.requestOptions = {
-            timeoutMs: 3000,
-            retries: {
-                strategy: "backoff",
-                backoff: {
-                    initialInterval: 100,
-                    maxInterval: 3000,
-                    exponent: 2,
-                    maxElapsedTime: 6000,
-                },
-                retryConnectionErrors: true,
-            },
-            retryCodes: ["500", "503", "504"],
-        };
+    constructor(config: S2ClientConfig) {
+        this._account = new InnerAccount({
+            ...(config.authToken !== undefined && { bearerAuth: config.authToken }),
+            ...(config.requestTimeout !== undefined && { timeoutMs: config.requestTimeout })
+        });
+        this.config = config;
+    }
+
+    get URL(): string | undefined {
+        if (!this.config.endpoints) return undefined;
+        return `https://${ClientKind.toAuthority({ kind: "Account" }, this.config.endpoints)}${this.accountURLSuffx}`;
     }
 
     basin(basinName: string): S2Basin {
-        return new S2Basin(this.authToken, basinName);
+        return new S2Basin(basinName, this.config);
     }
 
     async listBasins(
         request?: ListBasinsRequest
     ): Promise<PageIterator<ListBasinsResponse, { cursor: string }>> {
-        return this._account.listBasins(request ?? {}, this.requestOptions);
+        const url = this.URL;
+        return this._account.listBasins(request ?? {}, url ? { serverURL: url } : {});
     }
 
     async getBasinConfig(basin: string): Promise<BasinConfig | undefined> {
         const _request: GetBasinConfigRequest = { basin };
-        return (await this._account.getBasinConfig(_request, this.requestOptions)).basinConfig;
+        const url = this.URL;
+        return (await this._account.getBasinConfig(_request
+            , url ? { serverURL: url } : {}
+        )).basinConfig;
     }
 
     async createBasin(basin: string, request?: CreateBasinRequest): Promise<BasinInfo | undefined> {
@@ -123,67 +131,64 @@ class S2Account {
             s2RequestToken: genS2RequestToken(),
             createBasinRequest: request ?? {},
         };
-        return (await this._account.createBasin(_request, this.requestOptions)).basinInfo;
+        const url = this.URL;
+        return (await this._account.createBasin(_request,
+            url ? { serverURL: url } : {}
+        )).basinInfo;
     }
 
     async deleteBasin(basin: string, if_exists?: boolean): Promise<void | undefined> {
-        const response = await accountDeleteBasin(this._account, { basin }, this.requestOptions);
+        const url = this.URL;
+        const response = await accountDeleteBasin(this._account, { basin }, url ? { serverURL: url } : {});
         if (if_exists && response.error instanceof NotFoundError) return;
         if (response.error) throw new Error(response.error.message);
         return;
     }
 
     async reconfigureBasin(basin: string, config: BasinConfig): Promise<BasinConfig | undefined> {
+        const url = this.URL;
         const _request: ReconfigureBasinRequest = { basin, basinConfig: config };
-        return (await this._account.reconfigureBasin(_request, this.requestOptions)).basinConfig;
+        return (await this._account.reconfigureBasin(_request
+            , url ? { serverURL: url } : {}
+        )).basinConfig;
     }
 }
 
 class S2Basin {
     private _basin: InnerBasin;
     private _stream!: Stream;
-    private requestOptions: RequestOptions;
     private basinName: string;
-    private authToken: string;
-    private readonly basinURLSuffx = "b.aws.s2.dev/v1alpha";
+    private config: S2ClientConfig;
+    private clientKind: ClientKind;
+    private readonly basinURLSuffx = "/v1alpha";
 
-    private get basinURL(): string {
-        return `https://${this.basinName}.${this.basinURLSuffx}`;
+    private get URL(): string {
+        return `https://${ClientKind.toAuthority(this.clientKind, this.config.endpoints ?? S2Endpoints.forCloud(S2Cloud.Aws))}${this.basinURLSuffx}`;
     }
 
-    constructor(authToken: string, basinName: string) {
-        this._basin = new InnerBasin({ bearerAuth: authToken });
-        this.authToken = authToken;
+    constructor(basinName: string, config: S2ClientConfig) {
+        this._basin = new InnerBasin({
+            ...(config.authToken !== undefined && { bearerAuth: config.authToken }),
+            ...(config.requestTimeout !== undefined && { timeoutMs: config.requestTimeout })
+        });
+        this.config = config;
+        this.clientKind = { kind: "Basin" as const, basin: basinName };
         this.basinName = basinName;
-        this.requestOptions = {
-            timeoutMs: 3000,
-            retries: {
-                strategy: "backoff",
-                backoff: {
-                    initialInterval: 100,
-                    maxInterval: 3000,
-                    exponent: 2,
-                    maxElapsedTime: 6000,
-                },
-                retryConnectionErrors: true,
-            },
-            retryCodes: ["500", "503", "504"],
-        };
     }
 
     stream(streamName: string): Stream {
-        return (this._stream ??= new Stream(this.basinName, streamName, this.authToken));
+        return (this._stream ??= new Stream(this.basinName, streamName, this.config));
     }
 
     async listStreams(
         request: ListStreamsRequest
     ): Promise<PageIterator<ListStreamsResponse, { cursor: string }>> {
-        return this._basin.listStreams(request, { serverURL: this.basinURL, ...this.requestOptions });
+        return this._basin.listStreams(request, { serverURL: this.URL });
     }
 
     async getStreamConfig(stream: string): Promise<StreamConfig | undefined> {
         return (
-            await this._basin.getStreamConfig({ stream }, { serverURL: this.basinURL, ...this.requestOptions })
+            await this._basin.getStreamConfig({ stream }, { serverURL: this.URL })
         ).streamConfig;
     }
 
@@ -194,14 +199,13 @@ class S2Basin {
             createStreamRequest: request ?? {},
         };
         return (
-            await this._basin.createStream(_request, { serverURL: this.basinURL, ...this.requestOptions })
+            await this._basin.createStream(_request, { serverURL: this.URL })
         ).streamInfo;
     }
 
     async deleteStream(stream: string, if_exists?: boolean): Promise<void | undefined> {
         const response = await basinDeleteStream(this._basin, { stream }, {
-            serverURL: this.basinURL,
-            ...this.requestOptions,
+            serverURL: this.URL,
         });
         if (if_exists && response instanceof NotFoundError) return;
         if (response.error) throw new Error(response.error.message);
@@ -212,7 +216,7 @@ class S2Basin {
         return (
             await this._basin.reconfigureStream(
                 { stream, streamConfig: config },
-                { serverURL: this.basinURL, ...this.requestOptions }
+                { serverURL: this.URL }
             )
         ).streamConfig;
     }
@@ -220,18 +224,23 @@ class S2Basin {
 
 class Stream {
     private _stream: InnerStream;
-    private basinName: string;
     private streamName: string;
-    private readonly basinURLSuffx = "b.aws.s2.dev/v1alpha";
+    private config: S2ClientConfig;
+    private clientKind: ClientKind;
+    private readonly basinURLSuffx = "/v1alpha";
 
     private get basinURL(): string {
-        return `https://${this.basinName}.${this.basinURLSuffx}`;
+        return `https://${ClientKind.toAuthority(this.clientKind, this.config.endpoints ?? S2Endpoints.forCloud(S2Cloud.Aws))}${this.basinURLSuffx}`;
     }
 
-    constructor(basinName: string, streamName: string, authToken: string) {
-        this.basinName = basinName;
+    constructor(basinName: string, streamName: string, config: S2ClientConfig) {
+        this.config = config;
+        this.clientKind = { kind: "Basin" as const, basin: basinName };
         this.streamName = streamName;
-        this._stream = new InnerStream({ bearerAuth: authToken });
+        this._stream = new InnerStream({
+            ...(config.authToken !== undefined && { bearerAuth: config.authToken }),
+            ...(config.requestTimeout !== undefined && { timeoutMs: config.requestTimeout })
+        });
     }
 
     async checkTail(): Promise<CheckTailResponse | undefined> {
@@ -240,13 +249,10 @@ class Stream {
         ).checkTailResponse;
     }
 
-    async readStream(request: ReadRequest): Promise<EventStream<ReadResponse> | undefined> {
+    async append(request: AppendRequest): Promise<AppendOutput | undefined> {
         return (
-            await this._stream.read(
-                { ...request, stream: this.streamName },
-                { serverURL: this.basinURL, acceptHeaderOverride: ReadAcceptEnum.textEventStream }
-            )
-        ).readResponse;
+            await this._stream.append({ ...request, stream: this.streamName }, { serverURL: this.basinURL })
+        ).appendOutput;
     }
 
     async read(request: ReadRequest): Promise<Output | undefined> {
@@ -255,9 +261,48 @@ class Stream {
         ).output;
     }
 
-    async append(request: AppendRequest): Promise<AppendOutput | undefined> {
-        return (
-            await this._stream.append({ ...request, stream: this.streamName }, { serverURL: this.basinURL })
-        ).appendOutput;
+    async *readStream(request: ReadRequest): AsyncGenerator<ReadResponse, void, undefined> {
+        let currentRequest: ReadRequest = { ...request };
+
+        while (true) {
+            let stream: EventStream<ReadResponse> | undefined;
+            try {
+                const response = await this._stream.read(
+                    { ...currentRequest, stream: this.streamName },
+                    { 
+                      serverURL: this.basinURL,
+                      timeoutMs: -1, // disable only for streaming
+                      acceptHeaderOverride: ReadAcceptEnum.textEventStream 
+                    }
+                );
+                stream = response.readResponse;
+                if (!stream) return;
+
+                for await (const event of stream) {
+                    yield event;
+
+                    if (event.event === 'output') {
+                        const output = event as ReadResponseOutput;
+                        if ('batch' in output.data) {
+                            const batch = output.data.batch;
+                            if (batch.records && batch.records.length > 0) {
+                                const lastRecord = batch.records[batch.records.length - 1];
+                                if (lastRecord) {
+                                    currentRequest = { ...currentRequest, startSeqNum: lastRecord.seqNum + 1 };
+                                }
+                            }
+                        }
+                    }
+                }
+                return;
+            } catch (error) {
+                console.error("Error while reading stream", error);
+                return;
+            }
+        }
     }
+}
+
+export function genS2RequestToken(): string {
+    return v4().replace(/-/g, "");
 }

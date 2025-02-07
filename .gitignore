@@ -9,6 +9,7 @@
 /react-query
 /hooks
 /index.*
+/endpoints.*
 /core.*
 /cjs
 /esm
