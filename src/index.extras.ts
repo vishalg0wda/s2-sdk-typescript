@@ -9,10 +9,12 @@ import {
     Output,
     ReadResponse,
     ReadResponseOutput,
+    SequencedRecord,
+    SequencedRecordBatch,
     StreamConfig,
     StreamInfo,
 } from "./models/components";
-import { NotFoundError } from "./models/errors";
+import { ErrorResponse, NotFoundError } from "./models/errors";
 import {
     GetBasinConfigRequest,
     ListBasinsRequest,
@@ -263,16 +265,20 @@ class Stream {
 
     async *readStream(request: ReadRequest): AsyncGenerator<ReadResponse, void, undefined> {
         let currentRequest: ReadRequest = { ...request };
+        let backoffMs = 100;
+        const maxBackoffMs = 5000;
+        const maxRetries = 5;
+        let retryCount = 0;
 
         while (true) {
             let stream: EventStream<ReadResponse> | undefined;
             try {
                 const response = await this._stream.read(
                     { ...currentRequest, stream: this.streamName },
-                    { 
-                      serverURL: this.basinURL,
-                      timeoutMs: -1, // disable only for streaming
-                      acceptHeaderOverride: ReadAcceptEnum.textEventStream 
+                    {
+                        serverURL: this.basinURL,
+                        timeoutMs: -1, // disable only for streaming
+                        acceptHeaderOverride: ReadAcceptEnum.textEventStream
                     }
                 );
                 stream = response.readResponse;
@@ -281,7 +287,7 @@ class Stream {
                 for await (const event of stream) {
                     yield event;
 
-                    if (event.event === 'output') {
+                    if (event.event === 'message') {
                         const output = event as ReadResponseOutput;
                         if ('batch' in output.data) {
                             const batch = output.data.batch;
@@ -291,16 +297,41 @@ class Stream {
                                     currentRequest = { ...currentRequest, startSeqNum: lastRecord.seqNum + 1 };
                                 }
                             }
+                            if (currentRequest.limit) {
+                                if (currentRequest.limit.count != null) {
+                                    currentRequest.limit.count = Math.max(0, currentRequest.limit.count - batch.records.length);
+                                }
+                                if (currentRequest.limit.bytes != null) {
+                                    currentRequest.limit.bytes = Math.max(0, currentRequest.limit.bytes - meteredBatch(batch));
+                                }
+                            }
                         }
                     }
                 }
                 return;
             } catch (error) {
-                console.error("Error while reading stream", error);
-                return;
+                if (error instanceof ErrorResponse || error instanceof NotFoundError) return;
+                if (retryCount >= maxRetries) {
+                    throw error;
+                }
+                retryCount++;
+                await new Promise(resolve => setTimeout(resolve, backoffMs));
+                backoffMs = Math.min(backoffMs * 2, maxBackoffMs);
             }
         }
     }
+}
+
+function meteredRecord(batch: SequencedRecord): number {
+    const fixed = 8 + (2 * batch.headers.length);
+    const headerSize = batch.headers.reduce((acc, header) => acc + header.name.length + header.value.length, 0);
+    const bodySize = batch.body.length;
+
+    return fixed + headerSize + bodySize;
+}
+
+function meteredBatch(batch: SequencedRecordBatch): number {
+    return batch.records.reduce((acc, record) => acc + meteredRecord(record), 0);
 }
 
 export function genS2RequestToken(): string {
