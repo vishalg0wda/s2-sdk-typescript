@@ -37,6 +37,7 @@ import { v4 as uuidv4 } from "uuid";
 import { basinDeleteStream } from "./funcs/basinDeleteStream";
 import { EventStream } from "./lib/event-streams";
 import { ClientKind, S2Cloud, S2Endpoints } from "./endpoints";
+import { HTTPClient } from "./lib/http";
 
 export type ReadRequest = Omit<ReadRequestInner, "stream">;
 export type AppendRequest = Omit<AppendRequestInner, "stream">;
@@ -64,12 +65,14 @@ export * from "./endpoints";
 
 export type S2ClientConfig = {
     authToken?: string;
+    userAgent?: string;
     requestTimeout?: number;
     endpoints?: S2Endpoints;
     appedRetryPolicy?: AppendRetryPolicy;
     maxRetries?: number;
     initialBackoffMs?: number;
     maxBackoffMs?: number;
+    httpClient?: HTTPClient;
 };
 
 export enum AppendRetryPolicy {
@@ -81,13 +84,20 @@ const defaultS2ClientConfig: S2ClientConfig = {
     requestTimeout: 3000,
     endpoints: S2Endpoints.forCloud(S2Cloud.Aws),
     appedRetryPolicy: AppendRetryPolicy.All,
+    httpClient: new HTTPClient({
+        fetcher: async (request) => fetch(request),
+    }),
 };
 
 
 export class S2Client {
     private config: S2ClientConfig;
-    private _account?: S2Account;
+    private _account?: S2Account;    
+
     get account(): S2Account {
+        // this.httpClient.addHook("beforeRequest", (request) => {
+        //     if (this.config.userAgent) request.headers.set("User-Agent", this.config.userAgent);
+        // });
         return (this._account ??= new S2Account(this.config));
     }
 
@@ -107,9 +117,16 @@ class S2Account {
     private readonly accountURLSuffx = "/v1alpha";
 
     constructor(config: S2ClientConfig) {
+        if (config.userAgent !== undefined) {
+            config.httpClient?.addHook("beforeRequest", (request) => {
+                request.headers.set("user-agent", config.userAgent ?? "s2-sdk-typescript");
+                console.log(request)
+            });
+        }
         this._account = new InnerAccount({
             ...(config.authToken !== undefined && { bearerAuth: config.authToken }),
-            ...(config.requestTimeout !== undefined && { timeoutMs: config.requestTimeout })
+            ...(config.requestTimeout !== undefined && { timeoutMs: config.requestTimeout }),
+            ...(config.httpClient !== undefined && { httpClient: config.httpClient }),
         });
         this.config = config;
     }
@@ -117,7 +134,7 @@ class S2Account {
     get URL(): string | undefined {
         if (!this.config.endpoints) return undefined;
         return `https://${ClientKind.toAuthority({ kind: "Account" }, this.config.endpoints)}${this.accountURLSuffx}`;
-    }
+    }    
 
     basin(basinName: string): S2Basin {
         return new S2Basin(basinName, this.config);
@@ -192,13 +209,18 @@ class S2Basin {
     private basinName: string;
     private config: S2ClientConfig;
     private clientKind: ClientKind;
-    private readonly basinURLSuffx = "/v1alpha";
+    private readonly basinURLSuffx = "/v1alpha";    
 
     private get URL(): string {
         return `https://${ClientKind.toAuthority(this.clientKind, this.config.endpoints ?? S2Endpoints.forCloud(S2Cloud.Aws))}${this.basinURLSuffx}`;
     }
 
     constructor(basinName: string, config: S2ClientConfig) {
+        if (config.userAgent !== undefined) {
+            config.httpClient?.addHook("beforeRequest", (request) => {
+                request.headers.set("user-agent", config.userAgent ?? "s2-sdk-typescript");
+            });
+        }
         this._basin = new InnerBasin({
             ...(config.authToken !== undefined && { bearerAuth: config.authToken }),
             ...(config.requestTimeout !== undefined && { timeoutMs: config.requestTimeout })
@@ -283,6 +305,11 @@ class Stream {
         this.config = config;
         this.clientKind = { kind: "Basin" as const, basin: basinName };
         this.streamName = streamName;
+        if (config.userAgent !== undefined) {
+            config.httpClient?.addHook("beforeRequest", (request) => {
+                request.headers.set("user-agent", config.userAgent ?? "s2-sdk-typescript");
+            });
+        }
         this._stream = new InnerStream({
             ...(config.authToken !== undefined && { bearerAuth: config.authToken }),
             ...(config.requestTimeout !== undefined && { timeoutMs: config.requestTimeout })
