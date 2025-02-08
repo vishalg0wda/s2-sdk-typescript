@@ -10,6 +10,7 @@ import { safeParse } from "../lib/schemas.js";
 import { RequestOptions } from "../lib/sdks.js";
 import { extractSecurity, resolveGlobalSecurity } from "../lib/security.js";
 import { pathToFunc } from "../lib/url.js";
+import * as components from "../models/components/index.js";
 import { APIError } from "../models/errors/apierror.js";
 import {
   ConnectionError,
@@ -32,9 +33,10 @@ export async function accountCreateBasin(
   options?: RequestOptions,
 ): Promise<
   Result<
-    operations.CreateBasinResponse,
+    components.BasinInfo,
     | errors.ErrorResponse
-    | errors.ErrorResponse
+    | errors.RetryableError
+    | errors.RetryableError
     | APIError
     | SDKValidationError
     | UnexpectedClientError
@@ -109,7 +111,7 @@ export async function accountCreateBasin(
 
   const doResult = await client._do(req, {
     context,
-    errorCodes: ["400", "401", "409", "4XX", "500", "5XX"],
+    errorCodes: ["400", "401", "409", "499", "4XX", "500", "503", "504", "5XX"],
     retryConfig: context.retryConfig,
     retryCodes: context.retryCodes,
   });
@@ -123,9 +125,10 @@ export async function accountCreateBasin(
   };
 
   const [result] = await M.match<
-    operations.CreateBasinResponse,
+    components.BasinInfo,
     | errors.ErrorResponse
-    | errors.ErrorResponse
+    | errors.RetryableError
+    | errors.RetryableError
     | APIError
     | SDKValidationError
     | UnexpectedClientError
@@ -134,14 +137,13 @@ export async function accountCreateBasin(
     | RequestTimeoutError
     | ConnectionError
   >(
-    M.json(201, operations.CreateBasinResponse$inboundSchema, {
-      key: "BasinInfo",
-    }),
+    M.json(201, components.BasinInfo$inboundSchema),
     M.jsonErr([400, 401, 409], errors.ErrorResponse$inboundSchema),
-    M.jsonErr(500, errors.ErrorResponse$inboundSchema),
+    M.jsonErr(499, errors.RetryableError$inboundSchema),
+    M.jsonErr([500, 503, 504], errors.RetryableError$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
-  )(response, req, { extraFields: responseFields });
+  )(response, { extraFields: responseFields });
   if (!result.ok) {
     return result;
   }

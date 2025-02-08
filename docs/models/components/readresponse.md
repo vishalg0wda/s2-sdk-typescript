@@ -18,7 +18,7 @@ const value: components.ReadResponseOutput = {
               value: "<value>",
             },
           ],
-          seqNum: 87129,
+          seqNum: 944669,
         },
       ],
     },

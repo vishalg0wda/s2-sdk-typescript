@@ -3,10 +3,8 @@
  */
 
 import * as z from "zod";
-import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
-import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type GetBasinConfigRequest = {
@@ -14,11 +12,6 @@ export type GetBasinConfigRequest = {
    * Name of the basin.
    */
   basin: string;
-};
-
-export type GetBasinConfigResponse = {
-  httpMeta: components.HTTPMetadata;
-  basinConfig?: components.BasinConfig | undefined;
 };
 
 /** @internal */
@@ -72,72 +65,5 @@ export function getBasinConfigRequestFromJSON(
     jsonString,
     (x) => GetBasinConfigRequest$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'GetBasinConfigRequest' from JSON`,
-  );
-}
-
-/** @internal */
-export const GetBasinConfigResponse$inboundSchema: z.ZodType<
-  GetBasinConfigResponse,
-  z.ZodTypeDef,
-  unknown
-> = z.object({
-  HttpMeta: components.HTTPMetadata$inboundSchema,
-  BasinConfig: components.BasinConfig$inboundSchema.optional(),
-}).transform((v) => {
-  return remap$(v, {
-    "HttpMeta": "httpMeta",
-    "BasinConfig": "basinConfig",
-  });
-});
-
-/** @internal */
-export type GetBasinConfigResponse$Outbound = {
-  HttpMeta: components.HTTPMetadata$Outbound;
-  BasinConfig?: components.BasinConfig$Outbound | undefined;
-};
-
-/** @internal */
-export const GetBasinConfigResponse$outboundSchema: z.ZodType<
-  GetBasinConfigResponse$Outbound,
-  z.ZodTypeDef,
-  GetBasinConfigResponse
-> = z.object({
-  httpMeta: components.HTTPMetadata$outboundSchema,
-  basinConfig: components.BasinConfig$outboundSchema.optional(),
-}).transform((v) => {
-  return remap$(v, {
-    httpMeta: "HttpMeta",
-    basinConfig: "BasinConfig",
-  });
-});
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetBasinConfigResponse$ {
-  /** @deprecated use `GetBasinConfigResponse$inboundSchema` instead. */
-  export const inboundSchema = GetBasinConfigResponse$inboundSchema;
-  /** @deprecated use `GetBasinConfigResponse$outboundSchema` instead. */
-  export const outboundSchema = GetBasinConfigResponse$outboundSchema;
-  /** @deprecated use `GetBasinConfigResponse$Outbound` instead. */
-  export type Outbound = GetBasinConfigResponse$Outbound;
-}
-
-export function getBasinConfigResponseToJSON(
-  getBasinConfigResponse: GetBasinConfigResponse,
-): string {
-  return JSON.stringify(
-    GetBasinConfigResponse$outboundSchema.parse(getBasinConfigResponse),
-  );
-}
-
-export function getBasinConfigResponseFromJSON(
-  jsonString: string,
-): SafeParseResult<GetBasinConfigResponse, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => GetBasinConfigResponse$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'GetBasinConfigResponse' from JSON`,
   );
 }

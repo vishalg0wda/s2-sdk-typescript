@@ -42,7 +42,8 @@ export async function accountListBasins(
     Result<
       operations.ListBasinsResponse,
       | errors.ErrorResponse
-      | errors.ErrorResponse
+      | errors.RetryableError
+      | errors.RetryableError
       | APIError
       | SDKValidationError
       | UnexpectedClientError
@@ -111,7 +112,7 @@ export async function accountListBasins(
 
   const doResult = await client._do(req, {
     context,
-    errorCodes: ["400", "401", "4XX", "500", "5XX"],
+    errorCodes: ["400", "401", "499", "4XX", "500", "503", "504", "5XX"],
     retryConfig: context.retryConfig,
     retryCodes: context.retryCodes,
   });
@@ -127,7 +128,8 @@ export async function accountListBasins(
   const [result, raw] = await M.match<
     operations.ListBasinsResponse,
     | errors.ErrorResponse
-    | errors.ErrorResponse
+    | errors.RetryableError
+    | errors.RetryableError
     | APIError
     | SDKValidationError
     | UnexpectedClientError
@@ -136,14 +138,13 @@ export async function accountListBasins(
     | RequestTimeoutError
     | ConnectionError
   >(
-    M.json(200, operations.ListBasinsResponse$inboundSchema, {
-      key: "ListBasinsResponse",
-    }),
+    M.json(200, operations.ListBasinsResponse$inboundSchema, { key: "Result" }),
     M.jsonErr([400, 401], errors.ErrorResponse$inboundSchema),
-    M.jsonErr(500, errors.ErrorResponse$inboundSchema),
+    M.jsonErr(499, errors.RetryableError$inboundSchema),
+    M.jsonErr([500, 503, 504], errors.RetryableError$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
-  )(response, req, { extraFields: responseFields });
+  )(response, { extraFields: responseFields });
   if (!result.ok) {
     return haltIterator(result);
   }
@@ -155,7 +156,8 @@ export async function accountListBasins(
       Result<
         operations.ListBasinsResponse,
         | errors.ErrorResponse
-        | errors.ErrorResponse
+        | errors.RetryableError
+        | errors.RetryableError
         | APIError
         | SDKValidationError
         | UnexpectedClientError

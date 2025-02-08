@@ -10,6 +10,7 @@ import { safeParse } from "../lib/schemas.js";
 import { RequestOptions } from "../lib/sdks.js";
 import { extractSecurity, resolveGlobalSecurity } from "../lib/security.js";
 import { pathToFunc } from "../lib/url.js";
+import * as components from "../models/components/index.js";
 import { APIError } from "../models/errors/apierror.js";
 import {
   ConnectionError,
@@ -32,9 +33,10 @@ export async function accountGetBasinConfig(
   options?: RequestOptions,
 ): Promise<
   Result<
-    operations.GetBasinConfigResponse,
+    components.BasinConfig,
     | errors.ErrorResponse
-    | errors.ErrorResponse
+    | errors.RetryableError
+    | errors.RetryableError
     | APIError
     | SDKValidationError
     | UnexpectedClientError
@@ -101,7 +103,7 @@ export async function accountGetBasinConfig(
 
   const doResult = await client._do(req, {
     context,
-    errorCodes: ["400", "401", "404", "4XX", "500", "5XX"],
+    errorCodes: ["400", "401", "404", "499", "4XX", "500", "503", "504", "5XX"],
     retryConfig: context.retryConfig,
     retryCodes: context.retryCodes,
   });
@@ -115,9 +117,10 @@ export async function accountGetBasinConfig(
   };
 
   const [result] = await M.match<
-    operations.GetBasinConfigResponse,
+    components.BasinConfig,
     | errors.ErrorResponse
-    | errors.ErrorResponse
+    | errors.RetryableError
+    | errors.RetryableError
     | APIError
     | SDKValidationError
     | UnexpectedClientError
@@ -126,14 +129,13 @@ export async function accountGetBasinConfig(
     | RequestTimeoutError
     | ConnectionError
   >(
-    M.json(200, operations.GetBasinConfigResponse$inboundSchema, {
-      key: "BasinConfig",
-    }),
+    M.json(200, components.BasinConfig$inboundSchema),
     M.jsonErr([400, 401, 404], errors.ErrorResponse$inboundSchema),
-    M.jsonErr(500, errors.ErrorResponse$inboundSchema),
+    M.jsonErr(499, errors.RetryableError$inboundSchema),
+    M.jsonErr([500, 503, 504], errors.RetryableError$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
-  )(response, req, { extraFields: responseFields });
+  )(response, { extraFields: responseFields });
   if (!result.ok) {
     return result;
   }

@@ -24,11 +24,6 @@ export type ReconfigureStreamRequest = {
   streamConfig: components.StreamConfig;
 };
 
-export type ReconfigureStreamResponse = {
-  httpMeta: components.HTTPMetadata;
-  streamConfig?: components.StreamConfig | undefined;
-};
-
 /** @internal */
 export const ReconfigureStreamRequest$inboundSchema: z.ZodType<
   ReconfigureStreamRequest,
@@ -91,72 +86,5 @@ export function reconfigureStreamRequestFromJSON(
     jsonString,
     (x) => ReconfigureStreamRequest$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'ReconfigureStreamRequest' from JSON`,
-  );
-}
-
-/** @internal */
-export const ReconfigureStreamResponse$inboundSchema: z.ZodType<
-  ReconfigureStreamResponse,
-  z.ZodTypeDef,
-  unknown
-> = z.object({
-  HttpMeta: components.HTTPMetadata$inboundSchema,
-  StreamConfig: components.StreamConfig$inboundSchema.optional(),
-}).transform((v) => {
-  return remap$(v, {
-    "HttpMeta": "httpMeta",
-    "StreamConfig": "streamConfig",
-  });
-});
-
-/** @internal */
-export type ReconfigureStreamResponse$Outbound = {
-  HttpMeta: components.HTTPMetadata$Outbound;
-  StreamConfig?: components.StreamConfig$Outbound | undefined;
-};
-
-/** @internal */
-export const ReconfigureStreamResponse$outboundSchema: z.ZodType<
-  ReconfigureStreamResponse$Outbound,
-  z.ZodTypeDef,
-  ReconfigureStreamResponse
-> = z.object({
-  httpMeta: components.HTTPMetadata$outboundSchema,
-  streamConfig: components.StreamConfig$outboundSchema.optional(),
-}).transform((v) => {
-  return remap$(v, {
-    httpMeta: "HttpMeta",
-    streamConfig: "StreamConfig",
-  });
-});
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ReconfigureStreamResponse$ {
-  /** @deprecated use `ReconfigureStreamResponse$inboundSchema` instead. */
-  export const inboundSchema = ReconfigureStreamResponse$inboundSchema;
-  /** @deprecated use `ReconfigureStreamResponse$outboundSchema` instead. */
-  export const outboundSchema = ReconfigureStreamResponse$outboundSchema;
-  /** @deprecated use `ReconfigureStreamResponse$Outbound` instead. */
-  export type Outbound = ReconfigureStreamResponse$Outbound;
-}
-
-export function reconfigureStreamResponseToJSON(
-  reconfigureStreamResponse: ReconfigureStreamResponse,
-): string {
-  return JSON.stringify(
-    ReconfigureStreamResponse$outboundSchema.parse(reconfigureStreamResponse),
-  );
-}
-
-export function reconfigureStreamResponseFromJSON(
-  jsonString: string,
-): SafeParseResult<ReconfigureStreamResponse, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => ReconfigureStreamResponse$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ReconfigureStreamResponse' from JSON`,
   );
 }

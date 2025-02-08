@@ -8,6 +8,7 @@ import { basinGetStreamConfig } from "../funcs/basinGetStreamConfig.js";
 import { basinListStreams } from "../funcs/basinListStreams.js";
 import { basinReconfigureStream } from "../funcs/basinReconfigureStream.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
+import * as components from "../models/components/index.js";
 import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
 import { PageIterator, unwrapResultIterator } from "../types/operations.js";
@@ -33,7 +34,7 @@ export class Basin extends ClientSDK {
   async getStreamConfig(
     request: operations.GetStreamConfigRequest,
     options?: RequestOptions,
-  ): Promise<operations.GetStreamConfigResponse> {
+  ): Promise<components.StreamConfig> {
     return unwrapAsync(basinGetStreamConfig(
       this,
       request,
@@ -47,7 +48,7 @@ export class Basin extends ClientSDK {
   async createStream(
     request: operations.CreateStreamRequest,
     options?: RequestOptions,
-  ): Promise<operations.CreateStreamResponse> {
+  ): Promise<components.StreamInfo> {
     return unwrapAsync(basinCreateStream(
       this,
       request,
@@ -61,7 +62,7 @@ export class Basin extends ClientSDK {
   async deleteStream(
     request: operations.DeleteStreamRequest,
     options?: RequestOptions,
-  ): Promise<operations.DeleteStreamResponse> {
+  ): Promise<void> {
     return unwrapAsync(basinDeleteStream(
       this,
       request,
@@ -75,7 +76,7 @@ export class Basin extends ClientSDK {
   async reconfigureStream(
     request: operations.ReconfigureStreamRequest,
     options?: RequestOptions,
-  ): Promise<operations.ReconfigureStreamResponse> {
+  ): Promise<components.StreamConfig> {
     return unwrapAsync(basinReconfigureStream(
       this,
       request,

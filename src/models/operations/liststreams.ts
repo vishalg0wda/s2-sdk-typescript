@@ -36,8 +36,7 @@ export type ListStreamsRequest = {
 };
 
 export type ListStreamsResponse = {
-  httpMeta: components.HTTPMetadata;
-  listStreamsResponse?: components.ListStreamsResponse | undefined;
+  result: components.ListStreamsResponse;
 };
 
 /** @internal */
@@ -114,19 +113,16 @@ export const ListStreamsResponse$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.object({
-  HttpMeta: components.HTTPMetadata$inboundSchema,
-  ListStreamsResponse: components.ListStreamsResponse$inboundSchema.optional(),
+  Result: components.ListStreamsResponse$inboundSchema,
 }).transform((v) => {
   return remap$(v, {
-    "HttpMeta": "httpMeta",
-    "ListStreamsResponse": "listStreamsResponse",
+    "Result": "result",
   });
 });
 
 /** @internal */
 export type ListStreamsResponse$Outbound = {
-  HttpMeta: components.HTTPMetadata$Outbound;
-  ListStreamsResponse?: components.ListStreamsResponse$Outbound | undefined;
+  Result: components.ListStreamsResponse$Outbound;
 };
 
 /** @internal */
@@ -135,12 +131,10 @@ export const ListStreamsResponse$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   ListStreamsResponse
 > = z.object({
-  httpMeta: components.HTTPMetadata$outboundSchema,
-  listStreamsResponse: components.ListStreamsResponse$outboundSchema.optional(),
+  result: components.ListStreamsResponse$outboundSchema,
 }).transform((v) => {
   return remap$(v, {
-    httpMeta: "HttpMeta",
-    listStreamsResponse: "ListStreamsResponse",
+    result: "Result",
   });
 });
 

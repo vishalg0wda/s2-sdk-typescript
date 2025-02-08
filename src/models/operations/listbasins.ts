@@ -29,8 +29,7 @@ export type ListBasinsRequest = {
 };
 
 export type ListBasinsResponse = {
-  httpMeta: components.HTTPMetadata;
-  listBasinsResponse?: components.ListBasinsResponse | undefined;
+  result: components.ListBasinsResponse;
 };
 
 /** @internal */
@@ -107,19 +106,16 @@ export const ListBasinsResponse$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.object({
-  HttpMeta: components.HTTPMetadata$inboundSchema,
-  ListBasinsResponse: components.ListBasinsResponse$inboundSchema.optional(),
+  Result: components.ListBasinsResponse$inboundSchema,
 }).transform((v) => {
   return remap$(v, {
-    "HttpMeta": "httpMeta",
-    "ListBasinsResponse": "listBasinsResponse",
+    "Result": "result",
   });
 });
 
 /** @internal */
 export type ListBasinsResponse$Outbound = {
-  HttpMeta: components.HTTPMetadata$Outbound;
-  ListBasinsResponse?: components.ListBasinsResponse$Outbound | undefined;
+  Result: components.ListBasinsResponse$Outbound;
 };
 
 /** @internal */
@@ -128,12 +124,10 @@ export const ListBasinsResponse$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   ListBasinsResponse
 > = z.object({
-  httpMeta: components.HTTPMetadata$outboundSchema,
-  listBasinsResponse: components.ListBasinsResponse$outboundSchema.optional(),
+  result: components.ListBasinsResponse$outboundSchema,
 }).transform((v) => {
   return remap$(v, {
-    httpMeta: "HttpMeta",
-    listBasinsResponse: "ListBasinsResponse",
+    result: "Result",
   });
 });
 

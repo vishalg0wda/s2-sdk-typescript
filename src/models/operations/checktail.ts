@@ -3,10 +3,8 @@
  */
 
 import * as z from "zod";
-import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
-import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const CheckTailServerList = [
@@ -21,11 +19,6 @@ export type CheckTailRequest = {
    * Name of the stream.
    */
   stream: string;
-};
-
-export type CheckTailResponse = {
-  httpMeta: components.HTTPMetadata;
-  checkTailResponse?: components.CheckTailResponse | undefined;
 };
 
 /** @internal */
@@ -79,72 +72,5 @@ export function checkTailRequestFromJSON(
     jsonString,
     (x) => CheckTailRequest$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'CheckTailRequest' from JSON`,
-  );
-}
-
-/** @internal */
-export const CheckTailResponse$inboundSchema: z.ZodType<
-  CheckTailResponse,
-  z.ZodTypeDef,
-  unknown
-> = z.object({
-  HttpMeta: components.HTTPMetadata$inboundSchema,
-  CheckTailResponse: components.CheckTailResponse$inboundSchema.optional(),
-}).transform((v) => {
-  return remap$(v, {
-    "HttpMeta": "httpMeta",
-    "CheckTailResponse": "checkTailResponse",
-  });
-});
-
-/** @internal */
-export type CheckTailResponse$Outbound = {
-  HttpMeta: components.HTTPMetadata$Outbound;
-  CheckTailResponse?: components.CheckTailResponse$Outbound | undefined;
-};
-
-/** @internal */
-export const CheckTailResponse$outboundSchema: z.ZodType<
-  CheckTailResponse$Outbound,
-  z.ZodTypeDef,
-  CheckTailResponse
-> = z.object({
-  httpMeta: components.HTTPMetadata$outboundSchema,
-  checkTailResponse: components.CheckTailResponse$outboundSchema.optional(),
-}).transform((v) => {
-  return remap$(v, {
-    httpMeta: "HttpMeta",
-    checkTailResponse: "CheckTailResponse",
-  });
-});
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace CheckTailResponse$ {
-  /** @deprecated use `CheckTailResponse$inboundSchema` instead. */
-  export const inboundSchema = CheckTailResponse$inboundSchema;
-  /** @deprecated use `CheckTailResponse$outboundSchema` instead. */
-  export const outboundSchema = CheckTailResponse$outboundSchema;
-  /** @deprecated use `CheckTailResponse$Outbound` instead. */
-  export type Outbound = CheckTailResponse$Outbound;
-}
-
-export function checkTailResponseToJSON(
-  checkTailResponse: CheckTailResponse,
-): string {
-  return JSON.stringify(
-    CheckTailResponse$outboundSchema.parse(checkTailResponse),
-  );
-}
-
-export function checkTailResponseFromJSON(
-  jsonString: string,
-): SafeParseResult<CheckTailResponse, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => CheckTailResponse$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'CheckTailResponse' from JSON`,
   );
 }

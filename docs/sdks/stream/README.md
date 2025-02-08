@@ -29,11 +29,7 @@ async function run() {
     stream: "<value>",
   });
 
-  if (result.readResponse == null) {
-    throw new Error("failed to create stream: received null value");
-  }
-
-  for await (const event of result.readResponse) {
+  for await (const event of result) {
     // Handle the event
     console.log(event);
   }
@@ -67,11 +63,7 @@ async function run() {
 
   const { value: result } = res;
 
-  if (result.readResponse == null) {
-    throw new Error("failed to create stream: received null value");
-  }
-  
-  for await (const event of result.readResponse) {
+  for await (const event of result) {
     // Handle the event
     console.log(event);
   }
@@ -96,11 +88,12 @@ run();
 
 ### Errors
 
-| Error Type           | Status Code          | Content Type         |
-| -------------------- | -------------------- | -------------------- |
-| errors.ErrorResponse | 400, 401, 404        | application/json     |
-| errors.ErrorResponse | 500                  | application/json     |
-| errors.APIError      | 4XX, 5XX             | \*/\*                |
+| Error Type            | Status Code           | Content Type          |
+| --------------------- | --------------------- | --------------------- |
+| errors.ErrorResponse  | 400, 401, 404         | application/json      |
+| errors.RetryableError | 499                   | application/json      |
+| errors.RetryableError | 500, 503, 504         | application/json      |
+| errors.APIError       | 4XX, 5XX              | \*/\*                 |
 
 ## append
 
@@ -185,15 +178,16 @@ run();
 
 ### Response
 
-**Promise\<[operations.AppendResponse](../../models/operations/appendresponse.md)\>**
+**Promise\<[components.AppendOutput](../../models/components/appendoutput.md)\>**
 
 ### Errors
 
-| Error Type           | Status Code          | Content Type         |
-| -------------------- | -------------------- | -------------------- |
-| errors.ErrorResponse | 400, 401, 404        | application/json     |
-| errors.ErrorResponse | 500                  | application/json     |
-| errors.APIError      | 4XX, 5XX             | \*/\*                |
+| Error Type            | Status Code           | Content Type          |
+| --------------------- | --------------------- | --------------------- |
+| errors.ErrorResponse  | 400, 401, 404         | application/json      |
+| errors.RetryableError | 499                   | application/json      |
+| errors.RetryableError | 500, 503, 504         | application/json      |
+| errors.APIError       | 4XX, 5XX              | \*/\*                 |
 
 ## checkTail
 
@@ -264,12 +258,13 @@ run();
 
 ### Response
 
-**Promise\<[operations.CheckTailResponse](../../models/operations/checktailresponse.md)\>**
+**Promise\<[components.CheckTailResponse](../../models/components/checktailresponse.md)\>**
 
 ### Errors
 
-| Error Type           | Status Code          | Content Type         |
-| -------------------- | -------------------- | -------------------- |
-| errors.ErrorResponse | 400, 401, 404        | application/json     |
-| errors.ErrorResponse | 500                  | application/json     |
-| errors.APIError      | 4XX, 5XX             | \*/\*                |
+| Error Type            | Status Code           | Content Type          |
+| --------------------- | --------------------- | --------------------- |
+| errors.ErrorResponse  | 400, 401, 404         | application/json      |
+| errors.RetryableError | 499                   | application/json      |
+| errors.RetryableError | 500, 503, 504         | application/json      |
+| errors.APIError       | 4XX, 5XX              | \*/\*                 |

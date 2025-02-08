@@ -6,6 +6,7 @@ import { streamAppend } from "../funcs/streamAppend.js";
 import { streamCheckTail } from "../funcs/streamCheckTail.js";
 import { ReadAcceptEnum, streamRead } from "../funcs/streamRead.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
+import * as components from "../models/components/index.js";
 import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
 
@@ -38,7 +39,7 @@ export class Stream extends ClientSDK {
   async append(
     request: operations.AppendRequest,
     options?: RequestOptions,
-  ): Promise<operations.AppendResponse> {
+  ): Promise<components.AppendOutput> {
     return unwrapAsync(streamAppend(
       this,
       request,
@@ -55,7 +56,7 @@ export class Stream extends ClientSDK {
   async checkTail(
     request: operations.CheckTailRequest,
     options?: RequestOptions,
-  ): Promise<operations.CheckTailResponse> {
+  ): Promise<components.CheckTailResponse> {
     return unwrapAsync(streamCheckTail(
       this,
       request,

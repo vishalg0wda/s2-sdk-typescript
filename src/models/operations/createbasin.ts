@@ -18,11 +18,6 @@ export type CreateBasinRequest = {
   createBasinRequest: components.CreateBasinRequest;
 };
 
-export type CreateBasinResponse = {
-  httpMeta: components.HTTPMetadata;
-  basinInfo?: components.BasinInfo | undefined;
-};
-
 /** @internal */
 export const CreateBasinRequest$inboundSchema: z.ZodType<
   CreateBasinRequest,
@@ -90,72 +85,5 @@ export function createBasinRequestFromJSON(
     jsonString,
     (x) => CreateBasinRequest$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'CreateBasinRequest' from JSON`,
-  );
-}
-
-/** @internal */
-export const CreateBasinResponse$inboundSchema: z.ZodType<
-  CreateBasinResponse,
-  z.ZodTypeDef,
-  unknown
-> = z.object({
-  HttpMeta: components.HTTPMetadata$inboundSchema,
-  BasinInfo: components.BasinInfo$inboundSchema.optional(),
-}).transform((v) => {
-  return remap$(v, {
-    "HttpMeta": "httpMeta",
-    "BasinInfo": "basinInfo",
-  });
-});
-
-/** @internal */
-export type CreateBasinResponse$Outbound = {
-  HttpMeta: components.HTTPMetadata$Outbound;
-  BasinInfo?: components.BasinInfo$Outbound | undefined;
-};
-
-/** @internal */
-export const CreateBasinResponse$outboundSchema: z.ZodType<
-  CreateBasinResponse$Outbound,
-  z.ZodTypeDef,
-  CreateBasinResponse
-> = z.object({
-  httpMeta: components.HTTPMetadata$outboundSchema,
-  basinInfo: components.BasinInfo$outboundSchema.optional(),
-}).transform((v) => {
-  return remap$(v, {
-    httpMeta: "HttpMeta",
-    basinInfo: "BasinInfo",
-  });
-});
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace CreateBasinResponse$ {
-  /** @deprecated use `CreateBasinResponse$inboundSchema` instead. */
-  export const inboundSchema = CreateBasinResponse$inboundSchema;
-  /** @deprecated use `CreateBasinResponse$outboundSchema` instead. */
-  export const outboundSchema = CreateBasinResponse$outboundSchema;
-  /** @deprecated use `CreateBasinResponse$Outbound` instead. */
-  export type Outbound = CreateBasinResponse$Outbound;
-}
-
-export function createBasinResponseToJSON(
-  createBasinResponse: CreateBasinResponse,
-): string {
-  return JSON.stringify(
-    CreateBasinResponse$outboundSchema.parse(createBasinResponse),
-  );
-}
-
-export function createBasinResponseFromJSON(
-  jsonString: string,
-): SafeParseResult<CreateBasinResponse, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => CreateBasinResponse$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'CreateBasinResponse' from JSON`,
   );
 }

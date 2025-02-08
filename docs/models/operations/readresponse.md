@@ -1,17 +1,19 @@
 # ReadResponse
 
-## Example Usage
+
+## Supported Types
+
+### `components.Output`
 
 ```typescript
-import { ReadResponse } from "@s2-dev/streamstore/models/operations";
-
-// No examples available for this model
+const value: components.Output = {
+  firstSeqNum: 645894,
+};
 ```
 
-## Fields
+### `EventStream<components.ReadResponse>`
 
-| Field                                                              | Type                                                               | Required                                                           | Description                                                        |
-| ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ |
-| `httpMeta`                                                         | [components.HTTPMetadata](../../models/components/httpmetadata.md) | :heavy_check_mark:                                                 | N/A                                                                |
-| `output`                                                           | *components.Output*                                                | :heavy_minus_sign:                                                 | N/A                                                                |
-| `readResponse`                                                     | *EventStream<components.ReadResponse>*                             | :heavy_minus_sign:                                                 | N/A                                                                |
+```typescript
+const value: EventStream<components.ReadResponse> = ;
+```
+

@@ -86,11 +86,12 @@ run();
 
 ### Errors
 
-| Error Type           | Status Code          | Content Type         |
-| -------------------- | -------------------- | -------------------- |
-| errors.ErrorResponse | 400, 401             | application/json     |
-| errors.ErrorResponse | 500                  | application/json     |
-| errors.APIError      | 4XX, 5XX             | \*/\*                |
+| Error Type            | Status Code           | Content Type          |
+| --------------------- | --------------------- | --------------------- |
+| errors.ErrorResponse  | 400, 401              | application/json      |
+| errors.RetryableError | 499                   | application/json      |
+| errors.RetryableError | 500, 503, 504         | application/json      |
+| errors.APIError       | 4XX, 5XX              | \*/\*                 |
 
 ## getStreamConfig
 
@@ -161,15 +162,16 @@ run();
 
 ### Response
 
-**Promise\<[operations.GetStreamConfigResponse](../../models/operations/getstreamconfigresponse.md)\>**
+**Promise\<[components.StreamConfig](../../models/components/streamconfig.md)\>**
 
 ### Errors
 
-| Error Type           | Status Code          | Content Type         |
-| -------------------- | -------------------- | -------------------- |
-| errors.ErrorResponse | 400, 401, 404        | application/json     |
-| errors.ErrorResponse | 500                  | application/json     |
-| errors.APIError      | 4XX, 5XX             | \*/\*                |
+| Error Type            | Status Code           | Content Type          |
+| --------------------- | --------------------- | --------------------- |
+| errors.ErrorResponse  | 400, 401, 404         | application/json      |
+| errors.RetryableError | 499                   | application/json      |
+| errors.RetryableError | 500, 503, 504         | application/json      |
+| errors.APIError       | 4XX, 5XX              | \*/\*                 |
 
 ## createStream
 
@@ -242,15 +244,16 @@ run();
 
 ### Response
 
-**Promise\<[operations.CreateStreamResponse](../../models/operations/createstreamresponse.md)\>**
+**Promise\<[components.StreamInfo](../../models/components/streaminfo.md)\>**
 
 ### Errors
 
-| Error Type           | Status Code          | Content Type         |
-| -------------------- | -------------------- | -------------------- |
-| errors.ErrorResponse | 400, 401, 404, 409   | application/json     |
-| errors.ErrorResponse | 500                  | application/json     |
-| errors.APIError      | 4XX, 5XX             | \*/\*                |
+| Error Type            | Status Code           | Content Type          |
+| --------------------- | --------------------- | --------------------- |
+| errors.ErrorResponse  | 400, 401, 404, 409    | application/json      |
+| errors.RetryableError | 499                   | application/json      |
+| errors.RetryableError | 500, 503, 504         | application/json      |
+| errors.APIError       | 4XX, 5XX              | \*/\*                 |
 
 ## deleteStream
 
@@ -266,12 +269,11 @@ const s2 = new S2({
 });
 
 async function run() {
-  const result = await s2.basin.deleteStream({
+  await s2.basin.deleteStream({
     stream: "<value>",
   });
 
-  // Handle the result
-  console.log(result);
+
 }
 
 run();
@@ -302,8 +304,7 @@ async function run() {
 
   const { value: result } = res;
 
-  // Handle the result
-  console.log(result);
+  
 }
 
 run();
@@ -321,16 +322,17 @@ run();
 
 ### Response
 
-**Promise\<[operations.DeleteStreamResponse](../../models/operations/deletestreamresponse.md)\>**
+**Promise\<void\>**
 
 ### Errors
 
-| Error Type           | Status Code          | Content Type         |
-| -------------------- | -------------------- | -------------------- |
-| errors.ErrorResponse | 400, 401             | application/json     |
-| errors.NotFoundError | 404                  | application/json     |
-| errors.ErrorResponse | 500                  | application/json     |
-| errors.APIError      | 4XX, 5XX             | \*/\*                |
+| Error Type            | Status Code           | Content Type          |
+| --------------------- | --------------------- | --------------------- |
+| errors.ErrorResponse  | 400, 401              | application/json      |
+| errors.NotFoundError  | 404                   | application/json      |
+| errors.RetryableError | 499                   | application/json      |
+| errors.RetryableError | 500, 503, 504         | application/json      |
+| errors.APIError       | 4XX, 5XX              | \*/\*                 |
 
 ## reconfigureStream
 
@@ -407,12 +409,13 @@ run();
 
 ### Response
 
-**Promise\<[operations.ReconfigureStreamResponse](../../models/operations/reconfigurestreamresponse.md)\>**
+**Promise\<[components.StreamConfig](../../models/components/streamconfig.md)\>**
 
 ### Errors
 
-| Error Type           | Status Code          | Content Type         |
-| -------------------- | -------------------- | -------------------- |
-| errors.ErrorResponse | 400, 401, 404        | application/json     |
-| errors.ErrorResponse | 500                  | application/json     |
-| errors.APIError      | 4XX, 5XX             | \*/\*                |
+| Error Type            | Status Code           | Content Type          |
+| --------------------- | --------------------- | --------------------- |
+| errors.ErrorResponse  | 400, 401, 404         | application/json      |
+| errors.RetryableError | 499                   | application/json      |
+| errors.RetryableError | 500, 503, 504         | application/json      |
+| errors.APIError       | 4XX, 5XX              | \*/\*                 |

@@ -25,11 +25,6 @@ export type CreateStreamRequest = {
   createStreamRequest: components.CreateStreamRequest;
 };
 
-export type CreateStreamResponse = {
-  httpMeta: components.HTTPMetadata;
-  streamInfo?: components.StreamInfo | undefined;
-};
-
 /** @internal */
 export const CreateStreamRequest$inboundSchema: z.ZodType<
   CreateStreamRequest,
@@ -97,72 +92,5 @@ export function createStreamRequestFromJSON(
     jsonString,
     (x) => CreateStreamRequest$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'CreateStreamRequest' from JSON`,
-  );
-}
-
-/** @internal */
-export const CreateStreamResponse$inboundSchema: z.ZodType<
-  CreateStreamResponse,
-  z.ZodTypeDef,
-  unknown
-> = z.object({
-  HttpMeta: components.HTTPMetadata$inboundSchema,
-  StreamInfo: components.StreamInfo$inboundSchema.optional(),
-}).transform((v) => {
-  return remap$(v, {
-    "HttpMeta": "httpMeta",
-    "StreamInfo": "streamInfo",
-  });
-});
-
-/** @internal */
-export type CreateStreamResponse$Outbound = {
-  HttpMeta: components.HTTPMetadata$Outbound;
-  StreamInfo?: components.StreamInfo$Outbound | undefined;
-};
-
-/** @internal */
-export const CreateStreamResponse$outboundSchema: z.ZodType<
-  CreateStreamResponse$Outbound,
-  z.ZodTypeDef,
-  CreateStreamResponse
-> = z.object({
-  httpMeta: components.HTTPMetadata$outboundSchema,
-  streamInfo: components.StreamInfo$outboundSchema.optional(),
-}).transform((v) => {
-  return remap$(v, {
-    httpMeta: "HttpMeta",
-    streamInfo: "StreamInfo",
-  });
-});
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace CreateStreamResponse$ {
-  /** @deprecated use `CreateStreamResponse$inboundSchema` instead. */
-  export const inboundSchema = CreateStreamResponse$inboundSchema;
-  /** @deprecated use `CreateStreamResponse$outboundSchema` instead. */
-  export const outboundSchema = CreateStreamResponse$outboundSchema;
-  /** @deprecated use `CreateStreamResponse$Outbound` instead. */
-  export type Outbound = CreateStreamResponse$Outbound;
-}
-
-export function createStreamResponseToJSON(
-  createStreamResponse: CreateStreamResponse,
-): string {
-  return JSON.stringify(
-    CreateStreamResponse$outboundSchema.parse(createStreamResponse),
-  );
-}
-
-export function createStreamResponseFromJSON(
-  jsonString: string,
-): SafeParseResult<CreateStreamResponse, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => CreateStreamResponse$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'CreateStreamResponse' from JSON`,
   );
 }

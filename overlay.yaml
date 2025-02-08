@@ -31,7 +31,7 @@ actions:
           nextCursor: "$.streams[(@.length-1)].name"
         type: cursor
   - target: $.components.schemas
-    description: Add NotFoundError schema
+    description: Add NotFoundError and RetryableError schemas
     update:
       NotFoundError:
         type: object
@@ -39,7 +39,36 @@ actions:
           - error
         properties:
           error:
-            type: string  
+            type: string
+      RetryableError:
+        type: object
+        required:
+          - error
+        properties:
+          error:
+            type: string
   - target: $['paths'][*]['delete']['responses']['404']['content']['application/json']['schema']
-    update: 
+    update:
       $ref: "#/components/schemas/NotFoundError"
+  - target: $['paths'][*][*]['responses']
+    update:
+      "499":
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RetryableError"
+      "500":
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RetryableError"
+      "503":
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RetryableError"
+      "504":
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RetryableError"

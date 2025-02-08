@@ -14,7 +14,7 @@ import {
     StreamConfig,
     StreamInfo,
 } from "./models/components";
-import { ErrorResponse, NotFoundError } from "./models/errors";
+import { NotFoundError, RetryableError } from "./models/errors";
 import {
     GetBasinConfigRequest,
     ListBasinsRequest,
@@ -66,12 +66,23 @@ export type S2ClientConfig = {
     authToken?: string;
     requestTimeout?: number;
     endpoints?: S2Endpoints;
+    appedRetryPolicy?: AppendRetryPolicy;
+    maxRetries?: number;
+    initialBackoffMs?: number;
+    maxBackoffMs?: number;
 };
+
+export enum AppendRetryPolicy {
+    All,
+    NoSideEffects,
+}
 
 const defaultS2ClientConfig: S2ClientConfig = {
     requestTimeout: 3000,
     endpoints: S2Endpoints.forCloud(S2Cloud.Aws),
+    appedRetryPolicy: AppendRetryPolicy.All,
 };
+
 
 export class S2Client {
     private config: S2ClientConfig;
@@ -116,15 +127,23 @@ class S2Account {
         request?: ListBasinsRequest
     ): Promise<PageIterator<ListBasinsResponse, { cursor: string }>> {
         const url = this.URL;
-        return this._account.listBasins(request ?? {}, url ? { serverURL: url } : {});
+        return retryWithExponentialBackoff(
+            () => this._account.listBasins(request ?? {}, url ? { serverURL: url } : {}),
+            this.config.maxRetries,
+            this.config.initialBackoffMs,
+            this.config.maxBackoffMs
+        );
     }
 
     async getBasinConfig(basin: string): Promise<BasinConfig | undefined> {
         const _request: GetBasinConfigRequest = { basin };
         const url = this.URL;
-        return (await this._account.getBasinConfig(_request
-            , url ? { serverURL: url } : {}
-        )).basinConfig;
+        return retryWithExponentialBackoff(
+            () => this._account.getBasinConfig(_request, url ? { serverURL: url } : {}),
+            this.config.maxRetries,
+            this.config.initialBackoffMs,
+            this.config.maxBackoffMs
+        );
     }
 
     async createBasin(basin: string, request?: CreateBasinRequest): Promise<BasinInfo | undefined> {
@@ -134,14 +153,22 @@ class S2Account {
             createBasinRequest: request ?? {},
         };
         const url = this.URL;
-        return (await this._account.createBasin(_request,
-            url ? { serverURL: url } : {}
-        )).basinInfo;
+        return retryWithExponentialBackoff(
+            () => this._account.createBasin(_request, url ? { serverURL: url } : {}),
+            this.config.maxRetries,
+            this.config.initialBackoffMs,
+            this.config.maxBackoffMs
+        );
     }
 
-    async deleteBasin(basin: string, if_exists?: boolean): Promise<void | undefined> {
+    async deleteBasin(basin: string, if_exists?: boolean): Promise<void> {
         const url = this.URL;
-        const response = await accountDeleteBasin(this._account, { basin }, url ? { serverURL: url } : {});
+        const response = await retryWithExponentialBackoff(
+            () => accountDeleteBasin(this._account, { basin }, url ? { serverURL: url } : {}),
+            this.config.maxRetries,
+            this.config.initialBackoffMs,
+            this.config.maxBackoffMs
+        );
         if (if_exists && response.error instanceof NotFoundError) return;
         if (response.error) throw new Error(response.error.message);
         return;
@@ -150,9 +177,12 @@ class S2Account {
     async reconfigureBasin(basin: string, config: BasinConfig): Promise<BasinConfig | undefined> {
         const url = this.URL;
         const _request: ReconfigureBasinRequest = { basin, basinConfig: config };
-        return (await this._account.reconfigureBasin(_request
-            , url ? { serverURL: url } : {}
-        )).basinConfig;
+        return retryWithExponentialBackoff(
+            () => this._account.reconfigureBasin(_request, url ? { serverURL: url } : {}),
+            this.config.maxRetries,
+            this.config.initialBackoffMs,
+            this.config.maxBackoffMs
+        );
     }
 }
 
@@ -185,13 +215,21 @@ class S2Basin {
     async listStreams(
         request: ListStreamsRequest
     ): Promise<PageIterator<ListStreamsResponse, { cursor: string }>> {
-        return this._basin.listStreams(request, { serverURL: this.URL });
+        return retryWithExponentialBackoff(
+            () => this._basin.listStreams(request, { serverURL: this.URL }),
+            this.config.maxRetries,
+            this.config.initialBackoffMs,
+            this.config.maxBackoffMs
+        );
     }
 
     async getStreamConfig(stream: string): Promise<StreamConfig | undefined> {
-        return (
-            await this._basin.getStreamConfig({ stream }, { serverURL: this.URL })
-        ).streamConfig;
+        return retryWithExponentialBackoff(
+            () => this._basin.getStreamConfig({ stream }, { serverURL: this.URL }),
+            this.config.maxRetries,
+            this.config.initialBackoffMs,
+            this.config.maxBackoffMs
+        );
     }
 
     async createStream(stream: string, request?: CreateStreamRequest): Promise<StreamInfo | undefined> {
@@ -200,27 +238,33 @@ class S2Basin {
             s2RequestToken: genS2RequestToken(),
             createStreamRequest: request ?? {},
         };
-        return (
-            await this._basin.createStream(_request, { serverURL: this.URL })
-        ).streamInfo;
+        return retryWithExponentialBackoff(
+            () => this._basin.createStream(_request, { serverURL: this.URL }),
+            this.config.maxRetries,
+            this.config.initialBackoffMs,
+            this.config.maxBackoffMs
+        );
     }
 
     async deleteStream(stream: string, if_exists?: boolean): Promise<void | undefined> {
-        const response = await basinDeleteStream(this._basin, { stream }, {
-            serverURL: this.URL,
-        });
+        const response = await retryWithExponentialBackoff(
+            () => basinDeleteStream(this._basin, { stream }, { serverURL: this.URL }),
+            this.config.maxRetries,
+            this.config.initialBackoffMs,
+            this.config.maxBackoffMs
+        );
         if (if_exists && response instanceof NotFoundError) return;
         if (response.error) throw new Error(response.error.message);
         return;
     }
 
-    async reconfigureStream(stream: string, config: StreamConfig): Promise<StreamConfig | undefined> {
-        return (
-            await this._basin.reconfigureStream(
-                { stream, streamConfig: config },
-                { serverURL: this.URL }
-            )
-        ).streamConfig;
+    async reconfigureStream(stream: string, config: StreamConfig): Promise<StreamConfig> {
+        return retryWithExponentialBackoff(
+            () => this._basin.reconfigureStream({ stream, streamConfig: config }, { serverURL: this.URL }),
+            this.config.maxRetries,
+            this.config.initialBackoffMs,
+            this.config.maxBackoffMs
+        );
     }
 }
 
@@ -245,29 +289,44 @@ class Stream {
         });
     }
 
-    async checkTail(): Promise<CheckTailResponse | undefined> {
+    async checkTail(): Promise<CheckTailResponse> {
         return (
             await this._stream.checkTail({ stream: this.streamName }, { serverURL: this.basinURL })
-        ).checkTailResponse;
+        );
     }
 
-    async append(request: AppendRequest): Promise<AppendOutput | undefined> {
-        return (
-            await this._stream.append({ ...request, stream: this.streamName }, { serverURL: this.basinURL })
-        ).appendOutput;
+    async append(request: AppendRequest): Promise<AppendOutput> {
+        switch (this.config.appedRetryPolicy) {
+            case AppendRetryPolicy.All:
+            case undefined:
+                return retryWithExponentialBackoff(
+                    () => this._stream.append({ ...request, stream: this.streamName }, { serverURL: this.basinURL }),
+                    this.config.maxRetries,
+                    this.config.initialBackoffMs,
+                    this.config.maxBackoffMs
+                );
+            case AppendRetryPolicy.NoSideEffects:
+                return (
+                    await this._stream.append({ ...request, stream: this.streamName }, {
+                        serverURL: this.basinURL,
+                    })
+                );
+            default:
+                throw new Error("Invalid AppendRetryPolicy");
+        }
     }
 
-    async read(request: ReadRequest): Promise<Output | undefined> {
+    async read(request: ReadRequest): Promise<Output> {
         return (
-            await this._stream.read({ ...request, stream: this.streamName }, { serverURL: this.basinURL })
-        ).output;
+            await this._stream.read({ ...request, stream: this.streamName }, { serverURL: this.basinURL }) as Output
+        );
     }
 
     async *readStream(request: ReadRequest): AsyncGenerator<ReadResponse, void, undefined> {
         let currentRequest: ReadRequest = { ...request };
-        let backoffMs = 100;
+        let initialBackoffMs = this.config.initialBackoffMs ?? 100;
         const maxBackoffMs = 5000;
-        const maxRetries = 5;
+        const maxRetries = this.config.maxRetries ?? 5;
         let retryCount = 0;
 
         while (true) {
@@ -281,7 +340,7 @@ class Stream {
                         acceptHeaderOverride: ReadAcceptEnum.textEventStream
                     }
                 );
-                stream = response.readResponse;
+                stream = response as EventStream<ReadResponse>;
                 if (!stream) return;
 
                 for await (const event of stream) {
@@ -310,13 +369,16 @@ class Stream {
                 }
                 return;
             } catch (error) {
-                if (error instanceof ErrorResponse || error instanceof NotFoundError) return;
-                if (retryCount >= maxRetries) {
+                if (error instanceof RetryableError) {
+                    if (retryCount >= maxRetries) {
+                        throw error;
+                    }
+                    retryCount++;
+                    await new Promise(resolve => setTimeout(resolve, initialBackoffMs));
+                    initialBackoffMs = Math.min(initialBackoffMs * 2, maxBackoffMs);
+                } else {
                     throw error;
                 }
-                retryCount++;
-                await new Promise(resolve => setTimeout(resolve, backoffMs));
-                backoffMs = Math.min(backoffMs * 2, maxBackoffMs);
             }
         }
     }
@@ -336,4 +398,33 @@ function meteredBatchSize(batch: SequencedRecordBatch): number {
 
 export function genS2RequestToken(): string {
     return uuidv4().replace(/-/g, "");
+}
+
+async function retryWithExponentialBackoff<T>(
+    operation: () => Promise<T>,
+    maxAttempts: number = 5,
+    initialBackoffMs: number = 100,
+    maxBackoffMs: number = 5000
+): Promise<T> {
+    let attempt = 0;
+
+    while (attempt < maxAttempts) {
+        try {
+            return await operation();
+        } catch (error) {
+            if (error instanceof RetryableError) {
+                attempt++;
+                if (attempt >= maxAttempts) throw error;
+
+                const jitter = Math.random() * 0.3 + 0.85;
+                const delayMs = Math.min(initialBackoffMs * Math.pow(2, attempt) * jitter, maxBackoffMs);
+
+                await new Promise(resolve => setTimeout(resolve, delayMs));
+            } else {
+                throw error;
+            }
+        }
+    }
+
+    throw new Error("Max retry attempts reached");
 }

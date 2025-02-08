@@ -3,10 +3,8 @@
  */
 
 import * as z from "zod";
-import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
-import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const GetStreamConfigServerList = [
@@ -21,11 +19,6 @@ export type GetStreamConfigRequest = {
    * Name of the stream.
    */
   stream: string;
-};
-
-export type GetStreamConfigResponse = {
-  httpMeta: components.HTTPMetadata;
-  streamConfig?: components.StreamConfig | undefined;
 };
 
 /** @internal */
@@ -79,72 +72,5 @@ export function getStreamConfigRequestFromJSON(
     jsonString,
     (x) => GetStreamConfigRequest$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'GetStreamConfigRequest' from JSON`,
-  );
-}
-
-/** @internal */
-export const GetStreamConfigResponse$inboundSchema: z.ZodType<
-  GetStreamConfigResponse,
-  z.ZodTypeDef,
-  unknown
-> = z.object({
-  HttpMeta: components.HTTPMetadata$inboundSchema,
-  StreamConfig: components.StreamConfig$inboundSchema.optional(),
-}).transform((v) => {
-  return remap$(v, {
-    "HttpMeta": "httpMeta",
-    "StreamConfig": "streamConfig",
-  });
-});
-
-/** @internal */
-export type GetStreamConfigResponse$Outbound = {
-  HttpMeta: components.HTTPMetadata$Outbound;
-  StreamConfig?: components.StreamConfig$Outbound | undefined;
-};
-
-/** @internal */
-export const GetStreamConfigResponse$outboundSchema: z.ZodType<
-  GetStreamConfigResponse$Outbound,
-  z.ZodTypeDef,
-  GetStreamConfigResponse
-> = z.object({
-  httpMeta: components.HTTPMetadata$outboundSchema,
-  streamConfig: components.StreamConfig$outboundSchema.optional(),
-}).transform((v) => {
-  return remap$(v, {
-    httpMeta: "HttpMeta",
-    streamConfig: "StreamConfig",
-  });
-});
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetStreamConfigResponse$ {
-  /** @deprecated use `GetStreamConfigResponse$inboundSchema` instead. */
-  export const inboundSchema = GetStreamConfigResponse$inboundSchema;
-  /** @deprecated use `GetStreamConfigResponse$outboundSchema` instead. */
-  export const outboundSchema = GetStreamConfigResponse$outboundSchema;
-  /** @deprecated use `GetStreamConfigResponse$Outbound` instead. */
-  export type Outbound = GetStreamConfigResponse$Outbound;
-}
-
-export function getStreamConfigResponseToJSON(
-  getStreamConfigResponse: GetStreamConfigResponse,
-): string {
-  return JSON.stringify(
-    GetStreamConfigResponse$outboundSchema.parse(getStreamConfigResponse),
-  );
-}
-
-export function getStreamConfigResponseFromJSON(
-  jsonString: string,
-): SafeParseResult<GetStreamConfigResponse, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => GetStreamConfigResponse$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'GetStreamConfigResponse' from JSON`,
   );
 }

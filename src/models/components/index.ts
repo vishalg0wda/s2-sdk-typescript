@@ -14,7 +14,6 @@ export * from "./createbasinrequest.js";
 export * from "./createstreamrequest.js";
 export * from "./formatoption.js";
 export * from "./header.js";
-export * from "./httpmetadata.js";
 export * from "./listbasinsresponse.js";
 export * from "./liststreamsresponse.js";
 export * from "./output.js";

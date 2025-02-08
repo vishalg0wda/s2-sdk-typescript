@@ -8,6 +8,7 @@ import { accountGetBasinConfig } from "../funcs/accountGetBasinConfig.js";
 import { accountListBasins } from "../funcs/accountListBasins.js";
 import { accountReconfigureBasin } from "../funcs/accountReconfigureBasin.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
+import * as components from "../models/components/index.js";
 import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
 import { PageIterator, unwrapResultIterator } from "../types/operations.js";
@@ -33,7 +34,7 @@ export class Account extends ClientSDK {
   async getBasinConfig(
     request: operations.GetBasinConfigRequest,
     options?: RequestOptions,
-  ): Promise<operations.GetBasinConfigResponse> {
+  ): Promise<components.BasinConfig> {
     return unwrapAsync(accountGetBasinConfig(
       this,
       request,
@@ -47,7 +48,7 @@ export class Account extends ClientSDK {
   async createBasin(
     request: operations.CreateBasinRequest,
     options?: RequestOptions,
-  ): Promise<operations.CreateBasinResponse> {
+  ): Promise<components.BasinInfo> {
     return unwrapAsync(accountCreateBasin(
       this,
       request,
@@ -61,7 +62,7 @@ export class Account extends ClientSDK {
   async deleteBasin(
     request: operations.DeleteBasinRequest,
     options?: RequestOptions,
-  ): Promise<operations.DeleteBasinResponse> {
+  ): Promise<void> {
     return unwrapAsync(accountDeleteBasin(
       this,
       request,
@@ -75,7 +76,7 @@ export class Account extends ClientSDK {
   async reconfigureBasin(
     request: operations.ReconfigureBasinRequest,
     options?: RequestOptions,
-  ): Promise<operations.ReconfigureBasinResponse> {
+  ): Promise<components.BasinConfig> {
     return unwrapAsync(accountReconfigureBasin(
       this,
       request,

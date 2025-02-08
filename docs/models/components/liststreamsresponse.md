@@ -11,7 +11,7 @@ let value: ListStreamsResponse = {
   hasMore: false,
   streams: [
     {
-      createdAt: 791725,
+      createdAt: 71036,
       name: "<value>",
     },
   ],

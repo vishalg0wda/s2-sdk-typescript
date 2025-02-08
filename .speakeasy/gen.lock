@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 2d20490e-9921-47d5-9711-d3c4b91c8cfa
 management:
-  docChecksum: bbcb28d2548a56b38ad64847eb7a88d2
+  docChecksum: 9e7339e5177c40c4866ea6111dc794d6
   docVersion: 1.0.0
-  speakeasyVersion: 1.487.0
+  speakeasyVersion: 1.487.1
   generationVersion: 2.506.0
-  releaseVersion: 0.3.9
-  configChecksum: 2df4142ae1198abc894789b95b9611b9
+  releaseVersion: 0.3.13
+  configChecksum: a2cdc39cee0d581da5f5c6a903782e39
   repoURL: https://github.com/s2-streamstore/s2-sdk-typescript.git
   installationURL: https://github.com/s2-streamstore/s2-sdk-typescript
   published: true
@@ -58,7 +58,6 @@ generatedFiles:
   - docs/models/components/firstseqnum.md
   - docs/models/components/formatoption.md
   - docs/models/components/header.md
-  - docs/models/components/httpmetadata.md
   - docs/models/components/listbasinsresponse.md
   - docs/models/components/liststreamsresponse.md
   - docs/models/components/nextseqnum.md
@@ -75,22 +74,15 @@ generatedFiles:
   - docs/models/components/streaminfo.md
   - docs/models/errors/errorresponse.md
   - docs/models/errors/notfounderror.md
+  - docs/models/errors/retryableerror.md
   - docs/models/operations/appendrequest.md
-  - docs/models/operations/appendresponse.md
   - docs/models/operations/checktailrequest.md
-  - docs/models/operations/checktailresponse.md
   - docs/models/operations/createbasinrequest.md
-  - docs/models/operations/createbasinresponse.md
   - docs/models/operations/createstreamrequest.md
-  - docs/models/operations/createstreamresponse.md
   - docs/models/operations/deletebasinrequest.md
-  - docs/models/operations/deletebasinresponse.md
   - docs/models/operations/deletestreamrequest.md
-  - docs/models/operations/deletestreamresponse.md
   - docs/models/operations/getbasinconfigrequest.md
-  - docs/models/operations/getbasinconfigresponse.md
   - docs/models/operations/getstreamconfigrequest.md
-  - docs/models/operations/getstreamconfigresponse.md
   - docs/models/operations/headers2format.md
   - docs/models/operations/limit.md
   - docs/models/operations/listbasinsrequest.md
@@ -100,9 +92,7 @@ generatedFiles:
   - docs/models/operations/readrequest.md
   - docs/models/operations/readresponse.md
   - docs/models/operations/reconfigurebasinrequest.md
-  - docs/models/operations/reconfigurebasinresponse.md
   - docs/models/operations/reconfigurestreamrequest.md
-  - docs/models/operations/reconfigurestreamresponse.md
   - docs/models/operations/s2format.md
   - docs/sdks/account/README.md
   - docs/sdks/basin/README.md
@@ -158,7 +148,6 @@ generatedFiles:
   - src/models/components/createstreamrequest.ts
   - src/models/components/formatoption.ts
   - src/models/components/header.ts
-  - src/models/components/httpmetadata.ts
   - src/models/components/index.ts
   - src/models/components/listbasinsresponse.ts
   - src/models/components/liststreamsresponse.ts
@@ -176,6 +165,7 @@ generatedFiles:
   - src/models/errors/httpclienterrors.ts
   - src/models/errors/index.ts
   - src/models/errors/notfounderror.ts
+  - src/models/errors/retryableerror.ts
   - src/models/errors/sdkvalidationerror.ts
   - src/models/operations/append.ts
   - src/models/operations/checktail.ts
@@ -215,6 +205,8 @@ examples:
           application/json: {"error": "<value>"}
         "500":
           application/json: {"error": "<value>"}
+        "499":
+          application/json: {"error": "<value>"}
   get_basin_config:
     speakeasy-default-get-basin-config:
       parameters:
@@ -226,6 +218,8 @@ examples:
         "400":
           application/json: {"error": "<value>"}
         "500":
+          application/json: {"error": "<value>"}
+        "499":
           application/json: {"error": "<value>"}
   create_basin:
     speakeasy-default-create-basin:
@@ -242,6 +236,8 @@ examples:
           application/json: {"error": "<value>"}
         "500":
           application/json: {"error": "<value>"}
+        "499":
+          application/json: {"error": "<value>"}
   delete_basin:
     speakeasy-default-delete-basin:
       parameters:
@@ -254,6 +250,8 @@ examples:
           application/json: {"error": "<value>"}
         "404":
           application/json: {"error": "<value>"}
+        "499":
+          application/json: {"error": "<value>"}
   list_streams:
     speakeasy-default-list-streams:
       responses:
@@ -262,6 +260,8 @@ examples:
         "400":
           application/json: {"error": "<value>"}
         "500":
+          application/json: {"error": "<value>"}
+        "499":
           application/json: {"error": "<value>"}
   get_stream_config:
     speakeasy-default-get-stream-config:
@@ -274,6 +274,8 @@ examples:
         "400":
           application/json: {"error": "<value>"}
         "500":
+          application/json: {"error": "<value>"}
+        "499":
           application/json: {"error": "<value>"}
   create_stream:
     speakeasy-default-create-stream:
@@ -290,6 +292,8 @@ examples:
           application/json: {"error": "<value>"}
         "500":
           application/json: {"error": "<value>"}
+        "499":
+          application/json: {"error": "<value>"}
   delete_stream:
     speakeasy-default-delete-stream:
       parameters:
@@ -301,6 +305,8 @@ examples:
         "500":
           application/json: {"error": "<value>"}
         "404":
+          application/json: {"error": "<value>"}
+        "499":
           application/json: {"error": "<value>"}
   read:
     speakeasy-default-read:
@@ -315,6 +321,8 @@ examples:
         "400":
           application/json: {"error": "<value>"}
         "500":
+          application/json: {"error": "<value>"}
+        "499":
           application/json: {"error": "<value>"}
   append:
     speakeasy-default-append:
@@ -331,6 +339,8 @@ examples:
           application/json: {"error": "<value>"}
         "500":
           application/json: {"error": "<value>"}
+        "499":
+          application/json: {"error": "<value>"}
   check_tail:
     speakeasy-default-check-tail:
       parameters:
@@ -342,6 +352,8 @@ examples:
         "400":
           application/json: {"error": "<value>"}
         "500":
+          application/json: {"error": "<value>"}
+        "499":
           application/json: {"error": "<value>"}
   reconfigure_basin:
     speakeasy-default-reconfigure-basin:
@@ -357,6 +369,8 @@ examples:
           application/json: {"error": "<value>"}
         "500":
           application/json: {"error": "<value>"}
+        "499":
+          application/json: {"error": "<value>"}
   reconfigure_stream:
     speakeasy-default-reconfigure-stream:
       parameters:
@@ -370,6 +384,8 @@ examples:
         "400":
           application/json: {"error": "<value>"}
         "500":
+          application/json: {"error": "<value>"}
+        "499":
           application/json: {"error": "<value>"}
 examplesVersion: 1.0.0
 generatedTests: {}

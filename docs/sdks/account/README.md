@@ -85,11 +85,12 @@ run();
 
 ### Errors
 
-| Error Type           | Status Code          | Content Type         |
-| -------------------- | -------------------- | -------------------- |
-| errors.ErrorResponse | 400, 401             | application/json     |
-| errors.ErrorResponse | 500                  | application/json     |
-| errors.APIError      | 4XX, 5XX             | \*/\*                |
+| Error Type            | Status Code           | Content Type          |
+| --------------------- | --------------------- | --------------------- |
+| errors.ErrorResponse  | 400, 401              | application/json      |
+| errors.RetryableError | 499                   | application/json      |
+| errors.RetryableError | 500, 503, 504         | application/json      |
+| errors.APIError       | 4XX, 5XX              | \*/\*                 |
 
 ## getBasinConfig
 
@@ -159,15 +160,16 @@ run();
 
 ### Response
 
-**Promise\<[operations.GetBasinConfigResponse](../../models/operations/getbasinconfigresponse.md)\>**
+**Promise\<[components.BasinConfig](../../models/components/basinconfig.md)\>**
 
 ### Errors
 
-| Error Type           | Status Code          | Content Type         |
-| -------------------- | -------------------- | -------------------- |
-| errors.ErrorResponse | 400, 401, 404        | application/json     |
-| errors.ErrorResponse | 500                  | application/json     |
-| errors.APIError      | 4XX, 5XX             | \*/\*                |
+| Error Type            | Status Code           | Content Type          |
+| --------------------- | --------------------- | --------------------- |
+| errors.ErrorResponse  | 400, 401, 404         | application/json      |
+| errors.RetryableError | 499                   | application/json      |
+| errors.RetryableError | 500, 503, 504         | application/json      |
+| errors.APIError       | 4XX, 5XX              | \*/\*                 |
 
 ## createBasin
 
@@ -239,15 +241,16 @@ run();
 
 ### Response
 
-**Promise\<[operations.CreateBasinResponse](../../models/operations/createbasinresponse.md)\>**
+**Promise\<[components.BasinInfo](../../models/components/basininfo.md)\>**
 
 ### Errors
 
-| Error Type           | Status Code          | Content Type         |
-| -------------------- | -------------------- | -------------------- |
-| errors.ErrorResponse | 400, 401, 409        | application/json     |
-| errors.ErrorResponse | 500                  | application/json     |
-| errors.APIError      | 4XX, 5XX             | \*/\*                |
+| Error Type            | Status Code           | Content Type          |
+| --------------------- | --------------------- | --------------------- |
+| errors.ErrorResponse  | 400, 401, 409         | application/json      |
+| errors.RetryableError | 499                   | application/json      |
+| errors.RetryableError | 500, 503, 504         | application/json      |
+| errors.APIError       | 4XX, 5XX              | \*/\*                 |
 
 ## deleteBasin
 
@@ -263,12 +266,11 @@ const s2 = new S2({
 });
 
 async function run() {
-  const result = await s2.account.deleteBasin({
+  await s2.account.deleteBasin({
     basin: "<value>",
   });
 
-  // Handle the result
-  console.log(result);
+
 }
 
 run();
@@ -299,8 +301,7 @@ async function run() {
 
   const { value: result } = res;
 
-  // Handle the result
-  console.log(result);
+  
 }
 
 run();
@@ -317,16 +318,17 @@ run();
 
 ### Response
 
-**Promise\<[operations.DeleteBasinResponse](../../models/operations/deletebasinresponse.md)\>**
+**Promise\<void\>**
 
 ### Errors
 
-| Error Type           | Status Code          | Content Type         |
-| -------------------- | -------------------- | -------------------- |
-| errors.ErrorResponse | 400, 401             | application/json     |
-| errors.NotFoundError | 404                  | application/json     |
-| errors.ErrorResponse | 500                  | application/json     |
-| errors.APIError      | 4XX, 5XX             | \*/\*                |
+| Error Type            | Status Code           | Content Type          |
+| --------------------- | --------------------- | --------------------- |
+| errors.ErrorResponse  | 400, 401              | application/json      |
+| errors.NotFoundError  | 404                   | application/json      |
+| errors.RetryableError | 499                   | application/json      |
+| errors.RetryableError | 500, 503, 504         | application/json      |
+| errors.APIError       | 4XX, 5XX              | \*/\*                 |
 
 ## reconfigureBasin
 
@@ -398,12 +400,13 @@ run();
 
 ### Response
 
-**Promise\<[operations.ReconfigureBasinResponse](../../models/operations/reconfigurebasinresponse.md)\>**
+**Promise\<[components.BasinConfig](../../models/components/basinconfig.md)\>**
 
 ### Errors
 
-| Error Type           | Status Code          | Content Type         |
-| -------------------- | -------------------- | -------------------- |
-| errors.ErrorResponse | 400, 401, 404        | application/json     |
-| errors.ErrorResponse | 500                  | application/json     |
-| errors.APIError      | 4XX, 5XX             | \*/\*                |
+| Error Type            | Status Code           | Content Type          |
+| --------------------- | --------------------- | --------------------- |
+| errors.ErrorResponse  | 400, 401, 404         | application/json      |
+| errors.RetryableError | 499                   | application/json      |
+| errors.RetryableError | 500, 503, 504         | application/json      |
+| errors.APIError       | 4XX, 5XX              | \*/\*                 |
