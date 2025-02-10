@@ -75,8 +75,29 @@ export type S2ClientConfig = {
     httpClient?: HTTPClient;
 };
 
+/**
+ * Override the client level configuration for a specific operation.
+ *
+ * @remarks
+ * Only `authToken` can be overridden for now.
+ */
+export type S2OperationConfig = {
+    authToken?: string;
+};
+
+/**
+ * Retry policy for appends.
+ */
 export enum AppendRetryPolicy {
+    /**
+     * Retry all eligible failures encountered during an append.
+     * This could result in append batches being duplicated on the stream.     
+     */
     All,
+    /**
+     * Retry only failures with no side effects.
+     * Will not attempt to retry failures where it cannot be concluded whether an append may become durable, in order to prevent duplicates.
+     */
     NoSideEffects,
 }
 
@@ -94,7 +115,7 @@ export class S2Client {
     private config: S2ClientConfig;
     private _account?: S2Account;
 
-    get account(): S2Account {        
+    get account(): S2Account {
         return (this._account ??= new S2Account(this.config));
     }
 
@@ -127,57 +148,67 @@ class S2Account {
         this.config = config;
     }
 
-    get URL(): string | undefined {
-        if (!this.config.endpoints) return undefined;
-        return `https://${ClientKind.toAuthority({ kind: "Account" }, this.config.endpoints)}${this.accountURLSuffx}`;
+    get URL(): string {
+        return `https://${ClientKind.toAuthority({ kind: "Account" }, this.config.endpoints ?? S2Endpoints.forCloud(S2Cloud.Aws))}${this.accountURLSuffx}`;
     }
 
     basin(basinName: string): S2Basin {
         return new S2Basin(basinName, this.config);
     }
 
+    private overrideConfig(config?: S2OperationConfig) {
+        this.config.httpClient?.addHook("beforeRequest", (request) => {
+            if (config?.authToken !== undefined) {
+                request.headers.set("Authorization", `Bearer ${config.authToken}`);
+            }            
+        });
+    }
+
     async listBasins(
-        request?: ListBasinsRequest
+        request?: ListBasinsRequest,
+        opConfig?: S2OperationConfig,
     ): Promise<PageIterator<ListBasinsResponse, { cursor: string }>> {
-        const url = this.URL;
+        this.overrideConfig(opConfig);
         return retryWithExponentialBackoff(
-            () => this._account.listBasins(request ?? {}, url ? { serverURL: url } : {}),
+            () => this._account.listBasins(request ?? {}, {
+                serverURL: this.URL,
+            }),
             this.config.maxRetries,
             this.config.initialBackoffMs,
             this.config.maxBackoffMs
         );
     }
 
-    async getBasinConfig(basin: string): Promise<BasinConfig | undefined> {
+    async getBasinConfig(basin: string, opConfig?: S2OperationConfig): Promise<BasinConfig | undefined> {
+        this.overrideConfig(opConfig);
         const _request: GetBasinConfigRequest = { basin };
-        const url = this.URL;
         return retryWithExponentialBackoff(
-            () => this._account.getBasinConfig(_request, url ? { serverURL: url } : {}),
+            () => this._account.getBasinConfig(_request, { serverURL: this.URL }),
             this.config.maxRetries,
             this.config.initialBackoffMs,
             this.config.maxBackoffMs
         );
     }
 
-    async createBasin(basin: string, request?: CreateBasinRequest): Promise<BasinInfo | undefined> {
+    async createBasin(basin: string, request?: CreateBasinRequest, opConfig?: S2OperationConfig): Promise<BasinInfo | undefined> {
+        this.overrideConfig(opConfig);
         const _request: CreateBasinRequestInner = {
             basin,
             s2RequestToken: genS2RequestToken(),
             createBasinRequest: request ?? {},
         };
-        const url = this.URL;
         return retryWithExponentialBackoff(
-            () => this._account.createBasin(_request, url ? { serverURL: url } : {}),
+            () => this._account.createBasin(_request, { serverURL: this.URL }),
             this.config.maxRetries,
             this.config.initialBackoffMs,
             this.config.maxBackoffMs
         );
     }
 
-    async deleteBasin(basin: string, if_exists?: boolean): Promise<void> {
-        const url = this.URL;
+    async deleteBasin(basin: string, if_exists?: boolean, opConfig?: S2OperationConfig): Promise<void> {
+        this.overrideConfig(opConfig);
         const response = await retryWithExponentialBackoff(
-            () => accountDeleteBasin(this._account, { basin }, url ? { serverURL: url } : {}),
+            () => accountDeleteBasin(this._account, { basin }, { serverURL: this.URL }),
             this.config.maxRetries,
             this.config.initialBackoffMs,
             this.config.maxBackoffMs
@@ -187,11 +218,11 @@ class S2Account {
         return;
     }
 
-    async reconfigureBasin(basin: string, config: BasinConfig): Promise<BasinConfig | undefined> {
-        const url = this.URL;
+    async reconfigureBasin(basin: string, config: BasinConfig, opConfig?: S2OperationConfig): Promise<BasinConfig | undefined> {
+        this.overrideConfig(opConfig);
         const _request: ReconfigureBasinRequest = { basin, basinConfig: config };
         return retryWithExponentialBackoff(
-            () => this._account.reconfigureBasin(_request, url ? { serverURL: url } : {}),
+            () => this._account.reconfigureBasin(_request, { serverURL: this.URL }),
             this.config.maxRetries,
             this.config.initialBackoffMs,
             this.config.maxBackoffMs
@@ -234,18 +265,32 @@ class S2Basin {
         return (this._stream ??= new Stream(this.basinName, streamName, this.config));
     }
 
+    private overrideConfig(config?: S2OperationConfig) {
+        this.config.httpClient?.addHook("beforeRequest", (request) => {
+            if (config?.authToken !== undefined) {
+                request.headers.set("Authorization", `Bearer ${config.authToken}`);
+            }            
+        });
+    }
+
     async listStreams(
-        request: ListStreamsRequest
+        request?: ListStreamsRequest,
+        opConfig?: S2OperationConfig,
     ): Promise<PageIterator<ListStreamsResponse, { cursor: string }>> {
+        this.overrideConfig(opConfig);
         return retryWithExponentialBackoff(
-            () => this._basin.listStreams(request, { serverURL: this.URL }),
+            () => this._basin.listStreams(request ?? {}, { serverURL: this.URL }),
             this.config.maxRetries,
             this.config.initialBackoffMs,
             this.config.maxBackoffMs
         );
     }
 
-    async getStreamConfig(stream: string): Promise<StreamConfig | undefined> {
+    async getStreamConfig(
+        stream: string,
+        opConfig?: S2OperationConfig
+    ): Promise<StreamConfig | undefined> {
+        this.overrideConfig(opConfig);
         return retryWithExponentialBackoff(
             () => this._basin.getStreamConfig({ stream }, { serverURL: this.URL }),
             this.config.maxRetries,
@@ -254,7 +299,8 @@ class S2Basin {
         );
     }
 
-    async createStream(stream: string, request?: CreateStreamRequest): Promise<StreamInfo | undefined> {
+    async createStream(stream: string, request?: CreateStreamRequest, opConfig?: S2OperationConfig): Promise<StreamInfo | undefined> {
+        this.overrideConfig(opConfig);
         const _request: CreateStreamRequestInner = {
             stream,
             s2RequestToken: genS2RequestToken(),
@@ -268,7 +314,8 @@ class S2Basin {
         );
     }
 
-    async deleteStream(stream: string, if_exists?: boolean): Promise<void | undefined> {
+    async deleteStream(stream: string, if_exists?: boolean, opConfig?: S2OperationConfig): Promise<void | undefined> {
+        this.overrideConfig(opConfig);
         const response = await retryWithExponentialBackoff(
             () => basinDeleteStream(this._basin, { stream }, { serverURL: this.URL }),
             this.config.maxRetries,
@@ -280,7 +327,8 @@ class S2Basin {
         return;
     }
 
-    async reconfigureStream(stream: string, config: StreamConfig): Promise<StreamConfig> {
+    async reconfigureStream(stream: string, config: StreamConfig, opConfig?: S2OperationConfig): Promise<StreamConfig> {
+        this.overrideConfig(opConfig);
         return retryWithExponentialBackoff(
             () => this._basin.reconfigureStream({ stream, streamConfig: config }, { serverURL: this.URL }),
             this.config.maxRetries,
@@ -299,6 +347,14 @@ class Stream {
 
     private get basinURL(): string {
         return `https://${ClientKind.toAuthority(this.clientKind, this.config.endpoints ?? S2Endpoints.forCloud(S2Cloud.Aws))}${this.basinURLSuffx}`;
+    }
+
+    private overrideConfig(config?: S2OperationConfig) {
+        this.config.httpClient?.addHook("beforeRequest", (request) => {
+            if (config?.authToken !== undefined) {
+                request.headers.set("Authorization", `Bearer ${config.authToken}`);
+            }            
+        });
     }
 
     constructor(basinName: string, streamName: string, config: S2ClientConfig) {
@@ -320,13 +376,15 @@ class Stream {
         });
     }
 
-    async checkTail(): Promise<CheckTailResponse> {
+    async checkTail(opConfig?: S2OperationConfig): Promise<CheckTailResponse> {
+        this.overrideConfig(opConfig);
         return (
             await this._stream.checkTail({ stream: this.streamName }, { serverURL: this.basinURL })
         );
     }
 
-    async append(request: AppendRequest): Promise<AppendOutput> {
+    async append(request: AppendRequest, opConfig?: S2OperationConfig): Promise<AppendOutput> {
+        this.overrideConfig(opConfig);
         switch (this.config.appedRetryPolicy) {
             case AppendRetryPolicy.All:
             case undefined:
@@ -347,13 +405,15 @@ class Stream {
         }
     }
 
-    async read(request: ReadRequest): Promise<Output> {
+    async read(request: ReadRequest, opConfig?: S2OperationConfig): Promise<Output> {
+        this.overrideConfig(opConfig);
         return (
             await this._stream.read({ ...request, stream: this.streamName }, { serverURL: this.basinURL }) as Output
         );
     }
 
-    async *readStream(request: ReadRequest): AsyncGenerator<ReadResponse, void, undefined> {
+    async *readStream(request: ReadRequest, opConfig?: S2OperationConfig): AsyncGenerator<ReadResponse, void, undefined> {
+        this.overrideConfig(opConfig);
         let currentRequest: ReadRequest = { ...request };
         let initialBackoffMs = this.config.initialBackoffMs ?? 100;
         const maxBackoffMs = 5000;
