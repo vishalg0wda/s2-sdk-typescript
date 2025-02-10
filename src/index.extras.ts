@@ -92,12 +92,9 @@ const defaultS2ClientConfig: S2ClientConfig = {
 
 export class S2Client {
     private config: S2ClientConfig;
-    private _account?: S2Account;    
+    private _account?: S2Account;
 
-    get account(): S2Account {
-        // this.httpClient.addHook("beforeRequest", (request) => {
-        //     if (this.config.userAgent) request.headers.set("User-Agent", this.config.userAgent);
-        // });
+    get account(): S2Account {        
         return (this._account ??= new S2Account(this.config));
     }
 
@@ -117,12 +114,11 @@ class S2Account {
     private readonly accountURLSuffx = "/v1alpha";
 
     constructor(config: S2ClientConfig) {
-        if (config.userAgent !== undefined) {
-            config.httpClient?.addHook("beforeRequest", (request) => {
+        config.httpClient?.addHook("beforeRequest", (request) => {
+            if (config.userAgent !== undefined) {
                 request.headers.set("user-agent", config.userAgent ?? "s2-sdk-typescript");
-                console.log(request)
-            });
-        }
+            }
+        });
         this._account = new InnerAccount({
             ...(config.authToken !== undefined && { bearerAuth: config.authToken }),
             ...(config.requestTimeout !== undefined && { timeoutMs: config.requestTimeout }),
@@ -134,7 +130,7 @@ class S2Account {
     get URL(): string | undefined {
         if (!this.config.endpoints) return undefined;
         return `https://${ClientKind.toAuthority({ kind: "Account" }, this.config.endpoints)}${this.accountURLSuffx}`;
-    }    
+    }
 
     basin(basinName: string): S2Basin {
         return new S2Basin(basinName, this.config);
@@ -209,21 +205,25 @@ class S2Basin {
     private basinName: string;
     private config: S2ClientConfig;
     private clientKind: ClientKind;
-    private readonly basinURLSuffx = "/v1alpha";    
+    private readonly basinURLSuffx = "/v1alpha";
 
     private get URL(): string {
         return `https://${ClientKind.toAuthority(this.clientKind, this.config.endpoints ?? S2Endpoints.forCloud(S2Cloud.Aws))}${this.basinURLSuffx}`;
     }
 
     constructor(basinName: string, config: S2ClientConfig) {
-        if (config.userAgent !== undefined) {
-            config.httpClient?.addHook("beforeRequest", (request) => {
+        config.httpClient?.addHook("beforeRequest", (request) => {
+            if (config.userAgent !== undefined) {
                 request.headers.set("user-agent", config.userAgent ?? "s2-sdk-typescript");
-            });
-        }
+            }
+            if (config.endpoints?.basin?.kind === "Direct") {
+                request.headers.set("s2-basin", basinName);
+            }
+        });
         this._basin = new InnerBasin({
             ...(config.authToken !== undefined && { bearerAuth: config.authToken }),
-            ...(config.requestTimeout !== undefined && { timeoutMs: config.requestTimeout })
+            ...(config.requestTimeout !== undefined && { timeoutMs: config.requestTimeout }),
+            ...(config.httpClient !== undefined && { httpClient: config.httpClient }),
         });
         this.config = config;
         this.clientKind = { kind: "Basin" as const, basin: basinName };
@@ -305,14 +305,18 @@ class Stream {
         this.config = config;
         this.clientKind = { kind: "Basin" as const, basin: basinName };
         this.streamName = streamName;
-        if (config.userAgent !== undefined) {
-            config.httpClient?.addHook("beforeRequest", (request) => {
+        config.httpClient?.addHook("beforeRequest", (request) => {
+            if (config.userAgent !== undefined) {
                 request.headers.set("user-agent", config.userAgent ?? "s2-sdk-typescript");
-            });
-        }
+            }
+            if (config.endpoints?.basin?.kind === "Direct") {
+                request.headers.set("s2-basin", basinName);
+            }
+        });
         this._stream = new InnerStream({
             ...(config.authToken !== undefined && { bearerAuth: config.authToken }),
-            ...(config.requestTimeout !== undefined && { timeoutMs: config.requestTimeout })
+            ...(config.requestTimeout !== undefined && { timeoutMs: config.requestTimeout }),
+            ...(config.httpClient !== undefined && { httpClient: config.httpClient })
         });
     }
 
