@@ -3,10 +3,10 @@ id: 2d20490e-9921-47d5-9711-d3c4b91c8cfa
 management:
   docChecksum: 07391cade7c3cb454a12cd9adee46b89
   docVersion: 1.0.0
-  speakeasyVersion: 1.504.1
-  generationVersion: 2.529.2
-  releaseVersion: 0.4.2
-  configChecksum: 77fb451531f293d8a12e89918c15c41b
+  speakeasyVersion: 1.505.0
+  generationVersion: 2.531.0
+  releaseVersion: 0.5.0
+  configChecksum: f9db7a9028f1c499a64e3fe81a7dad00
   repoURL: https://github.com/s2-streamstore/s2-sdk-typescript.git
   installationURL: https://github.com/s2-streamstore/s2-sdk-typescript
   published: true
@@ -14,7 +14,7 @@ features:
   typescript:
     acceptHeaders: 2.81.2
     additionalDependencies: 0.1.0
-    core: 3.21.2
+    core: 3.21.3
     defaultEnabledRetries: 0.1.0
     devContainers: 2.90.0
     enumUnions: 0.1.0
@@ -26,7 +26,7 @@ features:
     mcpServer: 0.3.0
     methodServerURLs: 2.82.1
     nullables: 0.1.1
-    pagination: 2.82.8
+    pagination: 2.83.0
     responseFormat: 0.2.3
     retries: 2.83.0
     sdkHooks: 0.2.0
