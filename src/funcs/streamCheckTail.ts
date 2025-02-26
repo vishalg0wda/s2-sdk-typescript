@@ -23,6 +23,7 @@ import * as errors from "../models/errors/index.js";
 import { SDKValidationError } from "../models/errors/sdkvalidationerror.js";
 import { CheckTailServerList } from "../models/operations/checktail.js";
 import * as operations from "../models/operations/index.js";
+import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
@@ -31,11 +32,11 @@ import { Result } from "../types/fp.js";
  * @remarks
  * Check the sequence number that will be assigned to the next record on a stream.
  */
-export async function streamCheckTail(
+export function streamCheckTail(
   client: S2Core,
   request: operations.CheckTailRequest,
   options?: RequestOptions,
-): Promise<
+): APIPromise<
   Result<
     components.CheckTailResponse,
     | errors.ErrorResponse
@@ -50,13 +51,42 @@ export async function streamCheckTail(
     | ConnectionError
   >
 > {
+  return new APIPromise($do(
+    client,
+    request,
+    options,
+  ));
+}
+
+async function $do(
+  client: S2Core,
+  request: operations.CheckTailRequest,
+  options?: RequestOptions,
+): Promise<
+  [
+    Result<
+      components.CheckTailResponse,
+      | errors.ErrorResponse
+      | errors.RetryableError
+      | errors.RetryableError
+      | APIError
+      | SDKValidationError
+      | UnexpectedClientError
+      | InvalidRequestError
+      | RequestAbortedError
+      | RequestTimeoutError
+      | ConnectionError
+    >,
+    APICall,
+  ]
+> {
   const parsed = safeParse(
     request,
     (value) => operations.CheckTailRequest$outboundSchema.parse(value),
     "Input validation failed",
   );
   if (!parsed.ok) {
-    return parsed;
+    return [parsed, { status: "invalid" }];
   }
   const payload = parsed.value;
   const body = null;
@@ -84,6 +114,7 @@ export async function streamCheckTail(
   const requestSecurity = resolveGlobalSecurity(securityInput);
 
   const context = {
+    baseURL: baseURL ?? "",
     operationID: "check_tail",
     oAuth2Scopes: [],
 
@@ -106,7 +137,7 @@ export async function streamCheckTail(
     timeoutMs: options?.timeoutMs || client._options.timeoutMs || -1,
   }, options);
   if (!requestRes.ok) {
-    return requestRes;
+    return [requestRes, { status: "invalid" }];
   }
   const req = requestRes.value;
 
@@ -117,7 +148,7 @@ export async function streamCheckTail(
     retryCodes: context.retryCodes,
   });
   if (!doResult.ok) {
-    return doResult;
+    return [doResult, { status: "request-error", request: req }];
   }
   const response = doResult.value;
 
@@ -146,8 +177,8 @@ export async function streamCheckTail(
     M.fail("5XX"),
   )(response, { extraFields: responseFields });
   if (!result.ok) {
-    return result;
+    return [result, { status: "complete", request: req, response }];
   }
 
-  return result;
+  return [result, { status: "complete", request: req, response }];
 }

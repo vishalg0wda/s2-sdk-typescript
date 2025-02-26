@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 2d20490e-9921-47d5-9711-d3c4b91c8cfa
 management:
-  docChecksum: 9e7339e5177c40c4866ea6111dc794d6
+  docChecksum: 07391cade7c3cb454a12cd9adee46b89
   docVersion: 1.0.0
-  speakeasyVersion: 1.488.0
-  generationVersion: 2.506.0
-  releaseVersion: 0.3.17
-  configChecksum: d6230867afe0b2c76d44287210807975
+  speakeasyVersion: 1.504.1
+  generationVersion: 2.529.2
+  releaseVersion: 0.4.2
+  configChecksum: 77fb451531f293d8a12e89918c15c41b
   repoURL: https://github.com/s2-streamstore/s2-sdk-typescript.git
   installationURL: https://github.com/s2-streamstore/s2-sdk-typescript
   published: true
@@ -14,17 +14,18 @@ features:
   typescript:
     acceptHeaders: 2.81.2
     additionalDependencies: 0.1.0
-    core: 3.19.0
+    core: 3.21.2
     defaultEnabledRetries: 0.1.0
     devContainers: 2.90.0
     enumUnions: 0.1.0
     envVarSecurityUsage: 0.1.2
-    globalSecurity: 2.82.12
+    globalSecurity: 2.82.13
     globalSecurityCallbacks: 0.1.0
     globalSecurityFlattening: 0.1.0
     globalServerURLs: 2.82.4
+    mcpServer: 0.3.0
     methodServerURLs: 2.82.1
-    nullables: 0.1.0
+    nullables: 0.1.1
     pagination: 2.82.8
     responseFormat: 0.2.3
     retries: 2.83.0
@@ -136,6 +137,30 @@ generatedFiles:
   - src/lib/sdks.ts
   - src/lib/security.ts
   - src/lib/url.ts
+  - src/mcp-server/build.mts
+  - src/mcp-server/cli.ts
+  - src/mcp-server/cli/start/command.ts
+  - src/mcp-server/cli/start/impl.ts
+  - src/mcp-server/console-logger.ts
+  - src/mcp-server/mcp-server.ts
+  - src/mcp-server/resources.ts
+  - src/mcp-server/scopes.ts
+  - src/mcp-server/server.ts
+  - src/mcp-server/shared.ts
+  - src/mcp-server/tools.ts
+  - src/mcp-server/tools/accountCreateBasin.ts
+  - src/mcp-server/tools/accountDeleteBasin.ts
+  - src/mcp-server/tools/accountGetBasinConfig.ts
+  - src/mcp-server/tools/accountListBasins.ts
+  - src/mcp-server/tools/accountReconfigureBasin.ts
+  - src/mcp-server/tools/basinCreateStream.ts
+  - src/mcp-server/tools/basinDeleteStream.ts
+  - src/mcp-server/tools/basinGetStreamConfig.ts
+  - src/mcp-server/tools/basinListStreams.ts
+  - src/mcp-server/tools/basinReconfigureStream.ts
+  - src/mcp-server/tools/streamAppend.ts
+  - src/mcp-server/tools/streamCheckTail.ts
+  - src/mcp-server/tools/streamRead.ts
   - src/models/components/appendinput.ts
   - src/models/components/appendoutput.ts
   - src/models/components/appendrecord.ts
@@ -186,6 +211,7 @@ generatedFiles:
   - src/sdk/index.ts
   - src/sdk/sdk.ts
   - src/sdk/stream.ts
+  - src/types/async.ts
   - src/types/blobs.ts
   - src/types/constdatetime.ts
   - src/types/enums.ts

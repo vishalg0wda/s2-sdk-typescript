@@ -71,4 +71,15 @@ actions:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/RetryableError"
+              $ref: "#/components/schemas/RetryableError"  
+  - target: $.paths.*["get"]
+    update:
+      x-speakeasy-mcp:
+        scopes:
+          - read
+  - target: $.paths.*["post", "put", "delete", "patch"]
+    update:
+      x-speakeasy-mcp:
+        scopes:
+          - write
+
