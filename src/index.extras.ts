@@ -1,4 +1,4 @@
-import { accountDeleteBasin } from "./funcs/accountDeleteBasin";
+import { accountDeleteBasin } from "./funcs/accountDeleteBasin.js";
 import {
     AppendOutput,
     BasinConfig,
@@ -13,8 +13,8 @@ import {
     SequencedRecordBatch,
     StreamConfig,
     StreamInfo,
-} from "./models/components";
-import { NotFoundError, RetryableError } from "./models/errors";
+} from "./models/components/index.js";
+import { NotFoundError, RetryableError } from "./models/errors/index.js";
 import {
     GetBasinConfigRequest,
     ListBasinsRequest,
@@ -26,18 +26,18 @@ import {
     CreateStreamRequest as CreateStreamRequestInner,
     ReadRequest as ReadRequestInner,
     AppendRequest as AppendRequestInner,
-} from "./models/operations";
-import { PageIterator } from "./types";
+} from "./models/operations/index.js";
+import { PageIterator } from "./types/index.js";
 
-import { Stream as InnerStream, ReadAcceptEnum } from "./sdk/stream";
-import { Basin as InnerBasin } from "./sdk/basin";
-import { Account as InnerAccount } from "./sdk/account";
+import { Stream as InnerStream, ReadAcceptEnum } from "./sdk/stream.js";
+import { Basin as InnerBasin } from "./sdk/basin.js";
+import { Account as InnerAccount } from "./sdk/account.js";
 
 import { v4 as uuidv4 } from "uuid";
-import { basinDeleteStream } from "./funcs/basinDeleteStream";
-import { EventStream } from "./lib/event-streams";
-import { ClientKind, S2Cloud, S2Endpoints } from "./endpoints";
-import { HTTPClient } from "./lib/http";
+import { basinDeleteStream } from "./funcs/basinDeleteStream.js";
+import { EventStream } from "./lib/event-streams.js";
+import { ClientKind, S2Cloud, S2Endpoints } from "./endpoints.js";
+import { HTTPClient } from "./lib/http.js";
 
 export type ReadRequest = Omit<ReadRequestInner, "stream">;
 export type AppendRequest = Omit<AppendRequestInner, "stream">;
@@ -48,7 +48,7 @@ export type {
     ListStreamsRequest,
     ListStreamsResponse,
     ReconfigureBasinRequest,
-} from "./models/operations";
+} from "./models/operations/index.js";
 export type {
     BasinConfig,
     BasinInfo,
@@ -59,9 +59,9 @@ export type {
     ReadResponse,
     StreamConfig,
     StreamInfo,
-} from "./models/components";
+} from "./models/components/index.js";
 
-export * from "./endpoints";
+export * from "./endpoints.js";
 
 export type S2ClientConfig = {
     authToken?: string;

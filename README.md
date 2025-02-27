@@ -73,6 +73,8 @@ yarn add @s2-dev/streamstore zod
 # to install zod as shown above.
 ```
 
+> [!NOTE]
+> This package is published with CommonJS and ES Modules (ESM) support.
 
 
 ### Model Context Protocol (MCP) Server

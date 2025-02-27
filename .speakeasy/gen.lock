@@ -5,8 +5,8 @@ management:
   docVersion: 1.0.0
   speakeasyVersion: 1.505.0
   generationVersion: 2.531.0
-  releaseVersion: 0.5.0
-  configChecksum: f9db7a9028f1c499a64e3fe81a7dad00
+  releaseVersion: 0.5.2
+  configChecksum: a7c3f56f1e1d8a289e621dabc673c527
   repoURL: https://github.com/s2-streamstore/s2-sdk-typescript.git
   installationURL: https://github.com/s2-streamstore/s2-sdk-typescript
   published: true
