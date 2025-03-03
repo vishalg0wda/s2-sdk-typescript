@@ -6,7 +6,7 @@ export class CompressionHook implements BeforeCreateRequestHook {
         const hdrs = new Headers(input.options?.headers ?? {});
         const body = input.options?.body;
 
-        if (hdrs.get("content-type") !== "application/json" || typeof body !== "string") {
+        if (!hdrs.get("content-type")?.toLowerCase().startsWith("application/json") || typeof body !== "string") {
             return input;
         }
 
