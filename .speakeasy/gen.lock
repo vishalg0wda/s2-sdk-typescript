@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 2d20490e-9921-47d5-9711-d3c4b91c8cfa
 management:
-  docChecksum: 07391cade7c3cb454a12cd9adee46b89
+  docChecksum: deebedbb7334d4fd56b50a655b7543d6
   docVersion: 1.0.0
-  speakeasyVersion: 1.505.0
-  generationVersion: 2.531.0
-  releaseVersion: 0.5.2
-  configChecksum: a7c3f56f1e1d8a289e621dabc673c527
+  speakeasyVersion: 1.513.2
+  generationVersion: 2.545.2
+  releaseVersion: 0.7.0
+  configChecksum: dda0a94310d35cfb7716c7b21a29741c
   repoURL: https://github.com/s2-streamstore/s2-sdk-typescript.git
   installationURL: https://github.com/s2-streamstore/s2-sdk-typescript
   published: true
@@ -23,7 +23,7 @@ features:
     globalSecurityCallbacks: 0.1.0
     globalSecurityFlattening: 0.1.0
     globalServerURLs: 2.82.4
-    mcpServer: 0.3.0
+    mcpServer: 0.6.0
     methodServerURLs: 2.82.1
     nullables: 0.1.1
     pagination: 2.83.0
@@ -56,15 +56,19 @@ generatedFiles:
   - docs/models/components/createbasinrequest.md
   - docs/models/components/createstreamrequest.md
   - docs/models/components/errort.md
+  - docs/models/components/event.md
   - docs/models/components/firstseqnum.md
   - docs/models/components/formatoption.md
   - docs/models/components/header.md
   - docs/models/components/listbasinsresponse.md
   - docs/models/components/liststreamsresponse.md
+  - docs/models/components/message.md
   - docs/models/components/nextseqnum.md
   - docs/models/components/output.md
+  - docs/models/components/ping.md
   - docs/models/components/readresponse.md
-  - docs/models/components/readresponseoutput.md
+  - docs/models/components/readresponse3event.md
+  - docs/models/components/readresponseevent.md
   - docs/models/components/retentionpolicy.md
   - docs/models/components/scope.md
   - docs/models/components/security.md
@@ -142,6 +146,7 @@ generatedFiles:
   - src/mcp-server/cli/start/command.ts
   - src/mcp-server/cli/start/impl.ts
   - src/mcp-server/console-logger.ts
+  - src/mcp-server/extensions.ts
   - src/mcp-server/mcp-server.ts
   - src/mcp-server/resources.ts
   - src/mcp-server/scopes.ts

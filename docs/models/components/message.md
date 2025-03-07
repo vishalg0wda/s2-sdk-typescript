@@ -1,11 +1,11 @@
-# ReadResponseOutput
+# Message
 
 ## Example Usage
 
 ```typescript
-import { ReadResponseOutput } from "@s2-dev/streamstore/models/components";
+import { Message } from "@s2-dev/streamstore/models/components";
 
-let value: ReadResponseOutput = {
+let value: Message = {
   data: {
     batch: {
       records: [
@@ -22,7 +22,7 @@ let value: ReadResponseOutput = {
       ],
     },
   },
-  event: "<value>",
+  event: "message",
 };
 ```
 
@@ -31,4 +31,4 @@ let value: ReadResponseOutput = {
 | Field                                                                                              | Type                                                                                               | Required                                                                                           | Description                                                                                        |
 | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
 | `data`                                                                                             | *components.Output*                                                                                | :heavy_check_mark:                                                                                 | Reply which can be a batch of records, or a sequence number if the request could not be satisfied. |
-| `event`                                                                                            | *string*                                                                                           | :heavy_check_mark:                                                                                 | N/A                                                                                                |
+| `event`                                                                                            | [components.Event](../../models/components/event.md)                                               | :heavy_check_mark:                                                                                 | N/A                                                                                                |

@@ -6,6 +6,10 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { S2Core } from "../core.js";
 import { SDKOptions } from "../lib/config.js";
 import type { ConsoleLogger } from "./console-logger.js";
+import {
+  createRegisterResource,
+  createRegisterResourceTemplate,
+} from "./resources.js";
 import { MCPScope, mcpScopes } from "./scopes.js";
 import { createRegisterTool } from "./tools.js";
 import { tool$accountCreateBasin } from "./tools/accountCreateBasin.js";
@@ -24,6 +28,7 @@ import { tool$streamRead } from "./tools/streamRead.js";
 
 export function createMCPServer(deps: {
   logger: ConsoleLogger;
+  allowedTools?: string[] | undefined;
   scopes?: MCPScope[] | undefined;
   serverURL?: string | undefined;
   bearerAuth?: SDKOptions["bearerAuth"] | undefined;
@@ -31,7 +36,7 @@ export function createMCPServer(deps: {
 }) {
   const server = new McpServer({
     name: "S2",
-    version: "0.5.2",
+    version: "0.7.0",
   });
 
   const client = new S2Core({
@@ -39,8 +44,26 @@ export function createMCPServer(deps: {
     serverURL: deps.serverURL,
     serverIdx: deps.serverIdx,
   });
+
   const scopes = new Set(deps.scopes ?? mcpScopes);
-  const tool = createRegisterTool(deps.logger, server, client, scopes);
+
+  const allowedTools = deps.allowedTools && new Set(deps.allowedTools);
+  const tool = createRegisterTool(
+    deps.logger,
+    server,
+    client,
+    scopes,
+    allowedTools,
+  );
+  const resource = createRegisterResource(deps.logger, server, client, scopes);
+  const resourceTemplate = createRegisterResourceTemplate(
+    deps.logger,
+    server,
+    client,
+    scopes,
+  );
+  const register = { tool, resource, resourceTemplate };
+  void register; // suppress unused warnings
 
   tool(tool$accountListBasins);
   tool(tool$accountGetBasinConfig);

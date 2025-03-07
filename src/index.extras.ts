@@ -6,9 +6,9 @@ import {
     CheckTailResponse,
     CreateBasinRequest,
     CreateStreamRequest,
+    Message,
     Output,
     ReadResponse,
-    ReadResponseOutput,
     SequencedRecord,
     SequencedRecordBatch,
     StreamConfig,
@@ -438,7 +438,7 @@ class Stream {
                     yield event;
 
                     if (event.event === 'message') {
-                        const output = event as ReadResponseOutput;
+                        const output = event as Message;
                         if ('batch' in output.data) {
                             const batch = output.data.batch;
                             if (batch.records && batch.records.length > 0) {

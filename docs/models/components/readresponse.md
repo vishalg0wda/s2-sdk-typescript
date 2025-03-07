@@ -3,10 +3,10 @@
 
 ## Supported Types
 
-### `components.ReadResponseOutput`
+### `components.Message`
 
 ```typescript
-const value: components.ReadResponseOutput = {
+const value: components.Message = {
   data: {
     batch: {
       records: [
@@ -23,7 +23,7 @@ const value: components.ReadResponseOutput = {
       ],
     },
   },
-  event: "<value>",
+  event: "message",
 };
 ```
 
@@ -32,7 +32,15 @@ const value: components.ReadResponseOutput = {
 ```typescript
 const value: components.ErrorT = {
   data: "<value>",
-  event: "<value>",
+  event: "error",
+};
+```
+
+### `components.Ping`
+
+```typescript
+const value: components.Ping = {
+  event: "ping",
 };
 ```
 
