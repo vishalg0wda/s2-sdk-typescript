@@ -36,7 +36,7 @@ export function createMCPServer(deps: {
 }) {
   const server = new McpServer({
     name: "S2",
-    version: "0.7.4",
+    version: "0.7.5",
   });
 
   const client = new S2Core({

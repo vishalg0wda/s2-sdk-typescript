@@ -179,7 +179,7 @@ class S2Account {
         );
     }
 
-    async getBasinConfig(basin: string, opConfig?: S2OperationConfig): Promise<BasinConfig | undefined> {
+    async getBasinConfig(basin: string, opConfig?: S2OperationConfig): Promise<BasinConfig> {
         this.overrideConfig(opConfig);
         const _request: GetBasinConfigRequest = { basin };
         return retryWithExponentialBackoff(
