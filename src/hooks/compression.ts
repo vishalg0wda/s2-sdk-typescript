@@ -1,5 +1,5 @@
-import { RequestInput } from "../lib/http";
-import { BeforeCreateRequestContext, BeforeCreateRequestHook } from "./types";
+import { RequestInput } from "../lib/http.js";
+import { BeforeCreateRequestContext, BeforeCreateRequestHook } from "./types.js";
 
 export class CompressionHook implements BeforeCreateRequestHook {
     beforeCreateRequest(_hookCtx: BeforeCreateRequestContext, input: RequestInput): RequestInput {

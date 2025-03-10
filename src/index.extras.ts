@@ -190,7 +190,7 @@ class S2Account {
         );
     }
 
-    async createBasin(basin: string, request?: CreateBasinRequest, opConfig?: S2OperationConfig): Promise<BasinInfo | undefined> {
+    async createBasin(basin: string, request?: CreateBasinRequest, opConfig?: S2OperationConfig): Promise<BasinInfo> {
         this.overrideConfig(opConfig);
         const _request: CreateBasinRequestInner = {
             basin,
@@ -218,7 +218,7 @@ class S2Account {
         return;
     }
 
-    async reconfigureBasin(basin: string, config: BasinConfig, opConfig?: S2OperationConfig): Promise<BasinConfig | undefined> {
+    async reconfigureBasin(basin: string, config: BasinConfig, opConfig?: S2OperationConfig): Promise<BasinConfig> {
         this.overrideConfig(opConfig);
         const _request: ReconfigureBasinRequest = { basin, basinConfig: config };
         return retryWithExponentialBackoff(
@@ -289,7 +289,7 @@ class S2Basin {
     async getStreamConfig(
         stream: string,
         opConfig?: S2OperationConfig
-    ): Promise<StreamConfig | undefined> {
+    ): Promise<StreamConfig> {
         this.overrideConfig(opConfig);
         return retryWithExponentialBackoff(
             () => this._basin.getStreamConfig({ stream }, { serverURL: this.URL }),
@@ -299,7 +299,7 @@ class S2Basin {
         );
     }
 
-    async createStream(stream: string, request?: CreateStreamRequest, opConfig?: S2OperationConfig): Promise<StreamInfo | undefined> {
+    async createStream(stream: string, request?: CreateStreamRequest, opConfig?: S2OperationConfig): Promise<StreamInfo> {
         this.overrideConfig(opConfig);
         const _request: CreateStreamRequestInner = {
             stream,
@@ -314,7 +314,7 @@ class S2Basin {
         );
     }
 
-    async deleteStream(stream: string, if_exists?: boolean, opConfig?: S2OperationConfig): Promise<void | undefined> {
+    async deleteStream(stream: string, if_exists?: boolean, opConfig?: S2OperationConfig): Promise<void> {
         this.overrideConfig(opConfig);
         const response = await retryWithExponentialBackoff(
             () => basinDeleteStream(this._basin, { stream }, { serverURL: this.URL }),
