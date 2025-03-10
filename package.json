@@ -1,6 +1,6 @@
 {
   "name": "@s2-dev/streamstore",
-  "version": "0.7.5",
+  "version": "0.7.6",
   "author": "Speakeasy",
   "type": "module",
   "bin": {
