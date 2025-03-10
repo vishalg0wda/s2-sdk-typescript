@@ -6,6 +6,8 @@ export class CompressionHook implements BeforeCreateRequestHook {
         const hdrs = new Headers(input.options?.headers ?? {});
         const body = input.options?.body;
 
+        // We'll need to handle streaming requests differently (per message).
+        // Currently we only handle unary JSON requests.
         if (!hdrs.get("content-type")?.toLowerCase().startsWith("application/json") || typeof body !== "string") {
             return input;
         }
