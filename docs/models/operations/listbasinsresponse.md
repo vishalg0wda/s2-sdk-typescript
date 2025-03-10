@@ -9,9 +9,8 @@ let value: ListBasinsResponse = {
   result: {
     basins: [
       {
-        cell: "<value>",
         name: "<value>",
-        scope: "<value>",
+        scope: "aws:us-east-1",
         state: "creating",
       },
     ],

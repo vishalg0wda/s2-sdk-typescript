@@ -8,10 +8,9 @@ Basin information.
 import { BasinInfo } from "@s2-dev/streamstore/models/components";
 
 let value: BasinInfo = {
-  cell: "<value>",
   name: "<value>",
-  scope: "<value>",
-  state: "deleting",
+  scope: "aws:us-east-1",
+  state: "creating",
 };
 ```
 
@@ -19,7 +18,6 @@ let value: BasinInfo = {
 
 | Field                                                          | Type                                                           | Required                                                       | Description                                                    |
 | -------------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------- |
-| `cell`                                                         | *string*                                                       | :heavy_check_mark:                                             | Cell assignment.                                               |
 | `name`                                                         | *string*                                                       | :heavy_check_mark:                                             | Basin name.                                                    |
-| `scope`                                                        | *string*                                                       | :heavy_check_mark:                                             | Basin scope.                                                   |
+| `scope`                                                        | [components.BasinScope](../../models/components/basinscope.md) | :heavy_check_mark:                                             | Basin scope.                                                   |
 | `state`                                                        | [components.BasinState](../../models/components/basinstate.md) | :heavy_check_mark:                                             | Current state of the basin.                                    |

@@ -7,24 +7,26 @@ import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 import {
-  Assignment,
-  Assignment$inboundSchema,
-  Assignment$Outbound,
-  Assignment$outboundSchema,
-} from "./assignment.js";
-import {
   BasinConfig,
   BasinConfig$inboundSchema,
   BasinConfig$Outbound,
   BasinConfig$outboundSchema,
 } from "./basinconfig.js";
+import {
+  BasinScope,
+  BasinScope$inboundSchema,
+  BasinScope$outboundSchema,
+} from "./basinscope.js";
 
 /**
  * Create basin request.
  */
 export type CreateBasinRequest = {
-  assignment?: Assignment | null | undefined;
   config?: BasinConfig | null | undefined;
+  /**
+   * Basin scope.
+   */
+  scope?: BasinScope | undefined;
 };
 
 /** @internal */
@@ -33,14 +35,14 @@ export const CreateBasinRequest$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.object({
-  assignment: z.nullable(Assignment$inboundSchema).optional(),
   config: z.nullable(BasinConfig$inboundSchema).optional(),
+  scope: BasinScope$inboundSchema.optional(),
 });
 
 /** @internal */
 export type CreateBasinRequest$Outbound = {
-  assignment?: Assignment$Outbound | null | undefined;
   config?: BasinConfig$Outbound | null | undefined;
+  scope?: string | undefined;
 };
 
 /** @internal */
@@ -49,8 +51,8 @@ export const CreateBasinRequest$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   CreateBasinRequest
 > = z.object({
-  assignment: z.nullable(Assignment$outboundSchema).optional(),
   config: z.nullable(BasinConfig$outboundSchema).optional(),
+  scope: BasinScope$outboundSchema.optional(),
 });
 
 /**

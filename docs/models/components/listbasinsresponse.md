@@ -10,10 +10,9 @@ import { ListBasinsResponse } from "@s2-dev/streamstore/models/components";
 let value: ListBasinsResponse = {
   basins: [
     {
-      cell: "<value>",
       name: "<value>",
-      scope: "<value>",
-      state: "deleting",
+      scope: "aws:us-east-1",
+      state: "active",
     },
   ],
   hasMore: false,

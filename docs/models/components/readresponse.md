@@ -18,7 +18,7 @@ const value: components.Message = {
               value: "<value>",
             },
           ],
-          seqNum: 944669,
+          seqNum: 774234,
         },
       ],
     },

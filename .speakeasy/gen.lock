@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 2d20490e-9921-47d5-9711-d3c4b91c8cfa
 management:
-  docChecksum: deebedbb7334d4fd56b50a655b7543d6
+  docChecksum: 7c839b3c9b2925069b31d7192dfc6c2e
   docVersion: 1.0.0
-  speakeasyVersion: 1.513.2
-  generationVersion: 2.545.2
-  releaseVersion: 0.7.0
-  configChecksum: dda0a94310d35cfb7716c7b21a29741c
+  speakeasyVersion: 1.513.6
+  generationVersion: 2.545.7
+  releaseVersion: 0.7.1
+  configChecksum: d980fedbf4ceeb4e1e8d46a5bcb868ee
   repoURL: https://github.com/s2-streamstore/s2-sdk-typescript.git
   installationURL: https://github.com/s2-streamstore/s2-sdk-typescript
   published: true
@@ -46,12 +46,11 @@ generatedFiles:
   - docs/models/components/appendinput.md
   - docs/models/components/appendoutput.md
   - docs/models/components/appendrecord.md
-  - docs/models/components/assignment.md
   - docs/models/components/basinconfig.md
   - docs/models/components/basininfo.md
+  - docs/models/components/basinscope.md
   - docs/models/components/basinstate.md
   - docs/models/components/batch.md
-  - docs/models/components/cell.md
   - docs/models/components/checktailresponse.md
   - docs/models/components/createbasinrequest.md
   - docs/models/components/createstreamrequest.md
@@ -70,7 +69,6 @@ generatedFiles:
   - docs/models/components/readresponse3event.md
   - docs/models/components/readresponseevent.md
   - docs/models/components/retentionpolicy.md
-  - docs/models/components/scope.md
   - docs/models/components/security.md
   - docs/models/components/sequencedrecord.md
   - docs/models/components/sequencedrecordbatch.md
@@ -169,9 +167,9 @@ generatedFiles:
   - src/models/components/appendinput.ts
   - src/models/components/appendoutput.ts
   - src/models/components/appendrecord.ts
-  - src/models/components/assignment.ts
   - src/models/components/basinconfig.ts
   - src/models/components/basininfo.ts
+  - src/models/components/basinscope.ts
   - src/models/components/basinstate.ts
   - src/models/components/checktailresponse.ts
   - src/models/components/createbasinrequest.ts
@@ -231,7 +229,7 @@ examples:
     speakeasy-default-list-basins:
       responses:
         "200":
-          application/json: {"basins": [{"cell": "<value>", "name": "<value>", "scope": "<value>", "state": "unspecified"}], "has_more": true}
+          application/json: {"basins": [{"name": "<value>", "scope": "unspecified", "state": "unspecified"}], "has_more": true}
         "400":
           application/json: {"error": "<value>"}
         "500":
@@ -262,7 +260,7 @@ examples:
         application/json: {}
       responses:
         "201":
-          application/json: {"cell": "<value>", "name": "<value>", "scope": "<value>", "state": "active"}
+          application/json: {"name": "<value>", "scope": "unspecified", "state": "active"}
         "400":
           application/json: {"error": "<value>"}
         "500":

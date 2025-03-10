@@ -7,6 +7,11 @@ import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 import {
+  BasinScope,
+  BasinScope$inboundSchema,
+  BasinScope$outboundSchema,
+} from "./basinscope.js";
+import {
   BasinState,
   BasinState$inboundSchema,
   BasinState$outboundSchema,
@@ -17,17 +22,13 @@ import {
  */
 export type BasinInfo = {
   /**
-   * Cell assignment.
-   */
-  cell: string;
-  /**
    * Basin name.
    */
   name: string;
   /**
    * Basin scope.
    */
-  scope: string;
+  scope: BasinScope;
   /**
    * Current state of the basin.
    */
@@ -40,15 +41,13 @@ export const BasinInfo$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.object({
-  cell: z.string(),
   name: z.string(),
-  scope: z.string(),
+  scope: BasinScope$inboundSchema,
   state: BasinState$inboundSchema,
 });
 
 /** @internal */
 export type BasinInfo$Outbound = {
-  cell: string;
   name: string;
   scope: string;
   state: string;
@@ -60,9 +59,8 @@ export const BasinInfo$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   BasinInfo
 > = z.object({
-  cell: z.string(),
   name: z.string(),
-  scope: z.string(),
+  scope: BasinScope$outboundSchema,
   state: BasinState$outboundSchema,
 });
 

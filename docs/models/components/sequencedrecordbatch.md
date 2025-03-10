@@ -17,7 +17,7 @@ let value: SequencedRecordBatch = {
           value: "<value>",
         },
       ],
-      seqNum: 461479,
+      seqNum: 143353,
     },
   ],
 };

@@ -7,20 +7,7 @@ import { Message } from "@s2-dev/streamstore/models/components";
 
 let value: Message = {
   data: {
-    batch: {
-      records: [
-        {
-          body: "<value>",
-          headers: [
-            {
-              name: "<value>",
-              value: "<value>",
-            },
-          ],
-          seqNum: 639921,
-        },
-      ],
-    },
+    firstSeqNum: 414662,
   },
   event: "message",
 };
