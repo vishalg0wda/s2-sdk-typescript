@@ -18,6 +18,13 @@ import {
  * Basin configuration.
  */
 export type BasinConfig = {
+  /**
+   * Create stream on append if it doesn't exist,
+   *
+   * @remarks
+   * using the default stream configuration.
+   */
+  createStreamOnAppend: boolean;
   defaultStreamConfig?: StreamConfig | null | undefined;
 };
 
@@ -27,15 +34,18 @@ export const BasinConfig$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.object({
+  create_stream_on_append: z.boolean(),
   default_stream_config: z.nullable(StreamConfig$inboundSchema).optional(),
 }).transform((v) => {
   return remap$(v, {
+    "create_stream_on_append": "createStreamOnAppend",
     "default_stream_config": "defaultStreamConfig",
   });
 });
 
 /** @internal */
 export type BasinConfig$Outbound = {
+  create_stream_on_append: boolean;
   default_stream_config?: StreamConfig$Outbound | null | undefined;
 };
 
@@ -45,9 +55,11 @@ export const BasinConfig$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   BasinConfig
 > = z.object({
+  createStreamOnAppend: z.boolean(),
   defaultStreamConfig: z.nullable(StreamConfig$outboundSchema).optional(),
 }).transform((v) => {
   return remap$(v, {
+    createStreamOnAppend: "create_stream_on_append",
     defaultStreamConfig: "default_stream_config",
   });
 });

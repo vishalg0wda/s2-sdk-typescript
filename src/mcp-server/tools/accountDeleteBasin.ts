@@ -11,7 +11,7 @@ const args = {
 };
 
 export const tool$accountDeleteBasin: ToolDefinition<typeof args> = {
-  name: "account_delete-basin",
+  name: "account-delete-basin",
   description: `Delete a basin.`,
   scopes: ["write"],
   args,

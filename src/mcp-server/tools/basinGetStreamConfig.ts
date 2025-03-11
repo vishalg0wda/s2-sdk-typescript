@@ -11,7 +11,7 @@ const args = {
 };
 
 export const tool$basinGetStreamConfig: ToolDefinition<typeof args> = {
-  name: "basin_get-stream-config",
+  name: "basin-get-stream-config",
   description: `Get stream configuration.`,
   scopes: ["read"],
   args,

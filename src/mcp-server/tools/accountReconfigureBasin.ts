@@ -11,7 +11,7 @@ const args = {
 };
 
 export const tool$accountReconfigureBasin: ToolDefinition<typeof args> = {
-  name: "account_reconfigure-basin",
+  name: "account-reconfigure-basin",
   description: `Update basin configuration.`,
   scopes: ["write"],
   args,

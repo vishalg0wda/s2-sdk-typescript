@@ -11,7 +11,7 @@ const args = {
 };
 
 export const tool$basinReconfigureStream: ToolDefinition<typeof args> = {
-  name: "basin_reconfigure-stream",
+  name: "basin-reconfigure-stream",
   description: `Update stream configuration.`,
   scopes: ["write"],
   args,

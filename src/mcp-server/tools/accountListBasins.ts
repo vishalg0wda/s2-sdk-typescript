@@ -11,7 +11,7 @@ const args = {
 };
 
 export const tool$accountListBasins: ToolDefinition<typeof args> = {
-  name: "account_list-basins",
+  name: "account-list-basins",
   description: `List basins.`,
   scopes: ["read"],
   args,

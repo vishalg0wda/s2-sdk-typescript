@@ -11,7 +11,7 @@ const args = {
 };
 
 export const tool$accountGetBasinConfig: ToolDefinition<typeof args> = {
-  name: "account_get-basin-config",
+  name: "account-get-basin-config",
   description: `Get basin configuration.`,
   scopes: ["read"],
   args,

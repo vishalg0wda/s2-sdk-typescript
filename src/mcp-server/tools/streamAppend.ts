@@ -11,7 +11,7 @@ const args = {
 };
 
 export const tool$streamAppend: ToolDefinition<typeof args> = {
-  name: "stream_append",
+  name: "stream-append",
   description: `Append records.
 
 Append a batch of records to a stream.`,

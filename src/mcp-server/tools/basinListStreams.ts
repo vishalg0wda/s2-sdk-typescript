@@ -11,7 +11,7 @@ const args = {
 };
 
 export const tool$basinListStreams: ToolDefinition<typeof args> = {
-  name: "basin_list-streams",
+  name: "basin-list-streams",
   description: `List Streams.`,
   scopes: ["read"],
   args,

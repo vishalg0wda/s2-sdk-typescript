@@ -11,7 +11,7 @@ const args = {
 };
 
 export const tool$streamCheckTail: ToolDefinition<typeof args> = {
-  name: "stream_check-tail",
+  name: "stream-check-tail",
   description: `Check the tail.
 
 Check the sequence number that will be assigned to the next record on a stream.`,

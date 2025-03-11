@@ -11,7 +11,7 @@ const args = {
 };
 
 export const tool$streamRead: ToolDefinition<typeof args> = {
-  name: "stream_read",
+  name: "stream-read",
   description: `Retrieve records.
 
 Retrieve a batch of records, or set \`Accept: text/event-stream\` to stream using server-sent events.`,
