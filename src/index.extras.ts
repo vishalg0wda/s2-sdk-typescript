@@ -419,6 +419,8 @@ class Stream {
         const maxBackoffMs = 5000;
         const maxRetries = this.config.maxRetries ?? 5;
         let retryCount = 0;
+        const PING_TIMEOUT_MS = 30000;
+        let lastPingTime = Date.now();
 
         while (true) {
             let stream: EventStream<ReadResponse> | undefined;
@@ -435,6 +437,15 @@ class Stream {
                 if (!stream) return;
 
                 for await (const event of stream) {
+                    if (event.event === 'ping') {
+                        lastPingTime = Date.now();
+                        continue;
+                    }
+
+                    if (Date.now() - lastPingTime > PING_TIMEOUT_MS) {
+                        throw new Error('No ping received for over 30 seconds');
+                    }
+
                     yield event;
 
                     if (event.event === 'message') {
