@@ -20,6 +20,7 @@ export const ReadResponse3Event = {
 export type ReadResponse3Event = ClosedEnum<typeof ReadResponse3Event>;
 
 export type Ping = {
+  data: string;
   event: ReadResponse3Event;
 };
 
@@ -46,7 +47,7 @@ export type Message = {
   event: Event;
 };
 
-export type ReadResponse = Ping | Message | ErrorT;
+export type ReadResponse = Message | ErrorT | Ping;
 
 /** @internal */
 export const ReadResponse3Event$inboundSchema: z.ZodNativeEnum<
@@ -72,17 +73,20 @@ export namespace ReadResponse3Event$ {
 /** @internal */
 export const Ping$inboundSchema: z.ZodType<Ping, z.ZodTypeDef, unknown> = z
   .object({
+    data: z.string(),
     event: ReadResponse3Event$inboundSchema,
   });
 
 /** @internal */
 export type Ping$Outbound = {
+  data: string;
   event: string;
 };
 
 /** @internal */
 export const Ping$outboundSchema: z.ZodType<Ping$Outbound, z.ZodTypeDef, Ping> =
   z.object({
+    data: z.string(),
     event: ReadResponse3Event$outboundSchema,
   });
 
@@ -270,16 +274,16 @@ export const ReadResponse$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.union([
-  z.lazy(() => Ping$inboundSchema),
   z.lazy(() => Message$inboundSchema),
   z.lazy(() => ErrorT$inboundSchema),
+  z.lazy(() => Ping$inboundSchema),
 ]);
 
 /** @internal */
 export type ReadResponse$Outbound =
-  | Ping$Outbound
   | Message$Outbound
-  | ErrorT$Outbound;
+  | ErrorT$Outbound
+  | Ping$Outbound;
 
 /** @internal */
 export const ReadResponse$outboundSchema: z.ZodType<
@@ -287,9 +291,9 @@ export const ReadResponse$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   ReadResponse
 > = z.union([
-  z.lazy(() => Ping$outboundSchema),
   z.lazy(() => Message$outboundSchema),
   z.lazy(() => ErrorT$outboundSchema),
+  z.lazy(() => Ping$outboundSchema),
 ]);
 
 /**

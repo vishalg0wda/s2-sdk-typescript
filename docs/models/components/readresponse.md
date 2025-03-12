@@ -40,6 +40,7 @@ const value: components.ErrorT = {
 
 ```typescript
 const value: components.Ping = {
+  data: "<value>",
   event: "ping",
 };
 ```
