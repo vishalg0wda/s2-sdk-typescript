@@ -346,9 +346,7 @@ const s2 = new S2({
 async function run() {
   const result = await s2.account.reconfigureBasin({
     basin: "<value>",
-    basinConfig: {
-      createStreamOnAppend: false,
-    },
+    basinConfig: {},
   });
 
   // Handle the result
@@ -375,9 +373,7 @@ const s2 = new S2Core({
 async function run() {
   const res = await accountReconfigureBasin(s2, {
     basin: "<value>",
-    basinConfig: {
-      createStreamOnAppend: false,
-    },
+    basinConfig: {},
   });
 
   if (!res.ok) {

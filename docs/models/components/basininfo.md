@@ -9,8 +9,8 @@ import { BasinInfo } from "@s2-dev/streamstore/models/components";
 
 let value: BasinInfo = {
   name: "<value>",
-  scope: "aws:us-east-1",
-  state: "creating",
+  scope: "unspecified",
+  state: "deleting",
 };
 ```
 

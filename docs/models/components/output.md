@@ -19,7 +19,7 @@ const value: components.Batch = {
             value: "<value>",
           },
         ],
-        seqNum: 780529,
+        seqNum: 799159,
       },
     ],
   },
@@ -30,7 +30,7 @@ const value: components.Batch = {
 
 ```typescript
 const value: components.FirstSeqNum = {
-  firstSeqNum: 118274,
+  firstSeqNum: 461479,
 };
 ```
 
@@ -38,7 +38,7 @@ const value: components.FirstSeqNum = {
 
 ```typescript
 const value: components.NextSeqNum = {
-  nextSeqNum: 639921,
+  nextSeqNum: 780529,
 };
 ```
 
