@@ -27,7 +27,7 @@ export type StreamConfig = {
   /**
    * Storage class for recent writes.
    */
-  storageClass: StorageClass;
+  storageClass?: StorageClass | undefined;
 };
 
 /** @internal */
@@ -37,7 +37,7 @@ export const StreamConfig$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   retention_policy: z.nullable(RetentionPolicy$inboundSchema).optional(),
-  storage_class: StorageClass$inboundSchema,
+  storage_class: StorageClass$inboundSchema.optional(),
 }).transform((v) => {
   return remap$(v, {
     "retention_policy": "retentionPolicy",
@@ -48,7 +48,7 @@ export const StreamConfig$inboundSchema: z.ZodType<
 /** @internal */
 export type StreamConfig$Outbound = {
   retention_policy?: RetentionPolicy$Outbound | null | undefined;
-  storage_class: string;
+  storage_class?: string | undefined;
 };
 
 /** @internal */
@@ -58,7 +58,7 @@ export const StreamConfig$outboundSchema: z.ZodType<
   StreamConfig
 > = z.object({
   retentionPolicy: z.nullable(RetentionPolicy$outboundSchema).optional(),
-  storageClass: StorageClass$outboundSchema,
+  storageClass: StorageClass$outboundSchema.optional(),
 }).transform((v) => {
   return remap$(v, {
     retentionPolicy: "retention_policy",

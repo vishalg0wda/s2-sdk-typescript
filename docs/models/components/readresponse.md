@@ -8,20 +8,7 @@
 ```typescript
 const value: components.Message = {
   data: {
-    batch: {
-      records: [
-        {
-          body: "<value>",
-          headers: [
-            {
-              name: "<value>",
-              value: "<value>",
-            },
-          ],
-          seqNum: 774234,
-        },
-      ],
-    },
+    firstSeqNum: 414662,
   },
   event: "message",
 };

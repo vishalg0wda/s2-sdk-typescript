@@ -7,7 +7,7 @@
 
 ```typescript
 const value: components.Output = {
-  firstSeqNum: 437587,
+  firstSeqNum: 645894,
 };
 ```
 
