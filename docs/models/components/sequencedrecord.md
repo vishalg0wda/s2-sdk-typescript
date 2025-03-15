@@ -15,14 +15,16 @@ let value: SequencedRecord = {
       value: "<value>",
     },
   ],
-  seqNum: 639921,
+  seqNum: 521848,
+  timestamp: 414662,
 };
 ```
 
 ## Fields
 
-| Field                                                    | Type                                                     | Required                                                 | Description                                              |
-| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
-| `body`                                                   | *string*                                                 | :heavy_check_mark:                                       | Body of this record.                                     |
-| `headers`                                                | [components.Header](../../models/components/header.md)[] | :heavy_check_mark:                                       | Series of name-value pairs for this record.              |
-| `seqNum`                                                 | *number*                                                 | :heavy_check_mark:                                       | Sequence number for this record.                         |
+| Field                                                       | Type                                                        | Required                                                    | Description                                                 |
+| ----------------------------------------------------------- | ----------------------------------------------------------- | ----------------------------------------------------------- | ----------------------------------------------------------- |
+| `body`                                                      | *string*                                                    | :heavy_check_mark:                                          | Body of this record.                                        |
+| `headers`                                                   | [components.Header](../../models/components/header.md)[]    | :heavy_check_mark:                                          | Series of name-value pairs for this record.                 |
+| `seqNum`                                                    | *number*                                                    | :heavy_check_mark:                                          | Sequence number assigned to this record.                    |
+| `timestamp`                                                 | *number*                                                    | :heavy_check_mark:                                          | Timestamp for this record in milliseconds since Unix epoch. |

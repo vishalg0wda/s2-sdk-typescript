@@ -21,6 +21,7 @@ let value: Batch = {
           },
         ],
         seqNum: 978619,
+        timestamp: 799159,
       },
     ],
   },

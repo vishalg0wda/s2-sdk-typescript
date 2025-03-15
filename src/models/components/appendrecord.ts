@@ -19,6 +19,15 @@ export type AppendRecord = {
    * Series of name-value pairs for this record.
    */
   headers?: Array<Array<string>> | undefined;
+  /**
+   * Timestamp for this record in milliseconds since Unix epoch.
+   *
+   * @remarks
+   * The service ensures monotonicity by adjusting it up if necessary to the maximum observed timestamp.
+   * A timestamp detected to be in the future will be adjusted down.
+   * If not provided, the semantics depend on the stream's `require_client_timestamps` config.
+   */
+  timestamp?: number | null | undefined;
 };
 
 /** @internal */
@@ -29,12 +38,14 @@ export const AppendRecord$inboundSchema: z.ZodType<
 > = z.object({
   body: z.string(),
   headers: z.array(z.array(z.string())).optional(),
+  timestamp: z.nullable(z.number().int()).optional(),
 });
 
 /** @internal */
 export type AppendRecord$Outbound = {
   body: string;
   headers?: Array<Array<string>> | undefined;
+  timestamp?: number | null | undefined;
 };
 
 /** @internal */
@@ -45,6 +56,7 @@ export const AppendRecord$outboundSchema: z.ZodType<
 > = z.object({
   body: z.string(),
   headers: z.array(z.array(z.string())).optional(),
+  timestamp: z.nullable(z.number().int()).optional(),
 });
 
 /**
