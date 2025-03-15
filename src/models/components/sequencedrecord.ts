@@ -27,9 +27,13 @@ export type SequencedRecord = {
    */
   headers: Array<Header>;
   /**
-   * Sequence number for this record.
+   * Sequence number assigned to this record.
    */
   seqNum: number;
+  /**
+   * Timestamp for this record in milliseconds since Unix epoch.
+   */
+  timestamp: number;
 };
 
 /** @internal */
@@ -41,6 +45,7 @@ export const SequencedRecord$inboundSchema: z.ZodType<
   body: z.string(),
   headers: z.array(Header$inboundSchema),
   seq_num: z.number().int(),
+  timestamp: z.number().int(),
 }).transform((v) => {
   return remap$(v, {
     "seq_num": "seqNum",
@@ -52,6 +57,7 @@ export type SequencedRecord$Outbound = {
   body: string;
   headers: Array<Header$Outbound>;
   seq_num: number;
+  timestamp: number;
 };
 
 /** @internal */
@@ -63,6 +69,7 @@ export const SequencedRecord$outboundSchema: z.ZodType<
   body: z.string(),
   headers: z.array(Header$outboundSchema),
   seqNum: z.number().int(),
+  timestamp: z.number().int(),
 }).transform((v) => {
   return remap$(v, {
     seqNum: "seq_num",

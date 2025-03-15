@@ -8,7 +8,7 @@
 ```typescript
 const value: components.Message = {
   data: {
-    firstSeqNum: 414662,
+    firstSeqNum: 18789,
   },
   event: "message",
 };

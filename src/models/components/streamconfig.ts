@@ -23,6 +23,14 @@ import {
  * Stream configuration.
  */
 export type StreamConfig = {
+  /**
+   * Controls how to handle timestamps when they are not provided by the client.
+   *
+   * @remarks
+   * If this is false (or not set), the record's arrival time will be assigned as its timestamp.
+   * If this is true, then any append without a client-specified timestamp will be rejected as invalid.
+   */
+  requireClientTimestamps?: boolean | null | undefined;
   retentionPolicy?: RetentionPolicy | null | undefined;
   /**
    * Storage class for recent writes.
@@ -36,10 +44,12 @@ export const StreamConfig$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.object({
+  require_client_timestamps: z.nullable(z.boolean()).optional(),
   retention_policy: z.nullable(RetentionPolicy$inboundSchema).optional(),
   storage_class: StorageClass$inboundSchema.optional(),
 }).transform((v) => {
   return remap$(v, {
+    "require_client_timestamps": "requireClientTimestamps",
     "retention_policy": "retentionPolicy",
     "storage_class": "storageClass",
   });
@@ -47,6 +57,7 @@ export const StreamConfig$inboundSchema: z.ZodType<
 
 /** @internal */
 export type StreamConfig$Outbound = {
+  require_client_timestamps?: boolean | null | undefined;
   retention_policy?: RetentionPolicy$Outbound | null | undefined;
   storage_class?: string | undefined;
 };
@@ -57,10 +68,12 @@ export const StreamConfig$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   StreamConfig
 > = z.object({
+  requireClientTimestamps: z.nullable(z.boolean()).optional(),
   retentionPolicy: z.nullable(RetentionPolicy$outboundSchema).optional(),
   storageClass: StorageClass$outboundSchema.optional(),
 }).transform((v) => {
   return remap$(v, {
+    requireClientTimestamps: "require_client_timestamps",
     retentionPolicy: "retention_policy",
     storageClass: "storage_class",
   });
