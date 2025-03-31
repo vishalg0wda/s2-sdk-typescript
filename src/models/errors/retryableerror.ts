@@ -15,9 +15,7 @@ export class RetryableError extends Error {
   data$: RetryableErrorData;
 
   constructor(err: RetryableErrorData) {
-    const message = "message" in err && typeof err.message === "string"
-      ? err.message
-      : `API error occurred: ${JSON.stringify(err)}`;
+    const message = err.error || "API error occurred";
     super(message);
     this.data$ = err;
 

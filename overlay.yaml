@@ -40,6 +40,7 @@ actions:
         properties:
           error:
             type: string
+            x-speakeasy-error-message: true
       RetryableError:
         type: object
         required:
@@ -47,6 +48,15 @@ actions:
         properties:
           error:
             type: string
+            x-speakeasy-error-message: true
+      ErrorResponse:
+        type: object
+        required:
+          - error
+        properties:
+          error:
+            type: string
+            x-speakeasy-error-message: true
   - target: $['paths'][*]['delete']['responses']['404']['content']['application/json']['schema']
     update:
       $ref: "#/components/schemas/NotFoundError"
