@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 2d20490e-9921-47d5-9711-d3c4b91c8cfa
 management:
-  docChecksum: 2d43ef2b13f30777db2587362df84a57
+  docChecksum: 02d1a42462defc610f7e2251c6b9dde7
   docVersion: 1.0.0
-  speakeasyVersion: 1.517.0
-  generationVersion: 2.548.1
-  releaseVersion: 0.8.1
-  configChecksum: c1c8670a44860ac22690e05e652c3830
+  speakeasyVersion: 1.526.1
+  generationVersion: 2.563.0
+  releaseVersion: 0.9.0
+  configChecksum: bfa897245f346d77875e02c12964ae72
   repoURL: https://github.com/s2-streamstore/s2-sdk-typescript.git
   installationURL: https://github.com/s2-streamstore/s2-sdk-typescript
   published: true
@@ -19,11 +19,12 @@ features:
     devContainers: 2.90.0
     enumUnions: 0.1.0
     envVarSecurityUsage: 0.1.2
+    errors: 2.84.0
     globalSecurity: 2.82.13
     globalSecurityCallbacks: 0.1.0
     globalSecurityFlattening: 0.1.0
     globalServerURLs: 2.82.4
-    mcpServer: 0.7.0
+    mcpServer: 0.9.0
     methodServerURLs: 2.82.1
     nullables: 0.1.1
     pagination: 2.83.0
@@ -146,6 +147,7 @@ generatedFiles:
   - src/mcp-server/console-logger.ts
   - src/mcp-server/extensions.ts
   - src/mcp-server/mcp-server.ts
+  - src/mcp-server/prompts.ts
   - src/mcp-server/resources.ts
   - src/mcp-server/scopes.ts
   - src/mcp-server/server.ts

@@ -1,6 +1,7 @@
 # Output
 
-Reply which can be a batch of records, or a sequence number if the request could not be satisfied.
+Batch of records, or a sequence number if the read could not be satisfied.
+An empty batch or a sequence number output will be a terminal message in a session.
 
 
 ## Supported Types
@@ -19,7 +20,8 @@ const value: components.Batch = {
             value: "<value>",
           },
         ],
-        seqNum: 780529,
+        seqNum: 461479,
+        timestamp: 780529,
       },
     ],
   },

@@ -1,7 +1,8 @@
 # NextSeqNum
 
-Sequence number for the next record on this stream, in case the requested `start_seq_num` was larger.
-If returned in a streaming read session, this will be a terminal reply.
+Sequence number that will be assigned to the next record on this stream.
+This will be returned either because the requested `start_seq_num` was larger,
+or in case of a limited read, equal to it.
 
 ## Example Usage
 
@@ -9,12 +10,12 @@ If returned in a streaming read session, this will be a terminal reply.
 import { NextSeqNum } from "@s2-dev/streamstore/models/components";
 
 let value: NextSeqNum = {
-  nextSeqNum: 978619,
+  nextSeqNum: 778157,
 };
 ```
 
 ## Fields
 
-| Field                                                                                                                                                                         | Type                                                                                                                                                                          | Required                                                                                                                                                                      | Description                                                                                                                                                                   |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `nextSeqNum`                                                                                                                                                                  | *number*                                                                                                                                                                      | :heavy_check_mark:                                                                                                                                                            | Sequence number for the next record on this stream, in case the requested `start_seq_num` was larger.<br/>If returned in a streaming read session, this will be a terminal reply. |
+| Field                                                                                                                                                                                              | Type                                                                                                                                                                                               | Required                                                                                                                                                                                           | Description                                                                                                                                                                                        |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `nextSeqNum`                                                                                                                                                                                       | *number*                                                                                                                                                                                           | :heavy_check_mark:                                                                                                                                                                                 | Sequence number that will be assigned to the next record on this stream.<br/>This will be returned either because the requested `start_seq_num` was larger,<br/>or in case of a limited read, equal to it. |
