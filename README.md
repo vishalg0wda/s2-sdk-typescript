@@ -28,7 +28,6 @@ S2 API: Serverless API for streaming data backed by object storage.
   * [Authentication](#authentication)
   * [Available Resources and Operations](#available-resources-and-operations)
   * [Standalone functions](#standalone-functions)
-  * [Server-sent event streaming](#server-sent-event-streaming)
   * [Pagination](#pagination)
   * [Retries](#retries)
   * [Error Handling](#error-handling)
@@ -259,12 +258,10 @@ const s2 = new S2({
 });
 
 async function run() {
-  const result = await s2.account.listBasins({});
+  const result = await s2.accessTokens.listAccessTokens({});
 
-  for await (const page of result) {
-    // Handle the page
-    console.log(page);
-  }
+  // Handle the result
+  console.log(result);
 }
 
 run();
@@ -292,12 +289,10 @@ const s2 = new S2({
 });
 
 async function run() {
-  const result = await s2.account.listBasins({});
+  const result = await s2.accessTokens.listAccessTokens({});
 
-  for await (const page of result) {
-    // Handle the page
-    console.log(page);
-  }
+  // Handle the result
+  console.log(result);
 }
 
 run();
@@ -311,28 +306,28 @@ run();
 <details open>
 <summary>Available methods</summary>
 
-### [account](docs/sdks/account/README.md)
+### [accessTokens](docs/sdks/accesstokens/README.md)
 
-* [listBasins](docs/sdks/account/README.md#listbasins) - List basins.
-* [getBasinConfig](docs/sdks/account/README.md#getbasinconfig) - Get basin configuration.
-* [createBasin](docs/sdks/account/README.md#createbasin) - Create a new basin.
-* [deleteBasin](docs/sdks/account/README.md#deletebasin) - Delete a basin.
-* [reconfigureBasin](docs/sdks/account/README.md#reconfigurebasin) - Update basin configuration.
+* [listAccessTokens](docs/sdks/accesstokens/README.md#listaccesstokens) - List access tokens.
+* [issueAccessToken](docs/sdks/accesstokens/README.md#issueaccesstoken) - Issue a new access token.
+* [revokeAccessToken](docs/sdks/accesstokens/README.md#revokeaccesstoken) - Revoke an access token.
 
-### [basin](docs/sdks/basin/README.md)
+### [basins](docs/sdks/basins/README.md)
 
-* [listStreams](docs/sdks/basin/README.md#liststreams) - List Streams.
-* [getStreamConfig](docs/sdks/basin/README.md#getstreamconfig) - Get stream configuration.
-* [createStream](docs/sdks/basin/README.md#createstream) - Create a stream.
-* [deleteStream](docs/sdks/basin/README.md#deletestream) - Delete a stream.
-* [reconfigureStream](docs/sdks/basin/README.md#reconfigurestream) - Update stream configuration.
+* [listBasins](docs/sdks/basins/README.md#listbasins) - List basins.
+* [getBasinConfig](docs/sdks/basins/README.md#getbasinconfig) - Get basin config.
+* [createOrReconfigureBasin](docs/sdks/basins/README.md#createorreconfigurebasin) - Create or reconfigure a basin.
+* [deleteBasin](docs/sdks/basins/README.md#deletebasin) - Delete a basin.
+* [reconfigureBasin](docs/sdks/basins/README.md#reconfigurebasin) - Reconfigure a basin.
 
 
-### [stream](docs/sdks/stream/README.md)
+### [streams](docs/sdks/streams/README.md)
 
-* [read](docs/sdks/stream/README.md#read) - Retrieve records.
-* [append](docs/sdks/stream/README.md#append) - Append records.
-* [checkTail](docs/sdks/stream/README.md#checktail) - Check the tail.
+* [listStreams](docs/sdks/streams/README.md#liststreams) - List streams.
+* [getStreamConfig](docs/sdks/streams/README.md#getstreamconfig) - Get stream configuration.
+* [createOrReconfigureStream](docs/sdks/streams/README.md#createorreconfigurestream) - Create or reconfigure a stream.
+* [deleteStream](docs/sdks/streams/README.md#deletestream) - Delete a stream.
+* [reconfigureStream](docs/sdks/streams/README.md#reconfigurestream) - Reconfigure a stream.
 
 </details>
 <!-- End Available Resources and Operations [operations] -->
@@ -352,57 +347,22 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 
 <summary>Available standalone functions</summary>
 
-- [`accountCreateBasin`](docs/sdks/account/README.md#createbasin) - Create a new basin.
-- [`accountDeleteBasin`](docs/sdks/account/README.md#deletebasin) - Delete a basin.
-- [`accountGetBasinConfig`](docs/sdks/account/README.md#getbasinconfig) - Get basin configuration.
-- [`accountListBasins`](docs/sdks/account/README.md#listbasins) - List basins.
-- [`accountReconfigureBasin`](docs/sdks/account/README.md#reconfigurebasin) - Update basin configuration.
-- [`basinCreateStream`](docs/sdks/basin/README.md#createstream) - Create a stream.
-- [`basinDeleteStream`](docs/sdks/basin/README.md#deletestream) - Delete a stream.
-- [`basinGetStreamConfig`](docs/sdks/basin/README.md#getstreamconfig) - Get stream configuration.
-- [`basinListStreams`](docs/sdks/basin/README.md#liststreams) - List Streams.
-- [`basinReconfigureStream`](docs/sdks/basin/README.md#reconfigurestream) - Update stream configuration.
-- [`streamAppend`](docs/sdks/stream/README.md#append) - Append records.
-- [`streamCheckTail`](docs/sdks/stream/README.md#checktail) - Check the tail.
-- [`streamRead`](docs/sdks/stream/README.md#read) - Retrieve records.
+- [`accessTokensIssueAccessToken`](docs/sdks/accesstokens/README.md#issueaccesstoken) - Issue a new access token.
+- [`accessTokensListAccessTokens`](docs/sdks/accesstokens/README.md#listaccesstokens) - List access tokens.
+- [`accessTokensRevokeAccessToken`](docs/sdks/accesstokens/README.md#revokeaccesstoken) - Revoke an access token.
+- [`basinsCreateOrReconfigureBasin`](docs/sdks/basins/README.md#createorreconfigurebasin) - Create or reconfigure a basin.
+- [`basinsDeleteBasin`](docs/sdks/basins/README.md#deletebasin) - Delete a basin.
+- [`basinsGetBasinConfig`](docs/sdks/basins/README.md#getbasinconfig) - Get basin config.
+- [`basinsListBasins`](docs/sdks/basins/README.md#listbasins) - List basins.
+- [`basinsReconfigureBasin`](docs/sdks/basins/README.md#reconfigurebasin) - Reconfigure a basin.
+- [`streamsCreateOrReconfigureStream`](docs/sdks/streams/README.md#createorreconfigurestream) - Create or reconfigure a stream.
+- [`streamsDeleteStream`](docs/sdks/streams/README.md#deletestream) - Delete a stream.
+- [`streamsGetStreamConfig`](docs/sdks/streams/README.md#getstreamconfig) - Get stream configuration.
+- [`streamsListStreams`](docs/sdks/streams/README.md#liststreams) - List streams.
+- [`streamsReconfigureStream`](docs/sdks/streams/README.md#reconfigurestream) - Reconfigure a stream.
 
 </details>
 <!-- End Standalone functions [standalone-funcs] -->
-
-<!-- Start Server-sent event streaming [eventstream] -->
-## Server-sent event streaming
-
-[Server-sent events][mdn-sse] are used to stream content from certain
-operations. These operations will expose the stream as an async iterable that
-can be consumed using a [`for await...of`][mdn-for-await-of] loop. The loop will
-terminate when the server no longer has any events to send and closes the
-underlying connection.
-
-```typescript
-import { S2 } from "@s2-dev/streamstore";
-
-const s2 = new S2({
-  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
-});
-
-async function run() {
-  const result = await s2.stream.read({
-    stream: "<value>",
-  });
-
-  for await (const event of result) {
-    // Handle the event
-    console.log(event);
-  }
-}
-
-run();
-
-```
-
-[mdn-sse]: https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events
-[mdn-for-await-of]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await...of
-<!-- End Server-sent event streaming [eventstream] -->
 
 <!-- Start Pagination [pagination] -->
 ## Pagination
@@ -424,7 +384,7 @@ const s2 = new S2({
 });
 
 async function run() {
-  const result = await s2.account.listBasins({});
+  const result = await s2.basins.listBasins({});
 
   for await (const page of result) {
     // Handle the page
@@ -451,7 +411,7 @@ const s2 = new S2({
 });
 
 async function run() {
-  const result = await s2.account.listBasins({}, {
+  const result = await s2.accessTokens.listAccessTokens({}, {
     retries: {
       strategy: "backoff",
       backoff: {
@@ -464,10 +424,8 @@ async function run() {
     },
   });
 
-  for await (const page of result) {
-    // Handle the page
-    console.log(page);
-  }
+  // Handle the result
+  console.log(result);
 }
 
 run();
@@ -493,12 +451,10 @@ const s2 = new S2({
 });
 
 async function run() {
-  const result = await s2.account.listBasins({});
+  const result = await s2.accessTokens.listAccessTokens({});
 
-  for await (const page of result) {
-    // Handle the page
-    console.log(page);
-  }
+  // Handle the result
+  console.log(result);
 }
 
 run();
@@ -509,7 +465,7 @@ run();
 <!-- Start Error Handling [errors] -->
 ## Error Handling
 
-Some methods specify known errors which can be thrown. All the known errors are enumerated in the `models/errors/errors.ts` module. The known errors for a method are documented under the *Errors* tables in SDK docs. For example, the `listBasins` method may throw the following errors:
+Some methods specify known errors which can be thrown. All the known errors are enumerated in the `models/errors/errors.ts` module. The known errors for a method are documented under the *Errors* tables in SDK docs. For example, the `listAccessTokens` method may throw the following errors:
 
 | Error Type            | Status Code   | Content Type     |
 | --------------------- | ------------- | ---------------- |
@@ -535,12 +491,10 @@ const s2 = new S2({
 async function run() {
   let result;
   try {
-    result = await s2.account.listBasins({});
+    result = await s2.accessTokens.listAccessTokens({});
 
-    for await (const page of result) {
-      // Handle the page
-      console.log(page);
-    }
+    // Handle the result
+    console.log(result);
   } catch (err) {
     switch (true) {
       // The server response does not match the expected SDK schema
@@ -601,17 +555,15 @@ The default server can be overridden globally by passing a URL to the `serverURL
 import { S2 } from "@s2-dev/streamstore";
 
 const s2 = new S2({
-  serverURL: "https://aws.s2.dev/v1alpha",
+  serverURL: "https://aws.s2.dev/v1",
   bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
 });
 
 async function run() {
-  const result = await s2.account.listBasins({});
+  const result = await s2.accessTokens.listAccessTokens({});
 
-  for await (const page of result) {
-    // Handle the page
-    console.log(page);
-  }
+  // Handle the result
+  console.log(result);
 }
 
 run();
@@ -629,8 +581,8 @@ const s2 = new S2({
 });
 
 async function run() {
-  const result = await s2.basin.listStreams({}, {
-    serverURL: "https://my-favorite-basin.b.aws.s2.dev/v1alpha",
+  const result = await s2.streams.listStreams({}, {
+    serverURL: "https://.b.aws.s2.dev/v1",
   });
 
   for await (const page of result) {

@@ -13,7 +13,7 @@ export const ListStreamsServerList = [
   /**
    * Endpoint for the basin
    */
-  "https://{basin}.b.aws.s2.dev/v1alpha",
+  "https://.b.aws.s2.dev/v1",
 ] as const;
 
 export type ListStreamsRequest = {
@@ -45,9 +45,9 @@ export const ListStreamsRequest$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.object({
-  prefix: z.string().optional(),
-  start_after: z.string().optional(),
-  limit: z.number().int().optional(),
+  prefix: z.string().default(""),
+  start_after: z.string().default(""),
+  limit: z.number().int().default(1000),
 }).transform((v) => {
   return remap$(v, {
     "start_after": "startAfter",
@@ -56,9 +56,9 @@ export const ListStreamsRequest$inboundSchema: z.ZodType<
 
 /** @internal */
 export type ListStreamsRequest$Outbound = {
-  prefix?: string | undefined;
-  start_after?: string | undefined;
-  limit?: number | undefined;
+  prefix: string;
+  start_after: string;
+  limit: number;
 };
 
 /** @internal */
@@ -67,9 +67,9 @@ export const ListStreamsRequest$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   ListStreamsRequest
 > = z.object({
-  prefix: z.string().optional(),
-  startAfter: z.string().optional(),
-  limit: z.number().int().optional(),
+  prefix: z.string().default(""),
+  startAfter: z.string().default(""),
+  limit: z.number().int().default(1000),
 }).transform((v) => {
   return remap$(v, {
     startAfter: "start_after",

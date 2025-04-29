@@ -7,12 +7,10 @@ const s2 = new S2({
 });
 
 async function run() {
-  const result = await s2.account.listBasins({});
+  const result = await s2.accessTokens.listAccessTokens({});
 
-  for await (const page of result) {
-    // Handle the page
-    console.log(page);
-  }
+  // Handle the result
+  console.log(result);
 }
 
 run();

@@ -3,23 +3,23 @@
  */
 
 import { ClientSDK } from "../lib/sdks.js";
-import { Account } from "./account.js";
-import { Basin } from "./basin.js";
-import { Stream } from "./stream.js";
+import { AccessTokens } from "./accesstokens.js";
+import { Basins } from "./basins.js";
+import { Streams } from "./streams.js";
 
 export class S2 extends ClientSDK {
-  private _account?: Account;
-  get account(): Account {
-    return (this._account ??= new Account(this._options));
+  private _accessTokens?: AccessTokens;
+  get accessTokens(): AccessTokens {
+    return (this._accessTokens ??= new AccessTokens(this._options));
   }
 
-  private _basin?: Basin;
-  get basin(): Basin {
-    return (this._basin ??= new Basin(this._options));
+  private _basins?: Basins;
+  get basins(): Basins {
+    return (this._basins ??= new Basins(this._options));
   }
 
-  private _stream?: Stream;
-  get stream(): Stream {
-    return (this._stream ??= new Stream(this._options));
+  private _streams?: Streams;
+  get streams(): Streams {
+    return (this._streams ??= new Streams(this._options));
   }
 }

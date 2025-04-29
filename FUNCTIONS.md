@@ -20,7 +20,7 @@ specific category of applications.
 
 ```typescript
 import { S2Core } from "@s2-dev/streamstore/core.js";
-import { accountListBasins } from "@s2-dev/streamstore/funcs/accountListBasins.js";
+import { accessTokensListAccessTokens } from "@s2-dev/streamstore/funcs/accessTokensListAccessTokens.js";
 import { SDKValidationError } from "@s2-dev/streamstore/models/errors/sdkvalidationerror.js";
 
 // Use `S2Core` for best tree-shaking performance.
@@ -30,7 +30,7 @@ const s2 = new S2Core({
 });
 
 async function run() {
-  const res = await accountListBasins(s2, {});
+  const res = await accessTokensListAccessTokens(s2, {});
 
   switch (true) {
     case res.ok:
@@ -51,10 +51,8 @@ async function run() {
 
   const { value: result } = res;
 
-  for await (const page of result) {
-    // Handle the page
-    console.log(page);
-  }
+  // Handle the result
+  console.log(result);
 }
 
 run();

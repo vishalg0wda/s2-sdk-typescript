@@ -1,0 +1,20 @@
+# CreateOrReconfigureBasinRequest
+
+## Example Usage
+
+```typescript
+import { CreateOrReconfigureBasinRequest } from "@s2-dev/streamstore/models/operations";
+
+let value: CreateOrReconfigureBasinRequest = {
+  basin: "<value>",
+  createBasinRequest: {},
+};
+```
+
+## Fields
+
+| Field                                                                                                                                                                             | Type                                                                                                                                                                              | Required                                                                                                                                                                          | Description                                                                                                                                                                       |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `basin`                                                                                                                                                                           | *string*                                                                                                                                                                          | :heavy_check_mark:                                                                                                                                                                | Basin name, which must be globally unique.<br/>The name must be between 8 and 48 characters, comprising lowercase<br/>letters, numbers and hyphens. It cannot begin or end with a hyphen. |
+| `s2RequestToken`                                                                                                                                                                  | *string*                                                                                                                                                                          | :heavy_minus_sign:                                                                                                                                                                | Provide a client request token header for idempotent retry behaviour.                                                                                                             |
+| `createBasinRequest`                                                                                                                                                              | [components.CreateBasinRequest](../../models/components/createbasinrequest.md)                                                                                                    | :heavy_check_mark:                                                                                                                                                                | N/A                                                                                                                                                                               |

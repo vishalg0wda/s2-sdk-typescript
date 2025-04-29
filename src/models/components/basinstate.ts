@@ -5,18 +5,11 @@
 import * as z from "zod";
 import { ClosedEnum } from "../../types/enums.js";
 
-/**
- * Current state of the basin.
- */
 export const BasinState = {
-  Unspecified: "unspecified",
   Active: "active",
   Creating: "creating",
   Deleting: "deleting",
 } as const;
-/**
- * Current state of the basin.
- */
 export type BasinState = ClosedEnum<typeof BasinState>;
 
 /** @internal */

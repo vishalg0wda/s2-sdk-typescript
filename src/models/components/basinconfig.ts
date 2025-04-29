@@ -14,9 +14,6 @@ import {
   StreamConfig$outboundSchema,
 } from "./streamconfig.js";
 
-/**
- * Basin configuration.
- */
 export type BasinConfig = {
   /**
    * Create stream on append if it doesn't exist,
@@ -24,7 +21,14 @@ export type BasinConfig = {
    * @remarks
    * using the default stream configuration.
    */
-  createStreamOnAppend?: boolean | undefined;
+  createStreamOnAppend?: boolean | null | undefined;
+  /**
+   * Create stream on read if it doesn't exist,
+   *
+   * @remarks
+   * using the default stream configuration.
+   */
+  createStreamOnRead?: boolean | null | undefined;
   defaultStreamConfig?: StreamConfig | null | undefined;
 };
 
@@ -34,18 +38,21 @@ export const BasinConfig$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.object({
-  create_stream_on_append: z.boolean().optional(),
+  create_stream_on_append: z.nullable(z.boolean()).optional(),
+  create_stream_on_read: z.nullable(z.boolean()).optional(),
   default_stream_config: z.nullable(StreamConfig$inboundSchema).optional(),
 }).transform((v) => {
   return remap$(v, {
     "create_stream_on_append": "createStreamOnAppend",
+    "create_stream_on_read": "createStreamOnRead",
     "default_stream_config": "defaultStreamConfig",
   });
 });
 
 /** @internal */
 export type BasinConfig$Outbound = {
-  create_stream_on_append?: boolean | undefined;
+  create_stream_on_append?: boolean | null | undefined;
+  create_stream_on_read?: boolean | null | undefined;
   default_stream_config?: StreamConfig$Outbound | null | undefined;
 };
 
@@ -55,11 +62,13 @@ export const BasinConfig$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   BasinConfig
 > = z.object({
-  createStreamOnAppend: z.boolean().optional(),
+  createStreamOnAppend: z.nullable(z.boolean()).optional(),
+  createStreamOnRead: z.nullable(z.boolean()).optional(),
   defaultStreamConfig: z.nullable(StreamConfig$outboundSchema).optional(),
 }).transform((v) => {
   return remap$(v, {
     createStreamOnAppend: "create_stream_on_append",
+    createStreamOnRead: "create_stream_on_read",
     defaultStreamConfig: "default_stream_config",
   });
 });

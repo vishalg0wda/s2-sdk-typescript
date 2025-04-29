@@ -11,10 +11,14 @@ import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type ReconfigureBasinRequest = {
   /**
-   * Name of the basin.
+   * Basin name, which must be globally unique.
+   *
+   * @remarks
+   * The name must be between 8 and 48 characters, comprising lowercase
+   * letters, numbers and hyphens. It cannot begin or end with a hyphen.
    */
   basin: string;
-  basinConfig: components.BasinConfig;
+  basinReconfiguration: components.BasinReconfiguration;
 };
 
 /** @internal */
@@ -24,17 +28,17 @@ export const ReconfigureBasinRequest$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   basin: z.string(),
-  BasinConfig: components.BasinConfig$inboundSchema,
+  BasinReconfiguration: components.BasinReconfiguration$inboundSchema,
 }).transform((v) => {
   return remap$(v, {
-    "BasinConfig": "basinConfig",
+    "BasinReconfiguration": "basinReconfiguration",
   });
 });
 
 /** @internal */
 export type ReconfigureBasinRequest$Outbound = {
   basin: string;
-  BasinConfig: components.BasinConfig$Outbound;
+  BasinReconfiguration: components.BasinReconfiguration$Outbound;
 };
 
 /** @internal */
@@ -44,10 +48,10 @@ export const ReconfigureBasinRequest$outboundSchema: z.ZodType<
   ReconfigureBasinRequest
 > = z.object({
   basin: z.string(),
-  basinConfig: components.BasinConfig$outboundSchema,
+  basinReconfiguration: components.BasinReconfiguration$outboundSchema,
 }).transform((v) => {
   return remap$(v, {
-    basinConfig: "BasinConfig",
+    basinReconfiguration: "BasinReconfiguration",
   });
 });
 

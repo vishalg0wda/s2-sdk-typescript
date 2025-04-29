@@ -38,9 +38,9 @@ export const ListBasinsRequest$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.object({
-  prefix: z.string().optional(),
-  start_after: z.string().optional(),
-  limit: z.number().int().optional(),
+  prefix: z.string().default(""),
+  start_after: z.string().default(""),
+  limit: z.number().int().default(1000),
 }).transform((v) => {
   return remap$(v, {
     "start_after": "startAfter",
@@ -49,9 +49,9 @@ export const ListBasinsRequest$inboundSchema: z.ZodType<
 
 /** @internal */
 export type ListBasinsRequest$Outbound = {
-  prefix?: string | undefined;
-  start_after?: string | undefined;
-  limit?: number | undefined;
+  prefix: string;
+  start_after: string;
+  limit: number;
 };
 
 /** @internal */
@@ -60,9 +60,9 @@ export const ListBasinsRequest$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   ListBasinsRequest
 > = z.object({
-  prefix: z.string().optional(),
-  startAfter: z.string().optional(),
-  limit: z.number().int().optional(),
+  prefix: z.string().default(""),
+  startAfter: z.string().default(""),
+  limit: z.number().int().default(1000),
 }).transform((v) => {
   return remap$(v, {
     startAfter: "start_after",

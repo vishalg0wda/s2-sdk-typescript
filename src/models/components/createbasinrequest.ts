@@ -18,16 +18,53 @@ import {
   BasinScope$outboundSchema,
 } from "./basinscope.js";
 
-/**
- * Create basin request.
- */
+export type Scope = BasinScope;
+
 export type CreateBasinRequest = {
   config?: BasinConfig | null | undefined;
-  /**
-   * Basin scope.
-   */
   scope?: BasinScope | undefined;
 };
+
+/** @internal */
+export const Scope$inboundSchema: z.ZodType<Scope, z.ZodTypeDef, unknown> =
+  BasinScope$inboundSchema;
+
+/** @internal */
+export type Scope$Outbound = string;
+
+/** @internal */
+export const Scope$outboundSchema: z.ZodType<
+  Scope$Outbound,
+  z.ZodTypeDef,
+  Scope
+> = BasinScope$outboundSchema;
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace Scope$ {
+  /** @deprecated use `Scope$inboundSchema` instead. */
+  export const inboundSchema = Scope$inboundSchema;
+  /** @deprecated use `Scope$outboundSchema` instead. */
+  export const outboundSchema = Scope$outboundSchema;
+  /** @deprecated use `Scope$Outbound` instead. */
+  export type Outbound = Scope$Outbound;
+}
+
+export function scopeToJSON(scope: Scope): string {
+  return JSON.stringify(Scope$outboundSchema.parse(scope));
+}
+
+export function scopeFromJSON(
+  jsonString: string,
+): SafeParseResult<Scope, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => Scope$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'Scope' from JSON`,
+  );
+}
 
 /** @internal */
 export const CreateBasinRequest$inboundSchema: z.ZodType<

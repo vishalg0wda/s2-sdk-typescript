@@ -14,9 +14,6 @@ import {
   BasinInfo$outboundSchema,
 } from "./basininfo.js";
 
-/**
- * List basins response.
- */
 export type ListBasinsResponse = {
   /**
    * Matching basins.

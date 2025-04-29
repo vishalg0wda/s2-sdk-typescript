@@ -1,9 +1,9 @@
-speakeasyVersion: 1.526.1
+speakeasyVersion: 1.540.1
 sources:
     S2 API:
         sourceNamespace: s-2-api
-        sourceRevisionDigest: sha256:758cbf77b23f804971779197f2b05522e1e8f2624717a07920ae56c60a13bd49
-        sourceBlobDigest: sha256:c29061119beb58d2186bfda2a16b18c010cbc587d29901b5bd6f37022af05e70
+        sourceRevisionDigest: sha256:0c74635f89f59beff212e53a1464e1e43cf62a9a1a45284f1c9b0a5779f7edf6
+        sourceBlobDigest: sha256:a3617f91c3005fcc5cf41ece580844fbdcf7fdb7443451162552c9e0a07aacdf
         tags:
             - latest
             - 1.0.0
@@ -11,17 +11,17 @@ targets:
     streamstore:
         source: S2 API
         sourceNamespace: s-2-api
-        sourceRevisionDigest: sha256:758cbf77b23f804971779197f2b05522e1e8f2624717a07920ae56c60a13bd49
-        sourceBlobDigest: sha256:c29061119beb58d2186bfda2a16b18c010cbc587d29901b5bd6f37022af05e70
+        sourceRevisionDigest: sha256:0c74635f89f59beff212e53a1464e1e43cf62a9a1a45284f1c9b0a5779f7edf6
+        sourceBlobDigest: sha256:a3617f91c3005fcc5cf41ece580844fbdcf7fdb7443451162552c9e0a07aacdf
         codeSamplesNamespace: s-2-api-typescript-code-samples
-        codeSamplesRevisionDigest: sha256:bbbfc63508cddf95274968affab2492cc2f67e25f21f7111e8b3070aa2481b45
+        codeSamplesRevisionDigest: sha256:d3b954f5e573ff70a9701dfe7b401b8138c7e8a49dfa45179a5d9c58bd8cbe21
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest
     sources:
         S2 API:
             inputs:
-                - location: https://raw.githubusercontent.com/s2-streamstore/s2-protos/refs/heads/main/s2/v1alpha/openapi.json
+                - location: https://raw.githubusercontent.com/s2-streamstore/s2-protos/refs/heads/main/s2/v1/openapi.json
             overlays:
                 - location: overlay.yaml
             registry:

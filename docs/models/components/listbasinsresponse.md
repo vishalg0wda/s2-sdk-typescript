@@ -1,7 +1,5 @@
 # ListBasinsResponse
 
-List basins response.
-
 ## Example Usage
 
 ```typescript
@@ -12,7 +10,7 @@ let value: ListBasinsResponse = {
     {
       name: "<value>",
       scope: "aws:us-east-1",
-      state: "deleting",
+      state: "active",
     },
   ],
   hasMore: false,

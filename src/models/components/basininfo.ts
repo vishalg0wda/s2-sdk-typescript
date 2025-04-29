@@ -17,21 +17,12 @@ import {
   BasinState$outboundSchema,
 } from "./basinstate.js";
 
-/**
- * Basin information.
- */
 export type BasinInfo = {
   /**
    * Basin name.
    */
   name: string;
-  /**
-   * Basin scope.
-   */
   scope: BasinScope;
-  /**
-   * Current state of the basin.
-   */
   state: BasinState;
 };
 

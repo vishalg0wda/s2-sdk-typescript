@@ -14,9 +14,6 @@ import {
   StreamInfo$outboundSchema,
 } from "./streaminfo.js";
 
-/**
- * List streams response.
- */
 export type ListStreamsResponse = {
   /**
    * If set, indicates there are more results that can be listed with `start_after`.

@@ -5,17 +5,10 @@
 import * as z from "zod";
 import { ClosedEnum } from "../../types/enums.js";
 
-/**
- * Storage class for recent writes.
- */
 export const StorageClass = {
-  Unspecified: "unspecified",
   Standard: "standard",
   Express: "express",
 } as const;
-/**
- * Storage class for recent writes.
- */
 export type StorageClass = ClosedEnum<typeof StorageClass>;
 
 /** @internal */

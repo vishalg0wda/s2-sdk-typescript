@@ -1,14 +1,12 @@
 # StreamInfo
 
-Stream information.
-
 ## Example Usage
 
 ```typescript
 import { StreamInfo } from "@s2-dev/streamstore/models/components";
 
 let value: StreamInfo = {
-  createdAt: 832620,
+  createdAt: "1739735284610",
   name: "<value>",
 };
 ```
@@ -17,6 +15,6 @@ let value: StreamInfo = {
 
 | Field                                                                      | Type                                                                       | Required                                                                   | Description                                                                |
 | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
-| `createdAt`                                                                | *number*                                                                   | :heavy_check_mark:                                                         | Creation time in seconds since Unix epoch.                                 |
-| `deletedAt`                                                                | *number*                                                                   | :heavy_minus_sign:                                                         | Deletion time in seconds since Unix epoch, if the stream is being deleted. |
+| `createdAt`                                                                | *string*                                                                   | :heavy_check_mark:                                                         | Creation time in seconds since Unix epoch.                                 |
+| `deletedAt`                                                                | *string*                                                                   | :heavy_minus_sign:                                                         | Deletion time in seconds since Unix epoch, if the stream is being deleted. |
 | `name`                                                                     | *string*                                                                   | :heavy_check_mark:                                                         | Stream name.                                                               |

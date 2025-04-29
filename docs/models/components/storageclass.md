@@ -1,7 +1,5 @@
 # StorageClass
 
-Storage class for recent writes.
-
 ## Example Usage
 
 ```typescript
@@ -13,5 +11,5 @@ let value: StorageClass = "express";
 ## Values
 
 ```typescript
-"unspecified" | "standard" | "express"
+"standard" | "express"
 ```

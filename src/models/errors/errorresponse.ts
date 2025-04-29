@@ -5,10 +5,13 @@
 import * as z from "zod";
 
 export type ErrorResponseData = {
+  code?: string | null | undefined;
+  message: string;
   error: string;
 };
 
 export class ErrorResponse extends Error {
+  code?: string | null | undefined;
   error: string;
 
   /** The original data that was passed to this error instance. */
@@ -19,6 +22,7 @@ export class ErrorResponse extends Error {
     super(message);
     this.data$ = err;
 
+    if (err.code != null) this.code = err.code;
     this.error = err.error;
 
     this.name = "ErrorResponse";
@@ -31,6 +35,8 @@ export const ErrorResponse$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.object({
+  code: z.nullable(z.string()).optional(),
+  message: z.string(),
   error: z.string(),
 })
   .transform((v) => {
@@ -39,6 +45,8 @@ export const ErrorResponse$inboundSchema: z.ZodType<
 
 /** @internal */
 export type ErrorResponse$Outbound = {
+  code?: string | null | undefined;
+  message: string;
   error: string;
 };
 
@@ -50,6 +58,8 @@ export const ErrorResponse$outboundSchema: z.ZodType<
 > = z.instanceof(ErrorResponse)
   .transform(v => v.data$)
   .pipe(z.object({
+    code: z.nullable(z.string()).optional(),
+    message: z.string(),
     error: z.string(),
   }));
 

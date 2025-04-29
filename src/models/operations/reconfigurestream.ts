@@ -13,15 +13,19 @@ export const ReconfigureStreamServerList = [
   /**
    * Endpoint for the basin
    */
-  "https://{basin}.b.aws.s2.dev/v1alpha",
+  "https://{basin}.b.aws.s2.dev/v1",
 ] as const;
 
 export type ReconfigureStreamRequest = {
   /**
-   * Name of the stream.
+   * Stream name, which must be unique within the basin.
+   *
+   * @remarks
+   * It can be an arbitrary string upto 512 characters.
+   * Backslash (`/`) is recommended as a delimiter for hierarchical naming.
    */
   stream: string;
-  streamConfig: components.StreamConfig;
+  streamReconfiguration: components.StreamReconfiguration;
 };
 
 /** @internal */
@@ -31,17 +35,17 @@ export const ReconfigureStreamRequest$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   stream: z.string(),
-  StreamConfig: components.StreamConfig$inboundSchema,
+  StreamReconfiguration: components.StreamReconfiguration$inboundSchema,
 }).transform((v) => {
   return remap$(v, {
-    "StreamConfig": "streamConfig",
+    "StreamReconfiguration": "streamReconfiguration",
   });
 });
 
 /** @internal */
 export type ReconfigureStreamRequest$Outbound = {
   stream: string;
-  StreamConfig: components.StreamConfig$Outbound;
+  StreamReconfiguration: components.StreamReconfiguration$Outbound;
 };
 
 /** @internal */
@@ -51,10 +55,10 @@ export const ReconfigureStreamRequest$outboundSchema: z.ZodType<
   ReconfigureStreamRequest
 > = z.object({
   stream: z.string(),
-  streamConfig: components.StreamConfig$outboundSchema,
+  streamReconfiguration: components.StreamReconfiguration$outboundSchema,
 }).transform((v) => {
   return remap$(v, {
-    streamConfig: "StreamConfig",
+    streamReconfiguration: "StreamReconfiguration",
   });
 });
 

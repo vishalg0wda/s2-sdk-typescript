@@ -8,18 +8,15 @@ import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
-/**
- * Stream information.
- */
 export type StreamInfo = {
   /**
    * Creation time in seconds since Unix epoch.
    */
-  createdAt: number;
+  createdAt: string;
   /**
    * Deletion time in seconds since Unix epoch, if the stream is being deleted.
    */
-  deletedAt?: number | null | undefined;
+  deletedAt?: string | null | undefined;
   /**
    * Stream name.
    */
@@ -32,8 +29,8 @@ export const StreamInfo$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.object({
-  created_at: z.number().int(),
-  deleted_at: z.nullable(z.number().int()).optional(),
+  created_at: z.string(),
+  deleted_at: z.nullable(z.string()).optional(),
   name: z.string(),
 }).transform((v) => {
   return remap$(v, {
@@ -44,8 +41,8 @@ export const StreamInfo$inboundSchema: z.ZodType<
 
 /** @internal */
 export type StreamInfo$Outbound = {
-  created_at: number;
-  deleted_at?: number | null | undefined;
+  created_at: string;
+  deleted_at?: string | null | undefined;
   name: string;
 };
 
@@ -55,8 +52,8 @@ export const StreamInfo$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   StreamInfo
 > = z.object({
-  createdAt: z.number().int(),
-  deletedAt: z.nullable(z.number().int()).optional(),
+  createdAt: z.string(),
+  deletedAt: z.nullable(z.string()).optional(),
   name: z.string(),
 }).transform((v) => {
   return remap$(v, {

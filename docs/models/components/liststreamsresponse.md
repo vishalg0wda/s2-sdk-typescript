@@ -1,7 +1,5 @@
 # ListStreamsResponse
 
-List streams response.
-
 ## Example Usage
 
 ```typescript
@@ -11,7 +9,7 @@ let value: ListStreamsResponse = {
   hasMore: false,
   streams: [
     {
-      createdAt: 20218,
+      createdAt: "1730038533949",
       name: "<value>",
     },
   ],

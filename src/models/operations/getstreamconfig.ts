@@ -11,12 +11,16 @@ export const GetStreamConfigServerList = [
   /**
    * Endpoint for the basin
    */
-  "https://{basin}.b.aws.s2.dev/v1alpha",
+  "https://{basin}.b.aws.s2.dev/v1",
 ] as const;
 
 export type GetStreamConfigRequest = {
   /**
-   * Name of the stream.
+   * Stream name, which must be unique within the basin.
+   *
+   * @remarks
+   * It can be an arbitrary string upto 512 characters.
+   * Backslash (`/`) is recommended as a delimiter for hierarchical naming.
    */
   stream: string;
 };

@@ -11,7 +11,7 @@ let value: ListBasinsResponse = {
       {
         name: "<value>",
         scope: "aws:us-east-1",
-        state: "creating",
+        state: "active",
       },
     ],
     hasMore: false,

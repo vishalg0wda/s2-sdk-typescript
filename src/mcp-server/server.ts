@@ -11,21 +11,21 @@ import {
   createRegisterResource,
   createRegisterResourceTemplate,
 } from "./resources.js";
-import { MCPScope, mcpScopes } from "./scopes.js";
+import { MCPScope } from "./scopes.js";
 import { createRegisterTool } from "./tools.js";
-import { tool$accountCreateBasin } from "./tools/accountCreateBasin.js";
-import { tool$accountDeleteBasin } from "./tools/accountDeleteBasin.js";
-import { tool$accountGetBasinConfig } from "./tools/accountGetBasinConfig.js";
-import { tool$accountListBasins } from "./tools/accountListBasins.js";
-import { tool$accountReconfigureBasin } from "./tools/accountReconfigureBasin.js";
-import { tool$basinCreateStream } from "./tools/basinCreateStream.js";
-import { tool$basinDeleteStream } from "./tools/basinDeleteStream.js";
-import { tool$basinGetStreamConfig } from "./tools/basinGetStreamConfig.js";
-import { tool$basinListStreams } from "./tools/basinListStreams.js";
-import { tool$basinReconfigureStream } from "./tools/basinReconfigureStream.js";
-import { tool$streamAppend } from "./tools/streamAppend.js";
-import { tool$streamCheckTail } from "./tools/streamCheckTail.js";
-import { tool$streamRead } from "./tools/streamRead.js";
+import { tool$accessTokensIssueAccessToken } from "./tools/accessTokensIssueAccessToken.js";
+import { tool$accessTokensListAccessTokens } from "./tools/accessTokensListAccessTokens.js";
+import { tool$accessTokensRevokeAccessToken } from "./tools/accessTokensRevokeAccessToken.js";
+import { tool$basinsCreateOrReconfigureBasin } from "./tools/basinsCreateOrReconfigureBasin.js";
+import { tool$basinsDeleteBasin } from "./tools/basinsDeleteBasin.js";
+import { tool$basinsGetBasinConfig } from "./tools/basinsGetBasinConfig.js";
+import { tool$basinsListBasins } from "./tools/basinsListBasins.js";
+import { tool$basinsReconfigureBasin } from "./tools/basinsReconfigureBasin.js";
+import { tool$streamsCreateOrReconfigureStream } from "./tools/streamsCreateOrReconfigureStream.js";
+import { tool$streamsDeleteStream } from "./tools/streamsDeleteStream.js";
+import { tool$streamsGetStreamConfig } from "./tools/streamsGetStreamConfig.js";
+import { tool$streamsListStreams } from "./tools/streamsListStreams.js";
+import { tool$streamsReconfigureStream } from "./tools/streamsReconfigureStream.js";
 
 export function createMCPServer(deps: {
   logger: ConsoleLogger;
@@ -37,7 +37,7 @@ export function createMCPServer(deps: {
 }) {
   const server = new McpServer({
     name: "S2",
-    version: "0.10.0",
+    version: "0.11.0",
   });
 
   const client = new S2Core({
@@ -46,7 +46,7 @@ export function createMCPServer(deps: {
     serverIdx: deps.serverIdx,
   });
 
-  const scopes = new Set(deps.scopes ?? mcpScopes);
+  const scopes = new Set(deps.scopes);
 
   const allowedTools = deps.allowedTools && new Set(deps.allowedTools);
   const tool = createRegisterTool(
@@ -67,19 +67,19 @@ export function createMCPServer(deps: {
   const register = { tool, resource, resourceTemplate, prompt };
   void register; // suppress unused warnings
 
-  tool(tool$accountListBasins);
-  tool(tool$accountGetBasinConfig);
-  tool(tool$accountCreateBasin);
-  tool(tool$accountDeleteBasin);
-  tool(tool$accountReconfigureBasin);
-  tool(tool$basinListStreams);
-  tool(tool$basinGetStreamConfig);
-  tool(tool$basinCreateStream);
-  tool(tool$basinDeleteStream);
-  tool(tool$basinReconfigureStream);
-  tool(tool$streamRead);
-  tool(tool$streamAppend);
-  tool(tool$streamCheckTail);
+  tool(tool$accessTokensListAccessTokens);
+  tool(tool$accessTokensIssueAccessToken);
+  tool(tool$accessTokensRevokeAccessToken);
+  tool(tool$basinsListBasins);
+  tool(tool$basinsGetBasinConfig);
+  tool(tool$basinsCreateOrReconfigureBasin);
+  tool(tool$basinsDeleteBasin);
+  tool(tool$basinsReconfigureBasin);
+  tool(tool$streamsListStreams);
+  tool(tool$streamsGetStreamConfig);
+  tool(tool$streamsCreateOrReconfigureStream);
+  tool(tool$streamsDeleteStream);
+  tool(tool$streamsReconfigureStream);
 
   return server;
 }

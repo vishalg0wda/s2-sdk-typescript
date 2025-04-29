@@ -5,16 +5,9 @@
 import * as z from "zod";
 import { ClosedEnum } from "../../types/enums.js";
 
-/**
- * Basin scope.
- */
 export const BasinScope = {
-  Unspecified: "unspecified",
   AwsUsEast1: "aws:us-east-1",
 } as const;
-/**
- * Basin scope.
- */
 export type BasinScope = ClosedEnum<typeof BasinScope>;
 
 /** @internal */

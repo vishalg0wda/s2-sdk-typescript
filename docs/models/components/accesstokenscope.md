@@ -1,0 +1,19 @@
+# AccessTokenScope
+
+## Example Usage
+
+```typescript
+import { AccessTokenScope } from "@s2-dev/streamstore/models/components";
+
+let value: AccessTokenScope = {};
+```
+
+## Fields
+
+| Field                                                                                                                         | Type                                                                                                                          | Required                                                                                                                      | Description                                                                                                                   |
+| ----------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `accessTokens`                                                                                                                | *components.ResourceSet*                                                                                                      | :heavy_minus_sign:                                                                                                            | N/A                                                                                                                           |
+| `basins`                                                                                                                      | *components.ResourceSet*                                                                                                      | :heavy_minus_sign:                                                                                                            | N/A                                                                                                                           |
+| `opGroups`                                                                                                                    | [components.PermittedOperationGroups](../../models/components/permittedoperationgroups.md)                                    | :heavy_minus_sign:                                                                                                            | N/A                                                                                                                           |
+| `ops`                                                                                                                         | [components.Operation](../../models/components/operation.md)[]                                                                | :heavy_minus_sign:                                                                                                            | Operations allowed for the token.<br/>A union of allowed operations and groups is used as an effective set of allowed operations. |
+| `streams`                                                                                                                     | *components.ResourceSet*                                                                                                      | :heavy_minus_sign:                                                                                                            | N/A                                                                                                                           |

@@ -19,23 +19,25 @@ import {
   StorageClass$outboundSchema,
 } from "./storageclass.js";
 
-/**
- * Stream configuration.
- */
 export type StreamConfig = {
   /**
    * Controls how to handle timestamps when they are not provided by the client.
    *
    * @remarks
-   * If this is false (or not set), the record's arrival time will be assigned as its timestamp.
-   * If this is true, then any append without a client-specified timestamp will be rejected as invalid.
+   *  If this is false (or not set), the record's arrival time in milliseconds since Unix epoch
+   * will be assigned as its timestamp. If this is true, then any append without a
+   * client-specified timestamp will be rejected as invalid.
    */
   requireClientTimestamps?: boolean | null | undefined;
   retentionPolicy?: RetentionPolicy | null | undefined;
+  storageClass?: StorageClass | null | undefined;
   /**
-   * Storage class for recent writes.
+   * Allow client timestamps to exceed the arrival time in milliseconds since Unix epoch.
+   *
+   * @remarks
+   * If this is false (or not set), client timestamps will be capped at the arrival time.
    */
-  storageClass?: StorageClass | undefined;
+  uncappedClientTimestamps?: boolean | null | undefined;
 };
 
 /** @internal */
@@ -46,12 +48,14 @@ export const StreamConfig$inboundSchema: z.ZodType<
 > = z.object({
   require_client_timestamps: z.nullable(z.boolean()).optional(),
   retention_policy: z.nullable(RetentionPolicy$inboundSchema).optional(),
-  storage_class: StorageClass$inboundSchema.optional(),
+  storage_class: z.nullable(StorageClass$inboundSchema).optional(),
+  uncapped_client_timestamps: z.nullable(z.boolean()).optional(),
 }).transform((v) => {
   return remap$(v, {
     "require_client_timestamps": "requireClientTimestamps",
     "retention_policy": "retentionPolicy",
     "storage_class": "storageClass",
+    "uncapped_client_timestamps": "uncappedClientTimestamps",
   });
 });
 
@@ -59,7 +63,8 @@ export const StreamConfig$inboundSchema: z.ZodType<
 export type StreamConfig$Outbound = {
   require_client_timestamps?: boolean | null | undefined;
   retention_policy?: RetentionPolicy$Outbound | null | undefined;
-  storage_class?: string | undefined;
+  storage_class?: string | null | undefined;
+  uncapped_client_timestamps?: boolean | null | undefined;
 };
 
 /** @internal */
@@ -70,12 +75,14 @@ export const StreamConfig$outboundSchema: z.ZodType<
 > = z.object({
   requireClientTimestamps: z.nullable(z.boolean()).optional(),
   retentionPolicy: z.nullable(RetentionPolicy$outboundSchema).optional(),
-  storageClass: StorageClass$outboundSchema.optional(),
+  storageClass: z.nullable(StorageClass$outboundSchema).optional(),
+  uncappedClientTimestamps: z.nullable(z.boolean()).optional(),
 }).transform((v) => {
   return remap$(v, {
     requireClientTimestamps: "require_client_timestamps",
     retentionPolicy: "retention_policy",
     storageClass: "storage_class",
+    uncappedClientTimestamps: "uncapped_client_timestamps",
   });
 });
 

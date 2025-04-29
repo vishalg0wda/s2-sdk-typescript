@@ -11,7 +11,7 @@ import { Params, pathToFunc } from "./url.js";
  * Contains the list of servers available to the SDK
  */
 export const ServerList = [
-  "https://aws.s2.dev/v1alpha",
+  "https://aws.s2.dev/v1",
 ] as const;
 
 export type SDKOptions = {
@@ -54,8 +54,8 @@ export function serverURLFromOptions(options: SDKOptions): URL | null {
 export const SDK_METADATA = {
   language: "typescript",
   openapiDocVersion: "1.0.0",
-  sdkVersion: "0.10.0",
-  genVersion: "2.563.0",
+  sdkVersion: "0.11.0",
+  genVersion: "2.593.4",
   userAgent:
-    "speakeasy-sdk/typescript 0.10.0 2.563.0 1.0.0 @s2-dev/streamstore",
+    "speakeasy-sdk/typescript 0.11.0 2.593.4 1.0.0 @s2-dev/streamstore",
 } as const;

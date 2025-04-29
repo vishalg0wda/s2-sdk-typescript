@@ -7,43 +7,25 @@ import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
-/**
- * Age in seconds for automatic trimming of records older than this threshold.
- *
- * @remarks
- * If set to 0, the stream will have infinite retention.
- */
-export type Age = {
-  /**
-   * Age in seconds for automatic trimming of records older than this threshold.
-   *
-   * @remarks
-   * If set to 0, the stream will have infinite retention.
-   */
+export type One = {
   age: number;
 };
 
-/**
- * Retention policy for the stream.
- *
- * @remarks
- * If unspecified, the default is to retain records for 7 days.
- */
-export type RetentionPolicy = Age;
+export type RetentionPolicy = One;
 
 /** @internal */
-export const Age$inboundSchema: z.ZodType<Age, z.ZodTypeDef, unknown> = z
+export const One$inboundSchema: z.ZodType<One, z.ZodTypeDef, unknown> = z
   .object({
     age: z.number().int(),
   });
 
 /** @internal */
-export type Age$Outbound = {
+export type One$Outbound = {
   age: number;
 };
 
 /** @internal */
-export const Age$outboundSchema: z.ZodType<Age$Outbound, z.ZodTypeDef, Age> = z
+export const One$outboundSchema: z.ZodType<One$Outbound, z.ZodTypeDef, One> = z
   .object({
     age: z.number().int(),
   });
@@ -52,26 +34,26 @@ export const Age$outboundSchema: z.ZodType<Age$Outbound, z.ZodTypeDef, Age> = z
  * @internal
  * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
  */
-export namespace Age$ {
-  /** @deprecated use `Age$inboundSchema` instead. */
-  export const inboundSchema = Age$inboundSchema;
-  /** @deprecated use `Age$outboundSchema` instead. */
-  export const outboundSchema = Age$outboundSchema;
-  /** @deprecated use `Age$Outbound` instead. */
-  export type Outbound = Age$Outbound;
+export namespace One$ {
+  /** @deprecated use `One$inboundSchema` instead. */
+  export const inboundSchema = One$inboundSchema;
+  /** @deprecated use `One$outboundSchema` instead. */
+  export const outboundSchema = One$outboundSchema;
+  /** @deprecated use `One$Outbound` instead. */
+  export type Outbound = One$Outbound;
 }
 
-export function ageToJSON(age: Age): string {
-  return JSON.stringify(Age$outboundSchema.parse(age));
+export function oneToJSON(one: One): string {
+  return JSON.stringify(One$outboundSchema.parse(one));
 }
 
-export function ageFromJSON(
+export function oneFromJSON(
   jsonString: string,
-): SafeParseResult<Age, SDKValidationError> {
+): SafeParseResult<One, SDKValidationError> {
   return safeParse(
     jsonString,
-    (x) => Age$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'Age' from JSON`,
+    (x) => One$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'One' from JSON`,
   );
 }
 
@@ -80,17 +62,17 @@ export const RetentionPolicy$inboundSchema: z.ZodType<
   RetentionPolicy,
   z.ZodTypeDef,
   unknown
-> = z.lazy(() => Age$inboundSchema);
+> = z.lazy(() => One$inboundSchema);
 
 /** @internal */
-export type RetentionPolicy$Outbound = Age$Outbound;
+export type RetentionPolicy$Outbound = One$Outbound;
 
 /** @internal */
 export const RetentionPolicy$outboundSchema: z.ZodType<
   RetentionPolicy$Outbound,
   z.ZodTypeDef,
   RetentionPolicy
-> = z.lazy(() => Age$outboundSchema);
+> = z.lazy(() => One$outboundSchema);
 
 /**
  * @internal
