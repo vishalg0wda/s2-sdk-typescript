@@ -23,7 +23,7 @@ List basins.
 import { S2 } from "@s2-dev/streamstore";
 
 const s2 = new S2({
-  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
+  accessToken: process.env["S2_ACCESS_TOKEN"] ?? "",
 });
 
 async function run() {
@@ -49,7 +49,7 @@ import { basinsListBasins } from "@s2-dev/streamstore/funcs/basinsListBasins.js"
 // Use `S2Core` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const s2 = new S2Core({
-  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
+  accessToken: process.env["S2_ACCESS_TOKEN"] ?? "",
 });
 
 async function run() {
@@ -102,7 +102,7 @@ Get basin config.
 import { S2 } from "@s2-dev/streamstore";
 
 const s2 = new S2({
-  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
+  accessToken: process.env["S2_ACCESS_TOKEN"] ?? "",
 });
 
 async function run() {
@@ -128,7 +128,7 @@ import { basinsGetBasinConfig } from "@s2-dev/streamstore/funcs/basinsGetBasinCo
 // Use `S2Core` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const s2 = new S2Core({
-  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
+  accessToken: process.env["S2_ACCESS_TOKEN"] ?? "",
 });
 
 async function run() {
@@ -181,7 +181,7 @@ Create or reconfigure a basin.
 import { S2 } from "@s2-dev/streamstore";
 
 const s2 = new S2({
-  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
+  accessToken: process.env["S2_ACCESS_TOKEN"] ?? "",
 });
 
 async function run() {
@@ -208,7 +208,7 @@ import { basinsCreateOrReconfigureBasin } from "@s2-dev/streamstore/funcs/basins
 // Use `S2Core` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const s2 = new S2Core({
-  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
+  accessToken: process.env["S2_ACCESS_TOKEN"] ?? "",
 });
 
 async function run() {
@@ -262,7 +262,7 @@ Delete a basin.
 import { S2 } from "@s2-dev/streamstore";
 
 const s2 = new S2({
-  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
+  accessToken: process.env["S2_ACCESS_TOKEN"] ?? "",
 });
 
 async function run() {
@@ -287,7 +287,7 @@ import { basinsDeleteBasin } from "@s2-dev/streamstore/funcs/basinsDeleteBasin.j
 // Use `S2Core` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const s2 = new S2Core({
-  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
+  accessToken: process.env["S2_ACCESS_TOKEN"] ?? "",
 });
 
 async function run() {
@@ -339,7 +339,7 @@ Reconfigure a basin.
 import { S2 } from "@s2-dev/streamstore";
 
 const s2 = new S2({
-  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
+  accessToken: process.env["S2_ACCESS_TOKEN"] ?? "",
 });
 
 async function run() {
@@ -366,7 +366,7 @@ import { basinsReconfigureBasin } from "@s2-dev/streamstore/funcs/basinsReconfig
 // Use `S2Core` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const s2 = new S2Core({
-  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
+  accessToken: process.env["S2_ACCESS_TOKEN"] ?? "",
 });
 
 async function run() {

@@ -13,7 +13,7 @@ export const ListStreamsServerList = [
   /**
    * Endpoint for the basin
    */
-  "https://.b.aws.s2.dev/v1",
+  "https://{basin}.b.aws.s2.dev/v1",
 ] as const;
 
 export type ListStreamsRequest = {

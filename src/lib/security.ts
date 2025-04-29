@@ -244,7 +244,7 @@ export function resolveGlobalSecurity(
       {
         fieldName: "Authorization",
         type: "http:bearer",
-        value: security?.bearerAuth ?? env().S2_BEARER_AUTH,
+        value: security?.accessToken ?? env().S2_ACCESS_TOKEN,
       },
     ],
   );

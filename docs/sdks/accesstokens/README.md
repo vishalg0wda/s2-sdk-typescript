@@ -21,7 +21,7 @@ List access tokens.
 import { S2 } from "@s2-dev/streamstore";
 
 const s2 = new S2({
-  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
+  accessToken: process.env["S2_ACCESS_TOKEN"] ?? "",
 });
 
 async function run() {
@@ -45,7 +45,7 @@ import { accessTokensListAccessTokens } from "@s2-dev/streamstore/funcs/accessTo
 // Use `S2Core` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const s2 = new S2Core({
-  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
+  accessToken: process.env["S2_ACCESS_TOKEN"] ?? "",
 });
 
 async function run() {
@@ -96,7 +96,7 @@ Issue a new access token.
 import { S2 } from "@s2-dev/streamstore";
 
 const s2 = new S2({
-  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
+  accessToken: process.env["S2_ACCESS_TOKEN"] ?? "",
 });
 
 async function run() {
@@ -123,7 +123,7 @@ import { accessTokensIssueAccessToken } from "@s2-dev/streamstore/funcs/accessTo
 // Use `S2Core` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const s2 = new S2Core({
-  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
+  accessToken: process.env["S2_ACCESS_TOKEN"] ?? "",
 });
 
 async function run() {
@@ -177,7 +177,7 @@ Revoke an access token.
 import { S2 } from "@s2-dev/streamstore";
 
 const s2 = new S2({
-  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
+  accessToken: process.env["S2_ACCESS_TOKEN"] ?? "",
 });
 
 async function run() {
@@ -202,7 +202,7 @@ import { accessTokensRevokeAccessToken } from "@s2-dev/streamstore/funcs/accessT
 // Use `S2Core` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const s2 = new S2Core({
-  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
+  accessToken: process.env["S2_ACCESS_TOKEN"] ?? "",
 });
 
 async function run() {

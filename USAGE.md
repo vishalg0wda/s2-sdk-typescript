@@ -3,7 +3,7 @@
 import { S2 } from "@s2-dev/streamstore";
 
 const s2 = new S2({
-  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
+  accessToken: process.env["S2_ACCESS_TOKEN"] ?? "",
 });
 
 async function run() {

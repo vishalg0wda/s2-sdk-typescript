@@ -26,7 +26,7 @@ import { SDKValidationError } from "@s2-dev/streamstore/models/errors/sdkvalidat
 // Use `S2Core` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const s2 = new S2Core({
-  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
+  accessToken: process.env["S2_ACCESS_TOKEN"] ?? "",
 });
 
 async function run() {

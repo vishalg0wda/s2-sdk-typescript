@@ -32,16 +32,16 @@ export function createMCPServer(deps: {
   allowedTools?: string[] | undefined;
   scopes?: MCPScope[] | undefined;
   serverURL?: string | undefined;
-  bearerAuth?: SDKOptions["bearerAuth"] | undefined;
+  accessToken?: SDKOptions["accessToken"] | undefined;
   serverIdx?: SDKOptions["serverIdx"] | undefined;
 }) {
   const server = new McpServer({
     name: "S2",
-    version: "0.11.0",
+    version: "0.11.1",
   });
 
   const client = new S2Core({
-    bearerAuth: deps.bearerAuth,
+    accessToken: deps.accessToken,
     serverURL: deps.serverURL,
     serverIdx: deps.serverIdx,
   });

@@ -23,7 +23,7 @@ List streams.
 import { S2 } from "@s2-dev/streamstore";
 
 const s2 = new S2({
-  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
+  accessToken: process.env["S2_ACCESS_TOKEN"] ?? "",
 });
 
 async function run() {
@@ -49,7 +49,7 @@ import { streamsListStreams } from "@s2-dev/streamstore/funcs/streamsListStreams
 // Use `S2Core` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const s2 = new S2Core({
-  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
+  accessToken: process.env["S2_ACCESS_TOKEN"] ?? "",
 });
 
 async function run() {
@@ -103,7 +103,7 @@ Get stream configuration.
 import { S2 } from "@s2-dev/streamstore";
 
 const s2 = new S2({
-  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
+  accessToken: process.env["S2_ACCESS_TOKEN"] ?? "",
 });
 
 async function run() {
@@ -129,7 +129,7 @@ import { streamsGetStreamConfig } from "@s2-dev/streamstore/funcs/streamsGetStre
 // Use `S2Core` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const s2 = new S2Core({
-  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
+  accessToken: process.env["S2_ACCESS_TOKEN"] ?? "",
 });
 
 async function run() {
@@ -183,7 +183,7 @@ Create or reconfigure a stream.
 import { S2 } from "@s2-dev/streamstore";
 
 const s2 = new S2({
-  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
+  accessToken: process.env["S2_ACCESS_TOKEN"] ?? "",
 });
 
 async function run() {
@@ -210,7 +210,7 @@ import { streamsCreateOrReconfigureStream } from "@s2-dev/streamstore/funcs/stre
 // Use `S2Core` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const s2 = new S2Core({
-  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
+  accessToken: process.env["S2_ACCESS_TOKEN"] ?? "",
 });
 
 async function run() {
@@ -265,7 +265,7 @@ Delete a stream.
 import { S2 } from "@s2-dev/streamstore";
 
 const s2 = new S2({
-  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
+  accessToken: process.env["S2_ACCESS_TOKEN"] ?? "",
 });
 
 async function run() {
@@ -290,7 +290,7 @@ import { streamsDeleteStream } from "@s2-dev/streamstore/funcs/streamsDeleteStre
 // Use `S2Core` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const s2 = new S2Core({
-  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
+  accessToken: process.env["S2_ACCESS_TOKEN"] ?? "",
 });
 
 async function run() {
@@ -343,7 +343,7 @@ Reconfigure a stream.
 import { S2 } from "@s2-dev/streamstore";
 
 const s2 = new S2({
-  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
+  accessToken: process.env["S2_ACCESS_TOKEN"] ?? "",
 });
 
 async function run() {
@@ -370,7 +370,7 @@ import { streamsReconfigureStream } from "@s2-dev/streamstore/funcs/streamsRecon
 // Use `S2Core` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const s2 = new S2Core({
-  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
+  accessToken: process.env["S2_ACCESS_TOKEN"] ?? "",
 });
 
 async function run() {

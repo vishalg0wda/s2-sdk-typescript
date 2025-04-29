@@ -115,8 +115,8 @@ async function $do(
     ),
   }));
 
-  const secConfig = await extractSecurity(client._options.bearerAuth);
-  const securityInput = secConfig == null ? {} : { bearerAuth: secConfig };
+  const secConfig = await extractSecurity(client._options.accessToken);
+  const securityInput = secConfig == null ? {} : { accessToken: secConfig };
   const requestSecurity = resolveGlobalSecurity(securityInput);
 
   const context = {
@@ -126,7 +126,7 @@ async function $do(
 
     resolvedSecurity: requestSecurity,
 
-    securitySource: client._options.bearerAuth,
+    securitySource: client._options.accessToken,
     retryConfig: options?.retries
       || client._options.retryConfig
       || { strategy: "none" },

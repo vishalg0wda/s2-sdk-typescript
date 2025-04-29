@@ -97,7 +97,7 @@ Add the following server definition to your `claude_desktop_config.json` file:
         "-y", "--package", "@s2-dev/streamstore",
         "--",
         "mcp", "start",
-        "--bearer-auth", "..."
+        "--access-token", "..."
       ]
     }
   }
@@ -120,7 +120,7 @@ Create a `.cursor/mcp.json` file in your project root with the following content
         "-y", "--package", "@s2-dev/streamstore",
         "--",
         "mcp", "start",
-        "--bearer-auth", "..."
+        "--access-token", "..."
       ]
     }
   }
@@ -254,7 +254,7 @@ run();
 import { S2 } from "@s2-dev/streamstore";
 
 const s2 = new S2({
-  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
+  accessToken: process.env["S2_ACCESS_TOKEN"] ?? "",
 });
 
 async function run() {
@@ -276,16 +276,16 @@ run();
 
 This SDK supports the following security scheme globally:
 
-| Name         | Type | Scheme      | Environment Variable |
-| ------------ | ---- | ----------- | -------------------- |
-| `bearerAuth` | http | HTTP Bearer | `S2_BEARER_AUTH`     |
+| Name          | Type | Scheme      | Environment Variable |
+| ------------- | ---- | ----------- | -------------------- |
+| `accessToken` | http | HTTP Bearer | `S2_ACCESS_TOKEN`    |
 
-To authenticate with the API the `bearerAuth` parameter must be set when initializing the SDK client instance. For example:
+To authenticate with the API the `accessToken` parameter must be set when initializing the SDK client instance. For example:
 ```typescript
 import { S2 } from "@s2-dev/streamstore";
 
 const s2 = new S2({
-  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
+  accessToken: process.env["S2_ACCESS_TOKEN"] ?? "",
 });
 
 async function run() {
@@ -380,7 +380,7 @@ Here's an example of one such pagination call:
 import { S2 } from "@s2-dev/streamstore";
 
 const s2 = new S2({
-  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
+  accessToken: process.env["S2_ACCESS_TOKEN"] ?? "",
 });
 
 async function run() {
@@ -407,7 +407,7 @@ To change the default retry strategy for a single API call, simply provide a ret
 import { S2 } from "@s2-dev/streamstore";
 
 const s2 = new S2({
-  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
+  accessToken: process.env["S2_ACCESS_TOKEN"] ?? "",
 });
 
 async function run() {
@@ -447,7 +447,7 @@ const s2 = new S2({
     },
     retryConnectionErrors: false,
   },
-  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
+  accessToken: process.env["S2_ACCESS_TOKEN"] ?? "",
 });
 
 async function run() {
@@ -485,7 +485,7 @@ import {
 } from "@s2-dev/streamstore/models/errors";
 
 const s2 = new S2({
-  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
+  accessToken: process.env["S2_ACCESS_TOKEN"] ?? "",
 });
 
 async function run() {
@@ -556,7 +556,7 @@ import { S2 } from "@s2-dev/streamstore";
 
 const s2 = new S2({
   serverURL: "https://aws.s2.dev/v1",
-  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
+  accessToken: process.env["S2_ACCESS_TOKEN"] ?? "",
 });
 
 async function run() {
@@ -577,7 +577,7 @@ The server URL can also be overridden on a per-operation basis, provided a serve
 import { S2 } from "@s2-dev/streamstore";
 
 const s2 = new S2({
-  bearerAuth: process.env["S2_BEARER_AUTH"] ?? "",
+  accessToken: process.env["S2_ACCESS_TOKEN"] ?? "",
 });
 
 async function run() {
