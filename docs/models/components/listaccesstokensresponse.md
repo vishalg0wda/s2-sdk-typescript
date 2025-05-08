@@ -6,13 +6,13 @@
 import { ListAccessTokensResponse } from "@s2-dev/streamstore/models/components";
 
 let value: ListAccessTokensResponse = {
-  hasMore: false,
-  tokens: [
+  accessTokens: [
     {
       id: "<id>",
       scope: {},
     },
   ],
+  hasMore: false,
 };
 ```
 
@@ -20,5 +20,5 @@ let value: ListAccessTokensResponse = {
 
 | Field                                                                           | Type                                                                            | Required                                                                        | Description                                                                     |
 | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `accessTokens`                                                                  | [components.AccessTokenInfo](../../models/components/accesstokeninfo.md)[]      | :heavy_check_mark:                                                              | Access tokens information.                                                      |
 | `hasMore`                                                                       | *boolean*                                                                       | :heavy_check_mark:                                                              | If set, indicates there are more results that can be listed with `start_after`. |
-| `tokens`                                                                        | [components.AccessTokenInfo](../../models/components/accesstokeninfo.md)[]      | :heavy_check_mark:                                                              | Access tokens information.                                                      |

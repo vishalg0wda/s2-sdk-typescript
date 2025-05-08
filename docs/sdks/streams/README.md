@@ -189,7 +189,9 @@ const s2 = new S2({
 async function run() {
   const result = await s2.streams.createOrReconfigureStream({
     stream: "<value>",
-    streamConfig: {},
+    streamConfig: {
+      timestamping: {},
+    },
   });
 
   // Handle the result
@@ -216,7 +218,9 @@ const s2 = new S2Core({
 async function run() {
   const res = await streamsCreateOrReconfigureStream(s2, {
     stream: "<value>",
-    streamConfig: {},
+    streamConfig: {
+      timestamping: {},
+    },
   });
 
   if (!res.ok) {
@@ -349,7 +353,9 @@ const s2 = new S2({
 async function run() {
   const result = await s2.streams.reconfigureStream({
     stream: "<value>",
-    streamReconfiguration: {},
+    streamReconfiguration: {
+      timestamping: {},
+    },
   });
 
   // Handle the result
@@ -376,7 +382,9 @@ const s2 = new S2Core({
 async function run() {
   const res = await streamsReconfigureStream(s2, {
     stream: "<value>",
-    streamReconfiguration: {},
+    streamReconfiguration: {
+      timestamping: {},
+    },
   });
 
   if (!res.ok) {

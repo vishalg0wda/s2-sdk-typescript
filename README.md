@@ -320,6 +320,10 @@ run();
 * [deleteBasin](docs/sdks/basins/README.md#deletebasin) - Delete a basin.
 * [reconfigureBasin](docs/sdks/basins/README.md#reconfigurebasin) - Reconfigure a basin.
 
+### [records](docs/sdks/records/README.md)
+
+* [checkTail](docs/sdks/records/README.md#checktail) - Check the tail.
+
 
 ### [streams](docs/sdks/streams/README.md)
 
@@ -355,6 +359,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`basinsGetBasinConfig`](docs/sdks/basins/README.md#getbasinconfig) - Get basin config.
 - [`basinsListBasins`](docs/sdks/basins/README.md#listbasins) - List basins.
 - [`basinsReconfigureBasin`](docs/sdks/basins/README.md#reconfigurebasin) - Reconfigure a basin.
+- [`recordsCheckTail`](docs/sdks/records/README.md#checktail) - Check the tail.
 - [`streamsCreateOrReconfigureStream`](docs/sdks/streams/README.md#createorreconfigurestream) - Create or reconfigure a stream.
 - [`streamsDeleteStream`](docs/sdks/streams/README.md#deletestream) - Delete a stream.
 - [`streamsGetStreamConfig`](docs/sdks/streams/README.md#getstreamconfig) - Get stream configuration.
