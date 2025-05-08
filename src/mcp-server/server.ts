@@ -21,6 +21,7 @@ import { tool$basinsDeleteBasin } from "./tools/basinsDeleteBasin.js";
 import { tool$basinsGetBasinConfig } from "./tools/basinsGetBasinConfig.js";
 import { tool$basinsListBasins } from "./tools/basinsListBasins.js";
 import { tool$basinsReconfigureBasin } from "./tools/basinsReconfigureBasin.js";
+import { tool$recordsCheckTail } from "./tools/recordsCheckTail.js";
 import { tool$streamsCreateOrReconfigureStream } from "./tools/streamsCreateOrReconfigureStream.js";
 import { tool$streamsDeleteStream } from "./tools/streamsDeleteStream.js";
 import { tool$streamsGetStreamConfig } from "./tools/streamsGetStreamConfig.js";
@@ -37,7 +38,7 @@ export function createMCPServer(deps: {
 }) {
   const server = new McpServer({
     name: "S2",
-    version: "0.11.1",
+    version: "0.11.2",
   });
 
   const client = new S2Core({
@@ -80,6 +81,7 @@ export function createMCPServer(deps: {
   tool(tool$streamsCreateOrReconfigureStream);
   tool(tool$streamsDeleteStream);
   tool(tool$streamsReconfigureStream);
+  tool(tool$recordsCheckTail);
 
   return server;
 }

@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 2d20490e-9921-47d5-9711-d3c4b91c8cfa
 management:
-  docChecksum: 4176402366efeec23c4b3f61ca7ba496
+  docChecksum: 6807571eaff6a3b2c28643bd219cfea1
   docVersion: 1.0.0
-  speakeasyVersion: 1.540.1
-  generationVersion: 2.593.4
-  releaseVersion: 0.11.1
-  configChecksum: acfee2af79162315c728a31ed2310615
+  speakeasyVersion: 1.542.3
+  generationVersion: 2.597.9
+  releaseVersion: 0.11.2
+  configChecksum: 2452bd68f14270dd418f1efde42bf089
   repoURL: https://github.com/s2-streamstore/s2-sdk-typescript.git
   installationURL: https://github.com/s2-streamstore/s2-sdk-typescript
   published: true
@@ -14,7 +14,7 @@ features:
   typescript:
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.1.11
-    core: 3.21.6
+    core: 3.21.7
     defaultEnabledRetries: 0.1.0
     devContainers: 2.90.0
     enumUnions: 0.1.0
@@ -49,6 +49,7 @@ generatedFiles:
   - docs/models/components/basinreconfiguration.md
   - docs/models/components/basinscope.md
   - docs/models/components/basinstate.md
+  - docs/models/components/checktailresponse.md
   - docs/models/components/createbasinrequest.md
   - docs/models/components/exact.md
   - docs/models/components/issueaccesstokenresponse.md
@@ -67,9 +68,14 @@ generatedFiles:
   - docs/models/components/storageclass.md
   - docs/models/components/streamconfig.md
   - docs/models/components/streaminfo.md
+  - docs/models/components/streamposition.md
   - docs/models/components/streamreconfiguration.md
+  - docs/models/components/timestampingconfig.md
+  - docs/models/components/timestampingmode.md
+  - docs/models/components/timestampingreconfiguration.md
   - docs/models/errors/errorresponse.md
   - docs/models/errors/retryableerror.md
+  - docs/models/operations/checktailrequest.md
   - docs/models/operations/createorreconfigurebasinrequest.md
   - docs/models/operations/createorreconfigurestreamrequest.md
   - docs/models/operations/deletebasinrequest.md
@@ -86,6 +92,7 @@ generatedFiles:
   - docs/models/operations/revokeaccesstokenrequest.md
   - docs/sdks/accesstokens/README.md
   - docs/sdks/basins/README.md
+  - docs/sdks/records/README.md
   - docs/sdks/s2/README.md
   - docs/sdks/streams/README.md
   - eslint.config.mjs
@@ -100,6 +107,7 @@ generatedFiles:
   - src/funcs/basinsGetBasinConfig.ts
   - src/funcs/basinsListBasins.ts
   - src/funcs/basinsReconfigureBasin.ts
+  - src/funcs/recordsCheckTail.ts
   - src/funcs/streamsCreateOrReconfigureStream.ts
   - src/funcs/streamsDeleteStream.ts
   - src/funcs/streamsGetStreamConfig.ts
@@ -146,6 +154,7 @@ generatedFiles:
   - src/mcp-server/tools/basinsGetBasinConfig.ts
   - src/mcp-server/tools/basinsListBasins.ts
   - src/mcp-server/tools/basinsReconfigureBasin.ts
+  - src/mcp-server/tools/recordsCheckTail.ts
   - src/mcp-server/tools/streamsCreateOrReconfigureStream.ts
   - src/mcp-server/tools/streamsDeleteStream.ts
   - src/mcp-server/tools/streamsGetStreamConfig.ts
@@ -158,6 +167,7 @@ generatedFiles:
   - src/models/components/basinreconfiguration.ts
   - src/models/components/basinscope.ts
   - src/models/components/basinstate.ts
+  - src/models/components/checktailresponse.ts
   - src/models/components/createbasinrequest.ts
   - src/models/components/index.ts
   - src/models/components/issueaccesstokenresponse.ts
@@ -173,13 +183,18 @@ generatedFiles:
   - src/models/components/storageclass.ts
   - src/models/components/streamconfig.ts
   - src/models/components/streaminfo.ts
+  - src/models/components/streamposition.ts
   - src/models/components/streamreconfiguration.ts
+  - src/models/components/timestampingconfig.ts
+  - src/models/components/timestampingmode.ts
+  - src/models/components/timestampingreconfiguration.ts
   - src/models/errors/apierror.ts
   - src/models/errors/errorresponse.ts
   - src/models/errors/httpclienterrors.ts
   - src/models/errors/index.ts
   - src/models/errors/retryableerror.ts
   - src/models/errors/sdkvalidationerror.ts
+  - src/models/operations/checktail.ts
   - src/models/operations/createorreconfigurebasin.ts
   - src/models/operations/createorreconfigurestream.ts
   - src/models/operations/deletebasin.ts
@@ -196,6 +211,7 @@ generatedFiles:
   - src/sdk/accesstokens.ts
   - src/sdk/basins.ts
   - src/sdk/index.ts
+  - src/sdk/records.ts
   - src/sdk/sdk.ts
   - src/sdk/streams.ts
   - src/types/async.ts
@@ -218,7 +234,7 @@ examples:
           limit: 1000
       responses:
         "200":
-          application/json: {"has_more": false, "tokens": [{"auto_prefix_streams": false, "id": "<id>", "scope": {}}, {"auto_prefix_streams": false, "id": "<id>", "scope": {}}]}
+          application/json: {"access_tokens": [{"auto_prefix_streams": false, "id": "<id>", "scope": {}}, {"auto_prefix_streams": false, "id": "<id>", "scope": {}}], "has_more": false}
         "400":
           application/json: {"message": "<value>", "error": "<value>"}
         "499":
@@ -394,6 +410,20 @@ examples:
       responses:
         "200":
           application/json: {}
+        "400":
+          application/json: {"message": "<value>", "error": "<value>"}
+        "499":
+          application/json: {"error": "<value>"}
+        "500":
+          application/json: {"error": "<value>"}
+  check_tail:
+    speakeasy-default-check-tail:
+      parameters:
+        path:
+          stream: "<value>"
+      responses:
+        "200":
+          application/json: {"tail": {"seq_num": 483653, "timestamp": 279903}}
         "400":
           application/json: {"message": "<value>", "error": "<value>"}
         "499":

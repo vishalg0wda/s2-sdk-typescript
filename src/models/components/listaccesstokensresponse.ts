@@ -16,13 +16,13 @@ import {
 
 export type ListAccessTokensResponse = {
   /**
+   * Access tokens information.
+   */
+  accessTokens: Array<AccessTokenInfo>;
+  /**
    * If set, indicates there are more results that can be listed with `start_after`.
    */
   hasMore: boolean;
-  /**
-   * Access tokens information.
-   */
-  tokens: Array<AccessTokenInfo>;
 };
 
 /** @internal */
@@ -31,18 +31,19 @@ export const ListAccessTokensResponse$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.object({
+  access_tokens: z.array(AccessTokenInfo$inboundSchema),
   has_more: z.boolean(),
-  tokens: z.array(AccessTokenInfo$inboundSchema),
 }).transform((v) => {
   return remap$(v, {
+    "access_tokens": "accessTokens",
     "has_more": "hasMore",
   });
 });
 
 /** @internal */
 export type ListAccessTokensResponse$Outbound = {
+  access_tokens: Array<AccessTokenInfo$Outbound>;
   has_more: boolean;
-  tokens: Array<AccessTokenInfo$Outbound>;
 };
 
 /** @internal */
@@ -51,10 +52,11 @@ export const ListAccessTokensResponse$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   ListAccessTokensResponse
 > = z.object({
+  accessTokens: z.array(AccessTokenInfo$outboundSchema),
   hasMore: z.boolean(),
-  tokens: z.array(AccessTokenInfo$outboundSchema),
 }).transform((v) => {
   return remap$(v, {
+    accessTokens: "access_tokens",
     hasMore: "has_more",
   });
 });

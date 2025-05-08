@@ -7,7 +7,9 @@ import { CreateOrReconfigureStreamRequest } from "@s2-dev/streamstore/models/ope
 
 let value: CreateOrReconfigureStreamRequest = {
   stream: "<value>",
-  streamConfig: {},
+  streamConfig: {
+    timestamping: {},
+  },
 };
 ```
 

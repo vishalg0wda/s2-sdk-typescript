@@ -5,6 +5,7 @@
 import { ClientSDK } from "../lib/sdks.js";
 import { AccessTokens } from "./accesstokens.js";
 import { Basins } from "./basins.js";
+import { Records } from "./records.js";
 import { Streams } from "./streams.js";
 
 export class S2 extends ClientSDK {
@@ -21,5 +22,10 @@ export class S2 extends ClientSDK {
   private _streams?: Streams;
   get streams(): Streams {
     return (this._streams ??= new Streams(this._options));
+  }
+
+  private _records?: Records;
+  get records(): Records {
+    return (this._records ??= new Records(this._options));
   }
 }
