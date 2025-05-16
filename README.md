@@ -22,8 +22,7 @@ S2 API: Serverless API for streaming data backed by object storage.
 <!-- $toc-max-depth=2 -->
 * [streamstore](#streamstore)
   * [SDK Installation](#sdk-installation)
-  * [Requirements](#requirements)
-  * [SDK Recommended Usage](#sdk-recommended-usage)
+  * [Requirements](#requirements)  
   * [SDK Example Usage](#sdk-example-usage)
   * [Authentication](#authentication)
   * [Available Resources and Operations](#available-resources-and-operations)
@@ -166,85 +165,6 @@ npx -y --package @s2-dev/streamstore -- mcp start --help
 
 For supported JavaScript runtimes, please consult [RUNTIMES.md](RUNTIMES.md).
 <!-- End Requirements [requirements] -->
-
-## SDK Recommended Usage
-
-The `S2Client` class provides a lot of convenience over the generated methods and is the recommended way to interact with the SDK. If you need finer control over the internal functions, you may use [Generated functions](#available-resources-and-operations)
- or [Standalone functions](#standalone-functions).
-
-```typescript
-import { ReadRequest, S2Client } from "@s2-dev/streamstore";
-
-const s2 = new S2Client({ authToken: "<AUTH_TOKEN>" });
-
-async function run() {
-  await s2.account.createBasin("my-favorite-basin");  
-  await s2.account.basin("my-favorite-basin").stream("test").append({ appendInput: { records: [{ body: "hello" }] } });  
-}
-
-run();
-```
-### Examples
-
-- Using `S2Endpoints`
-
-```typescript
-const endpoints = new S2Endpoints(
-  "aws.s2.dev",
-  {
-      kind: BasinEndpointKind.Direct,
-      authority: "aws.s2.dev"
-  }
-);
-
-const s2 = new S2Client({ authToken: "<AUTH_TOKEN>", endpoints });
-async function run() {
-  const allStreams = await s2.account.basin("my-favorite-basin").listStreams();
-  for await (const stream of allStreams) {
-    console.log(basin);
-  }
-}
-
-run();
-```
-
-- Override Client level Auth token
-
-```typescript
-const s2 = new S2Client({ authToken: "<AUTH_TOKEN>"});
-async function run() {
-  const refreshedToken = await fetchToken();
-  await s2.account.deleteBasin("my-favorite-basin", { authToken: refreshedToken });
-}
-
-run();
-```
-
-- Set custom user-agent
-
-```typescript
-const s2 = new S2Client({ authToken: "<AUTH_TOKEN>", userAgent: "say-cheese" });
-async function run() {
-  const config = await s2.account.getBasinConfig("mehul-test");
-  console.log(config);
-}
-
-run();
-```
-
-- List Basins
-
-```typescript
-  const s2 = new S2Client({ authToken: "<AUTH_TOKEN>" });
-  async function run() {
-    const allBasins = await s2.account.listBasins();
-    for await (const basin of allBasins) {
-      console.log(basin);
-    }
-  }
-
-  run();
-```
 
 <!-- Start SDK Example Usage [usage] -->
 ## SDK Example Usage
