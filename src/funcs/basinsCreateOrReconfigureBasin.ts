@@ -86,7 +86,7 @@ async function $do(
     return [parsed, { status: "invalid" }];
   }
   const payload = parsed.value;
-  const body = encodeJSON("body", payload.CreateBasinRequest, {
+  const body = encodeJSON("body", payload.CreateOrReconfigureBasinRequest, {
     explode: true,
   });
 
@@ -143,7 +143,7 @@ async function $do(
 
   const doResult = await client._do(req, {
     context,
-    errorCodes: ["400", "401", "499", "4XX", "500", "503", "504", "5XX"],
+    errorCodes: ["400", "499", "4XX", "500", "503", "504", "5XX"],
     retryConfig: context.retryConfig,
     retryCodes: context.retryCodes,
   });
@@ -171,7 +171,7 @@ async function $do(
   >(
     M.json(201, components.BasinInfo$inboundSchema.optional()),
     M.nil(204, components.BasinInfo$inboundSchema.optional()),
-    M.jsonErr([400, 401], errors.ErrorResponse$inboundSchema),
+    M.jsonErr(400, errors.ErrorResponse$inboundSchema),
     M.jsonErr(499, errors.RetryableError$inboundSchema),
     M.jsonErr([500, 503, 504], errors.RetryableError$inboundSchema),
     M.fail("4XX"),

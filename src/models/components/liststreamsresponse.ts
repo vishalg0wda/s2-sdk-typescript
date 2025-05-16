@@ -16,7 +16,7 @@ import {
 
 export type ListStreamsResponse = {
   /**
-   * If set, indicates there are more results that can be listed with `start_after`.
+   * Indicates that there are more results that can be listed with `start_after`.
    */
   hasMore: boolean;
   /**

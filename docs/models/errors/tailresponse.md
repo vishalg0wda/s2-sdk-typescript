@@ -1,16 +1,11 @@
-# CheckTailResponse
+# TailResponse
 
 ## Example Usage
 
 ```typescript
-import { CheckTailResponse } from "@s2-dev/streamstore/models/components";
+import { TailResponse } from "@s2-dev/streamstore/models/errors";
 
-let value: CheckTailResponse = {
-  tail: {
-    seqNum: 844206,
-    timestamp: 245060,
-  },
-};
+// No examples available for this model
 ```
 
 ## Fields

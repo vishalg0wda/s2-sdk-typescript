@@ -28,6 +28,7 @@ S2 API: Serverless API for streaming data backed by object storage.
   * [Authentication](#authentication)
   * [Available Resources and Operations](#available-resources-and-operations)
   * [Standalone functions](#standalone-functions)
+  * [Server-sent event streaming](#server-sent-event-streaming)
   * [Pagination](#pagination)
   * [Retries](#retries)
   * [Error Handling](#error-handling)
@@ -315,6 +316,7 @@ run();
 ### [basins](docs/sdks/basins/README.md)
 
 * [listBasins](docs/sdks/basins/README.md#listbasins) - List basins.
+* [createBasin](docs/sdks/basins/README.md#createbasin) - Create a basin.
 * [getBasinConfig](docs/sdks/basins/README.md#getbasinconfig) - Get basin config.
 * [createOrReconfigureBasin](docs/sdks/basins/README.md#createorreconfigurebasin) - Create or reconfigure a basin.
 * [deleteBasin](docs/sdks/basins/README.md#deletebasin) - Delete a basin.
@@ -322,12 +324,15 @@ run();
 
 ### [records](docs/sdks/records/README.md)
 
+* [read](docs/sdks/records/README.md#read) - Retrieve records.
+* [append](docs/sdks/records/README.md#append) - Append records.
 * [checkTail](docs/sdks/records/README.md#checktail) - Check the tail.
 
 
 ### [streams](docs/sdks/streams/README.md)
 
 * [listStreams](docs/sdks/streams/README.md#liststreams) - List streams.
+* [createStream](docs/sdks/streams/README.md#createstream) - Create a stream.
 * [getStreamConfig](docs/sdks/streams/README.md#getstreamconfig) - Get stream configuration.
 * [createOrReconfigureStream](docs/sdks/streams/README.md#createorreconfigurestream) - Create or reconfigure a stream.
 * [deleteStream](docs/sdks/streams/README.md#deletestream) - Delete a stream.
@@ -354,13 +359,17 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`accessTokensIssueAccessToken`](docs/sdks/accesstokens/README.md#issueaccesstoken) - Issue a new access token.
 - [`accessTokensListAccessTokens`](docs/sdks/accesstokens/README.md#listaccesstokens) - List access tokens.
 - [`accessTokensRevokeAccessToken`](docs/sdks/accesstokens/README.md#revokeaccesstoken) - Revoke an access token.
+- [`basinsCreateBasin`](docs/sdks/basins/README.md#createbasin) - Create a basin.
 - [`basinsCreateOrReconfigureBasin`](docs/sdks/basins/README.md#createorreconfigurebasin) - Create or reconfigure a basin.
 - [`basinsDeleteBasin`](docs/sdks/basins/README.md#deletebasin) - Delete a basin.
 - [`basinsGetBasinConfig`](docs/sdks/basins/README.md#getbasinconfig) - Get basin config.
 - [`basinsListBasins`](docs/sdks/basins/README.md#listbasins) - List basins.
 - [`basinsReconfigureBasin`](docs/sdks/basins/README.md#reconfigurebasin) - Reconfigure a basin.
+- [`recordsAppend`](docs/sdks/records/README.md#append) - Append records.
 - [`recordsCheckTail`](docs/sdks/records/README.md#checktail) - Check the tail.
+- [`recordsRead`](docs/sdks/records/README.md#read) - Retrieve records.
 - [`streamsCreateOrReconfigureStream`](docs/sdks/streams/README.md#createorreconfigurestream) - Create or reconfigure a stream.
+- [`streamsCreateStream`](docs/sdks/streams/README.md#createstream) - Create a stream.
 - [`streamsDeleteStream`](docs/sdks/streams/README.md#deletestream) - Delete a stream.
 - [`streamsGetStreamConfig`](docs/sdks/streams/README.md#getstreamconfig) - Get stream configuration.
 - [`streamsListStreams`](docs/sdks/streams/README.md#liststreams) - List streams.
@@ -368,6 +377,41 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 
 </details>
 <!-- End Standalone functions [standalone-funcs] -->
+
+<!-- Start Server-sent event streaming [eventstream] -->
+## Server-sent event streaming
+
+[Server-sent events][mdn-sse] are used to stream content from certain
+operations. These operations will expose the stream as an async iterable that
+can be consumed using a [`for await...of`][mdn-for-await-of] loop. The loop will
+terminate when the server no longer has any events to send and closes the
+underlying connection.
+
+```typescript
+import { S2 } from "@s2-dev/streamstore";
+
+const s2 = new S2({
+  accessToken: process.env["S2_ACCESS_TOKEN"] ?? "",
+});
+
+async function run() {
+  const result = await s2.records.read({
+    stream: "<value>",
+  });
+
+  for await (const event of result) {
+    // Handle the event
+    console.log(event);
+  }
+}
+
+run();
+
+```
+
+[mdn-sse]: https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events
+[mdn-for-await-of]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await...of
+<!-- End Server-sent event streaming [eventstream] -->
 
 <!-- Start Pagination [pagination] -->
 ## Pagination
@@ -474,7 +518,7 @@ Some methods specify known errors which can be thrown. All the known errors are 
 
 | Error Type            | Status Code   | Content Type     |
 | --------------------- | ------------- | ---------------- |
-| errors.ErrorResponse  | 400, 401      | application/json |
+| errors.ErrorResponse  | 400, 403      | application/json |
 | errors.RetryableError | 499           | application/json |
 | errors.RetryableError | 500, 503, 504 | application/json |
 | errors.APIError       | 4XX, 5XX      | \*/\*            |

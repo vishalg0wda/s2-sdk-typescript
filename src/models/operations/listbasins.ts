@@ -19,7 +19,7 @@ export type ListBasinsRequest = {
    *
    * @remarks
    * This can be the last basin name seen in a previous listing, to continue from there.
-   * It must be greater than or equal to the prefix if specified.
+   * It must be greater than or equal to the `prefix` if that is specified.
    */
   startAfter?: string | undefined;
   /**

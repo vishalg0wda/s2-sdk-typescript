@@ -38,7 +38,7 @@ export function recordsCheckTail(
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    components.CheckTailResponse,
+    components.TailResponse,
     | errors.ErrorResponse
     | errors.RetryableError
     | errors.RetryableError
@@ -65,7 +65,7 @@ async function $do(
 ): Promise<
   [
     Result<
-      components.CheckTailResponse,
+      components.TailResponse,
       | errors.ErrorResponse
       | errors.RetryableError
       | errors.RetryableError
@@ -143,7 +143,18 @@ async function $do(
 
   const doResult = await client._do(req, {
     context,
-    errorCodes: ["400", "401", "404", "499", "4XX", "500", "503", "504", "5XX"],
+    errorCodes: [
+      "400",
+      "401",
+      "404",
+      "409",
+      "499",
+      "4XX",
+      "500",
+      "503",
+      "504",
+      "5XX",
+    ],
     retryConfig: context.retryConfig,
     retryCodes: context.retryCodes,
   });
@@ -157,7 +168,7 @@ async function $do(
   };
 
   const [result] = await M.match<
-    components.CheckTailResponse,
+    components.TailResponse,
     | errors.ErrorResponse
     | errors.RetryableError
     | errors.RetryableError
@@ -169,8 +180,8 @@ async function $do(
     | RequestTimeoutError
     | ConnectionError
   >(
-    M.json(200, components.CheckTailResponse$inboundSchema),
-    M.jsonErr([400, 401, 404], errors.ErrorResponse$inboundSchema),
+    M.json(200, components.TailResponse$inboundSchema),
+    M.jsonErr([400, 401, 404, 409], errors.ErrorResponse$inboundSchema),
     M.jsonErr(499, errors.RetryableError$inboundSchema),
     M.jsonErr([500, 503, 504], errors.RetryableError$inboundSchema),
     M.fail("4XX"),

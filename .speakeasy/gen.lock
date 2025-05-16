@@ -1,29 +1,31 @@
 lockVersion: 2.0.0
 id: 2d20490e-9921-47d5-9711-d3c4b91c8cfa
 management:
-  docChecksum: 6807571eaff6a3b2c28643bd219cfea1
+  docChecksum: 9523b9459b5f677a101907d505c25740
   docVersion: 1.0.0
-  speakeasyVersion: 1.542.3
-  generationVersion: 2.597.9
-  releaseVersion: 0.11.2
-  configChecksum: 2452bd68f14270dd418f1efde42bf089
+  speakeasyVersion: 1.546.1
+  generationVersion: 2.604.2
+  releaseVersion: 0.12.0
+  configChecksum: 885a98a924647abb089e5b22be351cea
   repoURL: https://github.com/s2-streamstore/s2-sdk-typescript.git
   installationURL: https://github.com/s2-streamstore/s2-sdk-typescript
   published: true
 features:
   typescript:
+    acceptHeaders: 2.81.2
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.1.11
-    core: 3.21.7
+    core: 3.21.8
     defaultEnabledRetries: 0.1.0
     devContainers: 2.90.0
     enumUnions: 0.1.0
     envVarSecurityUsage: 0.1.2
+    errorUnions: 0.1.1
     errors: 2.84.0
     globalSecurity: 2.82.13
     globalSecurityCallbacks: 0.1.0
     globalSecurityFlattening: 0.1.0
-    globalServerURLs: 2.82.4
+    globalServerURLs: 2.82.5
     mcpServer: 0.9.2
     methodServerURLs: 2.82.1
     nullables: 0.1.1
@@ -31,6 +33,7 @@ features:
     responseFormat: 0.2.3
     retries: 2.83.0
     sdkHooks: 0.2.0
+    serverEvents: 0.1.5
     unions: 2.85.8
 generatedFiles:
   - .devcontainer/README.md
@@ -44,14 +47,22 @@ generatedFiles:
   - docs/lib/utils/retryconfig.md
   - docs/models/components/accesstokeninfo.md
   - docs/models/components/accesstokenscope.md
+  - docs/models/components/appendack.md
+  - docs/models/components/appendinput.md
+  - docs/models/components/appendrecord.md
   - docs/models/components/basinconfig.md
   - docs/models/components/basininfo.md
   - docs/models/components/basinreconfiguration.md
   - docs/models/components/basinscope.md
   - docs/models/components/basinstate.md
-  - docs/models/components/checktailresponse.md
+  - docs/models/components/batch.md
   - docs/models/components/createbasinrequest.md
+  - docs/models/components/createorreconfigurebasinrequest.md
+  - docs/models/components/createorreconfigurebasinrequestscope.md
+  - docs/models/components/createstreamrequest.md
+  - docs/models/components/errort.md
   - docs/models/components/exact.md
+  - docs/models/components/header.md
   - docs/models/components/issueaccesstokenresponse.md
   - docs/models/components/listaccesstokensresponse.md
   - docs/models/components/listbasinsresponse.md
@@ -59,22 +70,34 @@ generatedFiles:
   - docs/models/components/one.md
   - docs/models/components/operation.md
   - docs/models/components/permittedoperationgroups.md
+  - docs/models/components/ping.md
   - docs/models/components/prefix.md
+  - docs/models/components/readbatch.md
+  - docs/models/components/readevent.md
   - docs/models/components/readwritepermissions.md
   - docs/models/components/resourceset.md
   - docs/models/components/retentionpolicy.md
+  - docs/models/components/s2format.md
   - docs/models/components/scope.md
   - docs/models/components/security.md
+  - docs/models/components/sequencedrecord.md
   - docs/models/components/storageclass.md
   - docs/models/components/streamconfig.md
   - docs/models/components/streaminfo.md
   - docs/models/components/streamposition.md
   - docs/models/components/streamreconfiguration.md
+  - docs/models/components/tailresponse.md
   - docs/models/components/timestampingconfig.md
   - docs/models/components/timestampingmode.md
   - docs/models/components/timestampingreconfiguration.md
+  - docs/models/errors/appendconditionfailed.md
   - docs/models/errors/errorresponse.md
+  - docs/models/errors/notfounderror.md
+  - docs/models/errors/one.md
   - docs/models/errors/retryableerror.md
+  - docs/models/errors/tailresponse.md
+  - docs/models/errors/two.md
+  - docs/models/operations/appendrequest.md
   - docs/models/operations/checktailrequest.md
   - docs/models/operations/createorreconfigurebasinrequest.md
   - docs/models/operations/createorreconfigurestreamrequest.md
@@ -87,6 +110,8 @@ generatedFiles:
   - docs/models/operations/listbasinsresponse.md
   - docs/models/operations/liststreamsrequest.md
   - docs/models/operations/liststreamsresponse.md
+  - docs/models/operations/readrequest.md
+  - docs/models/operations/readresponse.md
   - docs/models/operations/reconfigurebasinrequest.md
   - docs/models/operations/reconfigurestreamrequest.md
   - docs/models/operations/revokeaccesstokenrequest.md
@@ -102,13 +127,17 @@ generatedFiles:
   - src/funcs/accessTokensIssueAccessToken.ts
   - src/funcs/accessTokensListAccessTokens.ts
   - src/funcs/accessTokensRevokeAccessToken.ts
+  - src/funcs/basinsCreateBasin.ts
   - src/funcs/basinsCreateOrReconfigureBasin.ts
   - src/funcs/basinsDeleteBasin.ts
   - src/funcs/basinsGetBasinConfig.ts
   - src/funcs/basinsListBasins.ts
   - src/funcs/basinsReconfigureBasin.ts
+  - src/funcs/recordsAppend.ts
   - src/funcs/recordsCheckTail.ts
+  - src/funcs/recordsRead.ts
   - src/funcs/streamsCreateOrReconfigureStream.ts
+  - src/funcs/streamsCreateStream.ts
   - src/funcs/streamsDeleteStream.ts
   - src/funcs/streamsGetStreamConfig.ts
   - src/funcs/streamsListStreams.ts
@@ -122,6 +151,7 @@ generatedFiles:
   - src/lib/dlv.ts
   - src/lib/encodings.ts
   - src/lib/env.ts
+  - src/lib/event-streams.ts
   - src/lib/files.ts
   - src/lib/http.ts
   - src/lib/is-plain-object.ts
@@ -149,26 +179,35 @@ generatedFiles:
   - src/mcp-server/tools/accessTokensIssueAccessToken.ts
   - src/mcp-server/tools/accessTokensListAccessTokens.ts
   - src/mcp-server/tools/accessTokensRevokeAccessToken.ts
+  - src/mcp-server/tools/basinsCreateBasin.ts
   - src/mcp-server/tools/basinsCreateOrReconfigureBasin.ts
   - src/mcp-server/tools/basinsDeleteBasin.ts
   - src/mcp-server/tools/basinsGetBasinConfig.ts
   - src/mcp-server/tools/basinsListBasins.ts
   - src/mcp-server/tools/basinsReconfigureBasin.ts
+  - src/mcp-server/tools/recordsAppend.ts
   - src/mcp-server/tools/recordsCheckTail.ts
+  - src/mcp-server/tools/recordsRead.ts
   - src/mcp-server/tools/streamsCreateOrReconfigureStream.ts
+  - src/mcp-server/tools/streamsCreateStream.ts
   - src/mcp-server/tools/streamsDeleteStream.ts
   - src/mcp-server/tools/streamsGetStreamConfig.ts
   - src/mcp-server/tools/streamsListStreams.ts
   - src/mcp-server/tools/streamsReconfigureStream.ts
   - src/models/components/accesstokeninfo.ts
   - src/models/components/accesstokenscope.ts
+  - src/models/components/appendack.ts
+  - src/models/components/appendinput.ts
+  - src/models/components/appendrecord.ts
   - src/models/components/basinconfig.ts
   - src/models/components/basininfo.ts
   - src/models/components/basinreconfiguration.ts
   - src/models/components/basinscope.ts
   - src/models/components/basinstate.ts
-  - src/models/components/checktailresponse.ts
   - src/models/components/createbasinrequest.ts
+  - src/models/components/createorreconfigurebasinrequest.ts
+  - src/models/components/createstreamrequest.ts
+  - src/models/components/header.ts
   - src/models/components/index.ts
   - src/models/components/issueaccesstokenresponse.ts
   - src/models/components/listaccesstokensresponse.ts
@@ -176,27 +215,37 @@ generatedFiles:
   - src/models/components/liststreamsresponse.ts
   - src/models/components/operation.ts
   - src/models/components/permittedoperationgroups.ts
+  - src/models/components/readbatch.ts
+  - src/models/components/readevent.ts
   - src/models/components/readwritepermissions.ts
   - src/models/components/resourceset.ts
   - src/models/components/retentionpolicy.ts
+  - src/models/components/s2format.ts
   - src/models/components/security.ts
+  - src/models/components/sequencedrecord.ts
   - src/models/components/storageclass.ts
   - src/models/components/streamconfig.ts
   - src/models/components/streaminfo.ts
   - src/models/components/streamposition.ts
   - src/models/components/streamreconfiguration.ts
+  - src/models/components/tailresponse.ts
   - src/models/components/timestampingconfig.ts
   - src/models/components/timestampingmode.ts
   - src/models/components/timestampingreconfiguration.ts
   - src/models/errors/apierror.ts
+  - src/models/errors/appendconditionfailed.ts
   - src/models/errors/errorresponse.ts
   - src/models/errors/httpclienterrors.ts
   - src/models/errors/index.ts
+  - src/models/errors/notfounderror.ts
   - src/models/errors/retryableerror.ts
   - src/models/errors/sdkvalidationerror.ts
+  - src/models/errors/tailresponse.ts
+  - src/models/operations/append.ts
   - src/models/operations/checktail.ts
   - src/models/operations/createorreconfigurebasin.ts
   - src/models/operations/createorreconfigurestream.ts
+  - src/models/operations/createstream.ts
   - src/models/operations/deletebasin.ts
   - src/models/operations/deletestream.ts
   - src/models/operations/getbasinconfig.ts
@@ -205,6 +254,7 @@ generatedFiles:
   - src/models/operations/listaccesstokens.ts
   - src/models/operations/listbasins.ts
   - src/models/operations/liststreams.ts
+  - src/models/operations/read.ts
   - src/models/operations/reconfigurebasin.ts
   - src/models/operations/reconfigurestream.ts
   - src/models/operations/revokeaccesstoken.ts
@@ -234,7 +284,7 @@ examples:
           limit: 1000
       responses:
         "200":
-          application/json: {"access_tokens": [{"auto_prefix_streams": false, "id": "<id>", "scope": {}}, {"auto_prefix_streams": false, "id": "<id>", "scope": {}}], "has_more": false}
+          application/json: {"access_tokens": [{"auto_prefix_streams": false, "id": "<id>", "scope": {}}, {"auto_prefix_streams": false, "id": "<id>", "scope": {}}, {"auto_prefix_streams": false, "id": "<id>", "scope": {}}], "has_more": false}
         "400":
           application/json: {"message": "<value>", "error": "<value>"}
         "499":
@@ -275,7 +325,20 @@ examples:
           limit: 1000
       responses:
         "200":
-          application/json: {"basins": [{"name": "<value>", "scope": "aws:us-east-1", "state": "active"}], "has_more": true}
+          application/json: {"basins": [{"name": "<value>", "scope": "aws:us-east-1", "state": "active"}, {"name": "<value>", "scope": "aws:us-east-1", "state": "active"}, {"name": "<value>", "scope": "aws:us-east-1", "state": "active"}], "has_more": false}
+        "400":
+          application/json: {"message": "<value>", "error": "<value>"}
+        "499":
+          application/json: {"error": "<value>"}
+        "500":
+          application/json: {"error": "<value>"}
+  create_basin:
+    speakeasy-default-create-basin:
+      requestBody:
+        application/json: {"basin": "<value>"}
+      responses:
+        "201":
+          application/json: {"name": "<value>", "scope": "aws:us-east-1", "state": "deleting"}
         "400":
           application/json: {"message": "<value>", "error": "<value>"}
         "499":
@@ -302,8 +365,6 @@ examples:
         path:
           basin: "<value>"
         header: {}
-      requestBody:
-        application/json: {}
       responses:
         "201":
           application/json: {"name": "<value>", "scope": "aws:us-east-1", "state": "active"}
@@ -321,6 +382,8 @@ examples:
       responses:
         "400":
           application/json: {"message": "<value>", "error": "<value>"}
+        "404":
+          application/json: {"error": "<value>"}
         "499":
           application/json: {"error": "<value>"}
         "500":
@@ -350,7 +413,20 @@ examples:
           limit: 1000
       responses:
         "200":
-          application/json: {"has_more": false, "streams": []}
+          application/json: {"has_more": true, "streams": [{"created_at": "<value>", "name": "<value>"}, {"created_at": "<value>", "name": "<value>"}, {"created_at": "<value>", "name": "<value>"}]}
+        "400":
+          application/json: {"message": "<value>", "error": "<value>"}
+        "499":
+          application/json: {"error": "<value>"}
+        "500":
+          application/json: {"error": "<value>"}
+  create_stream:
+    speakeasy-default-create-stream:
+      requestBody:
+        application/json: {"stream": "<value>"}
+      responses:
+        "201":
+          application/json: {"created_at": "<value>", "name": "<value>"}
         "400":
           application/json: {"message": "<value>", "error": "<value>"}
         "499":
@@ -377,11 +453,9 @@ examples:
         path:
           stream: "<value>"
         header: {}
-      requestBody:
-        application/json: {}
       responses:
         "201":
-          application/json: {"created_at": "1744554214398", "name": "<value>"}
+          application/json: {"created_at": "<value>", "name": "<value>"}
         "400":
           application/json: {"message": "<value>", "error": "<value>"}
         "499":
@@ -396,6 +470,8 @@ examples:
       responses:
         "400":
           application/json: {"message": "<value>", "error": "<value>"}
+        "404":
+          application/json: {"error": "<value>"}
         "499":
           application/json: {"error": "<value>"}
         "500":
@@ -416,6 +492,43 @@ examples:
           application/json: {"error": "<value>"}
         "500":
           application/json: {"error": "<value>"}
+  read:
+    speakeasy-default-read:
+      parameters:
+        path:
+          stream: "<value>"
+        query: {}
+        header: {}
+      responses:
+        "200":
+          application/json: {"records": [{"seq_num": 726908, "timestamp": 537175}]}
+        "400":
+          application/json: {"message": "<value>", "error": "<value>"}
+        "416":
+          application/json: {"tail": {"seq_num": 297326, "timestamp": 934740}}
+        "499":
+          application/json: {"error": "<value>"}
+        "500":
+          application/json: {"error": "<value>"}
+  append:
+    speakeasy-default-append:
+      parameters:
+        path:
+          stream: "<value>"
+        header: {}
+      requestBody:
+        application/json: {"records": [{}, {}]}
+      responses:
+        "200":
+          application/json: {"end": {"seq_num": 955507, "timestamp": 515119}, "start": {"seq_num": 141999, "timestamp": 468943}, "tail": {"seq_num": 543056, "timestamp": 568743}}
+        "400":
+          application/json: {"message": "<value>", "error": "<value>"}
+        "412":
+          application/json: {"FencingTokenMismatch": "<value>"}
+        "499":
+          application/json: {"error": "<value>"}
+        "500":
+          application/json: {"error": "<value>"}
   check_tail:
     speakeasy-default-check-tail:
       parameters:
@@ -423,12 +536,12 @@ examples:
           stream: "<value>"
       responses:
         "200":
-          application/json: {"tail": {"seq_num": 483653, "timestamp": 279903}}
+          application/json: {"tail": {"seq_num": 552218, "timestamp": 574770}}
         "400":
           application/json: {"message": "<value>", "error": "<value>"}
         "499":
           application/json: {"error": "<value>"}
         "500":
           application/json: {"error": "<value>"}
-examplesVersion: 1.0.1
+examplesVersion: 1.0.2
 generatedTests: {}

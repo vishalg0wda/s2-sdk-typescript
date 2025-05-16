@@ -36,6 +36,7 @@ export function basinsDeleteBasin(
   Result<
     void,
     | errors.ErrorResponse
+    | errors.NotFoundError
     | errors.RetryableError
     | errors.RetryableError
     | APIError
@@ -63,6 +64,7 @@ async function $do(
     Result<
       void,
       | errors.ErrorResponse
+      | errors.NotFoundError
       | errors.RetryableError
       | errors.RetryableError
       | APIError
@@ -134,7 +136,18 @@ async function $do(
 
   const doResult = await client._do(req, {
     context,
-    errorCodes: ["400", "401", "499", "4XX", "500", "503", "504", "5XX"],
+    errorCodes: [
+      "400",
+      "401",
+      "403",
+      "404",
+      "499",
+      "4XX",
+      "500",
+      "503",
+      "504",
+      "5XX",
+    ],
     retryConfig: context.retryConfig,
     retryCodes: context.retryCodes,
   });
@@ -150,6 +163,7 @@ async function $do(
   const [result] = await M.match<
     void,
     | errors.ErrorResponse
+    | errors.NotFoundError
     | errors.RetryableError
     | errors.RetryableError
     | APIError
@@ -161,7 +175,8 @@ async function $do(
     | ConnectionError
   >(
     M.nil(202, z.void()),
-    M.jsonErr([400, 401], errors.ErrorResponse$inboundSchema),
+    M.jsonErr([400, 401, 403], errors.ErrorResponse$inboundSchema),
+    M.jsonErr(404, errors.NotFoundError$inboundSchema),
     M.jsonErr(499, errors.RetryableError$inboundSchema),
     M.jsonErr([500, 503, 504], errors.RetryableError$inboundSchema),
     M.fail("4XX"),

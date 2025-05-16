@@ -19,8 +19,7 @@ export type DeleteStreamRequest = {
    * Stream name, which must be unique within the basin.
    *
    * @remarks
-   * It can be an arbitrary string upto 512 characters.
-   * Backslash (`/`) is recommended as a delimiter for hierarchical naming.
+   * It can be an arbitrary string up to 512 characters.
    */
   stream: string;
 };
