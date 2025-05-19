@@ -37,8 +37,6 @@ export function streamsCreateOrReconfigureStream(
   Result<
     components.StreamInfo | undefined,
     | errors.ErrorResponse
-    | errors.RetryableError
-    | errors.RetryableError
     | APIError
     | SDKValidationError
     | UnexpectedClientError
@@ -64,8 +62,6 @@ async function $do(
     Result<
       components.StreamInfo | undefined,
       | errors.ErrorResponse
-      | errors.RetryableError
-      | errors.RetryableError
       | APIError
       | SDKValidationError
       | UnexpectedClientError
@@ -108,6 +104,10 @@ async function $do(
   const headers = new Headers(compactMap({
     "Content-Type": "application/json",
     Accept: "application/json",
+    "s2-basin": encodeSimple("s2-basin", payload["s2-basin"], {
+      explode: false,
+      charEncoding: "none",
+    }),
     "s2-request-token": encodeSimple(
       "s2-request-token",
       payload["s2-request-token"],
@@ -149,18 +149,7 @@ async function $do(
 
   const doResult = await client._do(req, {
     context,
-    errorCodes: [
-      "400",
-      "403",
-      "404",
-      "409",
-      "499",
-      "4XX",
-      "500",
-      "503",
-      "504",
-      "5XX",
-    ],
+    errorCodes: ["400", "403", "404", "409", "4XX", "5XX"],
     retryConfig: context.retryConfig,
     retryCodes: context.retryCodes,
   });
@@ -176,8 +165,6 @@ async function $do(
   const [result] = await M.match<
     components.StreamInfo | undefined,
     | errors.ErrorResponse
-    | errors.RetryableError
-    | errors.RetryableError
     | APIError
     | SDKValidationError
     | UnexpectedClientError
@@ -189,8 +176,6 @@ async function $do(
     M.json(201, components.StreamInfo$inboundSchema.optional()),
     M.nil(204, components.StreamInfo$inboundSchema.optional()),
     M.jsonErr([400, 403, 404, 409], errors.ErrorResponse$inboundSchema),
-    M.jsonErr(499, errors.RetryableError$inboundSchema),
-    M.jsonErr([500, 503, 504], errors.RetryableError$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, { extraFields: responseFields });

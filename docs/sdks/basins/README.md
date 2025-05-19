@@ -86,12 +86,10 @@ run();
 
 ### Errors
 
-| Error Type            | Status Code           | Content Type          |
-| --------------------- | --------------------- | --------------------- |
-| errors.ErrorResponse  | 400, 403              | application/json      |
-| errors.RetryableError | 499                   | application/json      |
-| errors.RetryableError | 500, 503, 504         | application/json      |
-| errors.APIError       | 4XX, 5XX              | \*/\*                 |
+| Error Type           | Status Code          | Content Type         |
+| -------------------- | -------------------- | -------------------- |
+| errors.ErrorResponse | 400, 403             | application/json     |
+| errors.APIError      | 4XX, 5XX             | \*/\*                |
 
 ## createBasin
 
@@ -165,12 +163,10 @@ run();
 
 ### Errors
 
-| Error Type            | Status Code           | Content Type          |
-| --------------------- | --------------------- | --------------------- |
-| errors.ErrorResponse  | 400, 401, 403, 409    | application/json      |
-| errors.RetryableError | 499                   | application/json      |
-| errors.RetryableError | 500, 503, 504         | application/json      |
-| errors.APIError       | 4XX, 5XX              | \*/\*                 |
+| Error Type           | Status Code          | Content Type         |
+| -------------------- | -------------------- | -------------------- |
+| errors.ErrorResponse | 400, 401, 403, 409   | application/json     |
+| errors.APIError      | 4XX, 5XX             | \*/\*                |
 
 ## getBasinConfig
 
@@ -244,12 +240,10 @@ run();
 
 ### Errors
 
-| Error Type            | Status Code           | Content Type          |
-| --------------------- | --------------------- | --------------------- |
-| errors.ErrorResponse  | 400, 403, 404         | application/json      |
-| errors.RetryableError | 499                   | application/json      |
-| errors.RetryableError | 500, 503, 504         | application/json      |
-| errors.APIError       | 4XX, 5XX              | \*/\*                 |
+| Error Type           | Status Code          | Content Type         |
+| -------------------- | -------------------- | -------------------- |
+| errors.ErrorResponse | 400, 403, 404        | application/json     |
+| errors.APIError      | 4XX, 5XX             | \*/\*                |
 
 ## createOrReconfigureBasin
 
@@ -323,12 +317,10 @@ run();
 
 ### Errors
 
-| Error Type            | Status Code           | Content Type          |
-| --------------------- | --------------------- | --------------------- |
-| errors.ErrorResponse  | 400                   | application/json      |
-| errors.RetryableError | 499                   | application/json      |
-| errors.RetryableError | 500, 503, 504         | application/json      |
-| errors.APIError       | 4XX, 5XX              | \*/\*                 |
+| Error Type           | Status Code          | Content Type         |
+| -------------------- | -------------------- | -------------------- |
+| errors.ErrorResponse | 400                  | application/json     |
+| errors.APIError      | 4XX, 5XX             | \*/\*                |
 
 ## deleteBasin
 
@@ -400,13 +392,10 @@ run();
 
 ### Errors
 
-| Error Type            | Status Code           | Content Type          |
-| --------------------- | --------------------- | --------------------- |
-| errors.ErrorResponse  | 400, 401, 403         | application/json      |
-| errors.NotFoundError  | 404                   | application/json      |
-| errors.RetryableError | 499                   | application/json      |
-| errors.RetryableError | 500, 503, 504         | application/json      |
-| errors.APIError       | 4XX, 5XX              | \*/\*                 |
+| Error Type           | Status Code          | Content Type         |
+| -------------------- | -------------------- | -------------------- |
+| errors.ErrorResponse | 400, 401, 403, 404   | application/json     |
+| errors.APIError      | 4XX, 5XX             | \*/\*                |
 
 ## reconfigureBasin
 
@@ -482,9 +471,7 @@ run();
 
 ### Errors
 
-| Error Type            | Status Code           | Content Type          |
-| --------------------- | --------------------- | --------------------- |
-| errors.ErrorResponse  | 400, 403, 404         | application/json      |
-| errors.RetryableError | 499                   | application/json      |
-| errors.RetryableError | 500, 503, 504         | application/json      |
-| errors.APIError       | 4XX, 5XX              | \*/\*                 |
+| Error Type           | Status Code          | Content Type         |
+| -------------------- | -------------------- | -------------------- |
+| errors.ErrorResponse | 400, 403, 404        | application/json     |
+| errors.APIError      | 4XX, 5XX             | \*/\*                |

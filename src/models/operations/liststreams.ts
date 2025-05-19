@@ -33,6 +33,10 @@ export type ListStreamsRequest = {
    * Number of results, up to a maximum of 1000.
    */
   limit?: number | undefined;
+  /**
+   * Basin name for basin-specific endpoints
+   */
+  s2Basin: string;
 };
 
 export type ListStreamsResponse = {
@@ -48,9 +52,11 @@ export const ListStreamsRequest$inboundSchema: z.ZodType<
   prefix: z.string().default(""),
   start_after: z.string().default(""),
   limit: z.number().int().default(1000),
+  "s2-basin": z.string(),
 }).transform((v) => {
   return remap$(v, {
     "start_after": "startAfter",
+    "s2-basin": "s2Basin",
   });
 });
 
@@ -59,6 +65,7 @@ export type ListStreamsRequest$Outbound = {
   prefix: string;
   start_after: string;
   limit: number;
+  "s2-basin": string;
 };
 
 /** @internal */
@@ -70,9 +77,11 @@ export const ListStreamsRequest$outboundSchema: z.ZodType<
   prefix: z.string().default(""),
   startAfter: z.string().default(""),
   limit: z.number().int().default(1000),
+  s2Basin: z.string(),
 }).transform((v) => {
   return remap$(v, {
     startAfter: "start_after",
+    s2Basin: "s2-basin",
   });
 });
 

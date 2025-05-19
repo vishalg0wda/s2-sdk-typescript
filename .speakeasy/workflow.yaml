@@ -6,6 +6,8 @@ sources:
             - location: https://raw.githubusercontent.com/s2-streamstore/s2-protos/refs/heads/main/s2/v1/openapi.json
         overlays:
             - location: overlay.yaml
+            - location: overlay.yaml
+            - location: overlay.yaml
         registry:
             location: registry.speakeasyapi.dev/stream-store/s2/s-2-api
 targets:

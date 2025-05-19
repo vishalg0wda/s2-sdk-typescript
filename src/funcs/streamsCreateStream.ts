@@ -3,7 +3,7 @@
  */
 
 import { S2Core } from "../core.js";
-import { encodeJSON } from "../lib/encodings.js";
+import { encodeJSON, encodeSimple } from "../lib/encodings.js";
 import * as M from "../lib/matchers.js";
 import { compactMap } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
@@ -22,6 +22,7 @@ import {
 import * as errors from "../models/errors/index.js";
 import { SDKValidationError } from "../models/errors/sdkvalidationerror.js";
 import { CreateStreamServerList } from "../models/operations/createstream.js";
+import * as operations from "../models/operations/index.js";
 import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
@@ -30,14 +31,12 @@ import { Result } from "../types/fp.js";
  */
 export function streamsCreateStream(
   client: S2Core,
-  request: components.CreateStreamRequest,
+  request: operations.CreateStreamRequest,
   options?: RequestOptions,
 ): APIPromise<
   Result<
     components.StreamInfo,
     | errors.ErrorResponse
-    | errors.RetryableError
-    | errors.RetryableError
     | APIError
     | SDKValidationError
     | UnexpectedClientError
@@ -56,15 +55,13 @@ export function streamsCreateStream(
 
 async function $do(
   client: S2Core,
-  request: components.CreateStreamRequest,
+  request: operations.CreateStreamRequest,
   options?: RequestOptions,
 ): Promise<
   [
     Result<
       components.StreamInfo,
       | errors.ErrorResponse
-      | errors.RetryableError
-      | errors.RetryableError
       | APIError
       | SDKValidationError
       | UnexpectedClientError
@@ -78,14 +75,16 @@ async function $do(
 > {
   const parsed = safeParse(
     request,
-    (value) => components.CreateStreamRequest$outboundSchema.parse(value),
+    (value) => operations.CreateStreamRequest$outboundSchema.parse(value),
     "Input validation failed",
   );
   if (!parsed.ok) {
     return [parsed, { status: "invalid" }];
   }
   const payload = parsed.value;
-  const body = encodeJSON("body", payload, { explode: true });
+  const body = encodeJSON("body", payload.CreateStreamRequest, {
+    explode: true,
+  });
 
   const baseURL = options?.serverURL
     || pathToFunc(CreateStreamServerList[0], { charEncoding: "percent" })({
@@ -97,6 +96,10 @@ async function $do(
   const headers = new Headers(compactMap({
     "Content-Type": "application/json",
     Accept: "application/json",
+    "s2-basin": encodeSimple("s2-basin", payload["s2-basin"], {
+      explode: false,
+      charEncoding: "none",
+    }),
   }));
 
   const secConfig = await extractSecurity(client._options.accessToken);
@@ -133,18 +136,7 @@ async function $do(
 
   const doResult = await client._do(req, {
     context,
-    errorCodes: [
-      "400",
-      "403",
-      "404",
-      "409",
-      "499",
-      "4XX",
-      "500",
-      "503",
-      "504",
-      "5XX",
-    ],
+    errorCodes: ["400", "403", "404", "409", "4XX", "5XX"],
     retryConfig: context.retryConfig,
     retryCodes: context.retryCodes,
   });
@@ -160,8 +152,6 @@ async function $do(
   const [result] = await M.match<
     components.StreamInfo,
     | errors.ErrorResponse
-    | errors.RetryableError
-    | errors.RetryableError
     | APIError
     | SDKValidationError
     | UnexpectedClientError
@@ -172,8 +162,6 @@ async function $do(
   >(
     M.json(201, components.StreamInfo$inboundSchema),
     M.jsonErr([400, 403, 404, 409], errors.ErrorResponse$inboundSchema),
-    M.jsonErr(499, errors.RetryableError$inboundSchema),
-    M.jsonErr([500, 503, 504], errors.RetryableError$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, { extraFields: responseFields });

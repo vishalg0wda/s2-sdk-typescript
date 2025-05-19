@@ -13,7 +13,7 @@ const args = {
 export const tool$streamsListStreams: ToolDefinition<typeof args> = {
   name: "streams-list-streams",
   description: `List streams.`,
-  scopes: ["read"],
+  scopes: ["read", "read", "read"],
   args,
   tool: async (client, args, ctx) => {
     const [result, apiCall] = await streamsListStreams(

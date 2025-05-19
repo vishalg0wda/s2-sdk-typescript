@@ -32,6 +32,10 @@ export type AppendRequest = {
    * json-binsafe: Base64-encoded binary data
    */
   s2Format?: components.S2Format | undefined;
+  /**
+   * Basin name for basin-specific endpoints
+   */
+  s2Basin: string;
   appendInput: components.AppendInput;
 };
 
@@ -43,10 +47,12 @@ export const AppendRequest$inboundSchema: z.ZodType<
 > = z.object({
   stream: z.string(),
   "s2-format": components.S2Format$inboundSchema.optional(),
+  "s2-basin": z.string(),
   AppendInput: components.AppendInput$inboundSchema,
 }).transform((v) => {
   return remap$(v, {
     "s2-format": "s2Format",
+    "s2-basin": "s2Basin",
     "AppendInput": "appendInput",
   });
 });
@@ -55,6 +61,7 @@ export const AppendRequest$inboundSchema: z.ZodType<
 export type AppendRequest$Outbound = {
   stream: string;
   "s2-format"?: string | undefined;
+  "s2-basin": string;
   AppendInput: components.AppendInput$Outbound;
 };
 
@@ -66,10 +73,12 @@ export const AppendRequest$outboundSchema: z.ZodType<
 > = z.object({
   stream: z.string(),
   s2Format: components.S2Format$outboundSchema.optional(),
+  s2Basin: z.string(),
   appendInput: components.AppendInput$outboundSchema,
 }).transform((v) => {
   return remap$(v, {
     s2Format: "s2-format",
+    s2Basin: "s2-basin",
     appendInput: "AppendInput",
   });
 });

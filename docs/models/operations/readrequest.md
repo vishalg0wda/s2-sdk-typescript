@@ -7,6 +7,7 @@ import { ReadRequest } from "@s2-dev/streamstore/models/operations";
 
 let value: ReadRequest = {
   stream: "<value>",
+  s2Basin: "<value>",
 };
 ```
 
@@ -21,3 +22,4 @@ let value: ReadRequest = {
 | `tailOffset`                                                                                                      | *number*                                                                                                          | :heavy_minus_sign:                                                                                                | Start from number of records before the tail, i.e. before the next sequence number.                               |
 | `count`                                                                                                           | *number*                                                                                                          | :heavy_minus_sign:                                                                                                | Limit total records to return.                                                                                    |
 | `bytes`                                                                                                           | *number*                                                                                                          | :heavy_minus_sign:                                                                                                | Limit total metered bytes to return.                                                                              |
+| `s2Basin`                                                                                                         | *string*                                                                                                          | :heavy_check_mark:                                                                                                | Basin name for basin-specific endpoints                                                                           |

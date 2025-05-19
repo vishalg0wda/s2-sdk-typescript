@@ -13,7 +13,7 @@ const args = {
 export const tool$accessTokensRevokeAccessToken: ToolDefinition<typeof args> = {
   name: "access-tokens-revoke-access-token",
   description: `Revoke an access token.`,
-  scopes: ["write"],
+  scopes: ["write", "write", "write"],
   args,
   tool: async (client, args, ctx) => {
     const [result, apiCall] = await accessTokensRevokeAccessToken(

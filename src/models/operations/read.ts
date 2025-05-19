@@ -53,6 +53,10 @@ export type ReadRequest = {
    * Limit total metered bytes to return.
    */
   bytes?: number | undefined;
+  /**
+   * Basin name for basin-specific endpoints
+   */
+  s2Basin: string;
 };
 
 export type ReadResponse =
@@ -72,11 +76,13 @@ export const ReadRequest$inboundSchema: z.ZodType<
   tail_offset: z.number().int().optional(),
   count: z.number().int().optional(),
   bytes: z.number().int().optional(),
+  "s2-basin": z.string(),
 }).transform((v) => {
   return remap$(v, {
     "s2-format": "s2Format",
     "seq_num": "seqNum",
     "tail_offset": "tailOffset",
+    "s2-basin": "s2Basin",
   });
 });
 
@@ -89,6 +95,7 @@ export type ReadRequest$Outbound = {
   tail_offset?: number | undefined;
   count?: number | undefined;
   bytes?: number | undefined;
+  "s2-basin": string;
 };
 
 /** @internal */
@@ -104,11 +111,13 @@ export const ReadRequest$outboundSchema: z.ZodType<
   tailOffset: z.number().int().optional(),
   count: z.number().int().optional(),
   bytes: z.number().int().optional(),
+  s2Basin: z.string(),
 }).transform((v) => {
   return remap$(v, {
     s2Format: "s2-format",
     seqNum: "seq_num",
     tailOffset: "tail_offset",
+    s2Basin: "s2-basin",
   });
 });
 

@@ -37,8 +37,6 @@ export function streamsGetStreamConfig(
   Result<
     components.StreamConfig,
     | errors.ErrorResponse
-    | errors.RetryableError
-    | errors.RetryableError
     | APIError
     | SDKValidationError
     | UnexpectedClientError
@@ -64,8 +62,6 @@ async function $do(
     Result<
       components.StreamConfig,
       | errors.ErrorResponse
-      | errors.RetryableError
-      | errors.RetryableError
       | APIError
       | SDKValidationError
       | UnexpectedClientError
@@ -104,6 +100,10 @@ async function $do(
 
   const headers = new Headers(compactMap({
     Accept: "application/json",
+    "s2-basin": encodeSimple("s2-basin", payload["s2-basin"], {
+      explode: false,
+      charEncoding: "none",
+    }),
   }));
 
   const secConfig = await extractSecurity(client._options.accessToken);
@@ -140,18 +140,7 @@ async function $do(
 
   const doResult = await client._do(req, {
     context,
-    errorCodes: [
-      "400",
-      "403",
-      "404",
-      "409",
-      "499",
-      "4XX",
-      "500",
-      "503",
-      "504",
-      "5XX",
-    ],
+    errorCodes: ["400", "403", "404", "409", "4XX", "5XX"],
     retryConfig: context.retryConfig,
     retryCodes: context.retryCodes,
   });
@@ -167,8 +156,6 @@ async function $do(
   const [result] = await M.match<
     components.StreamConfig,
     | errors.ErrorResponse
-    | errors.RetryableError
-    | errors.RetryableError
     | APIError
     | SDKValidationError
     | UnexpectedClientError
@@ -179,8 +166,6 @@ async function $do(
   >(
     M.json(200, components.StreamConfig$inboundSchema),
     M.jsonErr([400, 403, 404, 409], errors.ErrorResponse$inboundSchema),
-    M.jsonErr(499, errors.RetryableError$inboundSchema),
-    M.jsonErr([500, 503, 504], errors.RetryableError$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, { extraFields: responseFields });

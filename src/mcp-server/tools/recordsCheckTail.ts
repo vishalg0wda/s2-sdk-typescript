@@ -15,7 +15,7 @@ export const tool$recordsCheckTail: ToolDefinition<typeof args> = {
   description: `Check the tail.
 
 Check the tail of a stream.`,
-  scopes: ["read"],
+  scopes: ["read", "read", "read"],
   args,
   tool: async (client, args, ctx) => {
     const [result, apiCall] = await recordsCheckTail(

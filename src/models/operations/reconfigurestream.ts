@@ -24,6 +24,10 @@ export type ReconfigureStreamRequest = {
    * It can be an arbitrary string up to 512 characters.
    */
   stream: string;
+  /**
+   * Basin name for basin-specific endpoints
+   */
+  s2Basin: string;
   streamReconfiguration: components.StreamReconfiguration;
 };
 
@@ -34,9 +38,11 @@ export const ReconfigureStreamRequest$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   stream: z.string(),
+  "s2-basin": z.string(),
   StreamReconfiguration: components.StreamReconfiguration$inboundSchema,
 }).transform((v) => {
   return remap$(v, {
+    "s2-basin": "s2Basin",
     "StreamReconfiguration": "streamReconfiguration",
   });
 });
@@ -44,6 +50,7 @@ export const ReconfigureStreamRequest$inboundSchema: z.ZodType<
 /** @internal */
 export type ReconfigureStreamRequest$Outbound = {
   stream: string;
+  "s2-basin": string;
   StreamReconfiguration: components.StreamReconfiguration$Outbound;
 };
 
@@ -54,9 +61,11 @@ export const ReconfigureStreamRequest$outboundSchema: z.ZodType<
   ReconfigureStreamRequest
 > = z.object({
   stream: z.string(),
+  s2Basin: z.string(),
   streamReconfiguration: components.StreamReconfiguration$outboundSchema,
 }).transform((v) => {
   return remap$(v, {
+    s2Basin: "s2-basin",
     streamReconfiguration: "StreamReconfiguration",
   });
 });

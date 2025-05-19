@@ -13,7 +13,7 @@ const args = {
 export const tool$streamsDeleteStream: ToolDefinition<typeof args> = {
   name: "streams-delete-stream",
   description: `Delete a stream.`,
-  scopes: ["write"],
+  scopes: ["write", "write", "write"],
   args,
   tool: async (client, args, ctx) => {
     const [result, apiCall] = await streamsDeleteStream(

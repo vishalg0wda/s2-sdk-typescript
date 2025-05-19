@@ -13,7 +13,7 @@ const args = {
 export const tool$accessTokensListAccessTokens: ToolDefinition<typeof args> = {
   name: "access-tokens-list-access-tokens",
   description: `List access tokens.`,
-  scopes: ["read"],
+  scopes: ["read", "read", "read"],
   args,
   tool: async (client, args, ctx) => {
     const [result, apiCall] = await accessTokensListAccessTokens(

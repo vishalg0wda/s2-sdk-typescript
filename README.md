@@ -317,6 +317,7 @@ const s2 = new S2({
 async function run() {
   const result = await s2.records.read({
     stream: "<value>",
+    s2Basin: "<value>",
   });
 
   for await (const event of result) {
@@ -436,12 +437,10 @@ run();
 
 Some methods specify known errors which can be thrown. All the known errors are enumerated in the `models/errors/errors.ts` module. The known errors for a method are documented under the *Errors* tables in SDK docs. For example, the `listAccessTokens` method may throw the following errors:
 
-| Error Type            | Status Code   | Content Type     |
-| --------------------- | ------------- | ---------------- |
-| errors.ErrorResponse  | 400, 403      | application/json |
-| errors.RetryableError | 499           | application/json |
-| errors.RetryableError | 500, 503, 504 | application/json |
-| errors.APIError       | 4XX, 5XX      | \*/\*            |
+| Error Type           | Status Code | Content Type     |
+| -------------------- | ----------- | ---------------- |
+| errors.ErrorResponse | 400, 403    | application/json |
+| errors.APIError      | 4XX, 5XX    | \*/\*            |
 
 If the method throws an error and it is not captured by the known errors, it will default to throwing a `APIError`.
 
@@ -449,7 +448,6 @@ If the method throws an error and it is not captured by the known errors, it wil
 import { S2 } from "@s2-dev/streamstore";
 import {
   ErrorResponse,
-  RetryableError,
   SDKValidationError,
 } from "@s2-dev/streamstore/models/errors";
 
@@ -476,16 +474,6 @@ async function run() {
       }
       case (err instanceof ErrorResponse): {
         // Handle err.data$: ErrorResponseData
-        console.error(err);
-        return;
-      }
-      case (err instanceof RetryableError): {
-        // Handle err.data$: RetryableErrorData
-        console.error(err);
-        return;
-      }
-      case (err instanceof RetryableError): {
-        // Handle err.data$: RetryableErrorData
         console.error(err);
         return;
       }
@@ -550,7 +538,9 @@ const s2 = new S2({
 });
 
 async function run() {
-  const result = await s2.streams.listStreams({}, {
+  const result = await s2.streams.listStreams({
+    s2Basin: "<value>",
+  }, {
     serverURL: "https://.b.aws.s2.dev/v1",
   });
 

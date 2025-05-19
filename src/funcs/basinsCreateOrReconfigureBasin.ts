@@ -36,8 +36,6 @@ export function basinsCreateOrReconfigureBasin(
   Result<
     components.BasinInfo | undefined,
     | errors.ErrorResponse
-    | errors.RetryableError
-    | errors.RetryableError
     | APIError
     | SDKValidationError
     | UnexpectedClientError
@@ -63,8 +61,6 @@ async function $do(
     Result<
       components.BasinInfo | undefined,
       | errors.ErrorResponse
-      | errors.RetryableError
-      | errors.RetryableError
       | APIError
       | SDKValidationError
       | UnexpectedClientError
@@ -143,7 +139,7 @@ async function $do(
 
   const doResult = await client._do(req, {
     context,
-    errorCodes: ["400", "499", "4XX", "500", "503", "504", "5XX"],
+    errorCodes: ["400", "4XX", "5XX"],
     retryConfig: context.retryConfig,
     retryCodes: context.retryCodes,
   });
@@ -159,8 +155,6 @@ async function $do(
   const [result] = await M.match<
     components.BasinInfo | undefined,
     | errors.ErrorResponse
-    | errors.RetryableError
-    | errors.RetryableError
     | APIError
     | SDKValidationError
     | UnexpectedClientError
@@ -172,8 +166,6 @@ async function $do(
     M.json(201, components.BasinInfo$inboundSchema.optional()),
     M.nil(204, components.BasinInfo$inboundSchema.optional()),
     M.jsonErr(400, errors.ErrorResponse$inboundSchema),
-    M.jsonErr(499, errors.RetryableError$inboundSchema),
-    M.jsonErr([500, 503, 504], errors.RetryableError$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, { extraFields: responseFields });

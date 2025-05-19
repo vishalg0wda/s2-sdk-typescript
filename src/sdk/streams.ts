@@ -33,7 +33,7 @@ export class Streams extends ClientSDK {
    * Create a stream.
    */
   async createStream(
-    request: components.CreateStreamRequest,
+    request: operations.CreateStreamRequest,
     options?: RequestOptions,
   ): Promise<components.StreamInfo> {
     return unwrapAsync(streamsCreateStream(

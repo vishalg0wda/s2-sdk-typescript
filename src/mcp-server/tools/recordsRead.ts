@@ -15,7 +15,7 @@ export const tool$recordsRead: ToolDefinition<typeof args> = {
   description: `Retrieve records.
 
 Retrieve a batch of records, or set \`Accept: text/event-stream\` to stream using server-sent events.`,
-  scopes: ["read"],
+  scopes: ["read", "read", "read"],
   args,
   tool: async (client, args, ctx) => {
     const [result, apiCall] = await recordsRead(
