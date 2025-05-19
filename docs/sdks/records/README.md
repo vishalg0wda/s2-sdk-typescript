@@ -27,6 +27,7 @@ const s2 = new S2({
 async function run() {
   const result = await s2.records.read({
     stream: "<value>",
+    s2Basin: "<value>",
   });
 
   for await (const event of result) {
@@ -55,6 +56,7 @@ const s2 = new S2Core({
 async function run() {
   const res = await recordsRead(s2, {
     stream: "<value>",
+    s2Basin: "<value>",
   });
 
   if (!res.ok) {
@@ -88,13 +90,12 @@ run();
 
 ### Errors
 
-| Error Type            | Status Code           | Content Type          |
-| --------------------- | --------------------- | --------------------- |
-| errors.ErrorResponse  | 400, 401, 404, 409    | application/json      |
-| errors.TailResponse   | 416                   | application/json      |
-| errors.RetryableError | 499                   | application/json      |
-| errors.RetryableError | 500, 503, 504         | application/json      |
-| errors.APIError       | 4XX, 5XX              | \*/\*                 |
+| Error Type           | Status Code          | Content Type         |
+| -------------------- | -------------------- | -------------------- |
+| errors.ErrorResponse | 400, 401, 404, 409   | application/json     |
+| errors.TailResponse  | 416                  | application/json     |
+| errors.ErrorResponse | 500                  | application/json     |
+| errors.APIError      | 4XX, 5XX             | \*/\*                |
 
 ## append
 
@@ -112,6 +113,7 @@ const s2 = new S2({
 async function run() {
   const result = await s2.records.append({
     stream: "<value>",
+    s2Basin: "<value>",
     appendInput: {
       records: [
         {},
@@ -144,6 +146,7 @@ const s2 = new S2Core({
 async function run() {
   const res = await recordsAppend(s2, {
     stream: "<value>",
+    s2Basin: "<value>",
     appendInput: {
       records: [
         {},
@@ -181,14 +184,13 @@ run();
 
 ### Errors
 
-| Error Type            | Status Code           | Content Type          |
-| --------------------- | --------------------- | --------------------- |
-| errors.ErrorResponse  | 400, 401, 404, 409    | application/json      |
-| errors.One            | 412                   | application/json      |
-| errors.Two            | 412                   | application/json      |
-| errors.RetryableError | 499                   | application/json      |
-| errors.RetryableError | 500, 503, 504         | application/json      |
-| errors.APIError       | 4XX, 5XX              | \*/\*                 |
+| Error Type           | Status Code          | Content Type         |
+| -------------------- | -------------------- | -------------------- |
+| errors.ErrorResponse | 400, 401, 404, 409   | application/json     |
+| errors.One           | 412                  | application/json     |
+| errors.Two           | 412                  | application/json     |
+| errors.ErrorResponse | 500                  | application/json     |
+| errors.APIError      | 4XX, 5XX             | \*/\*                |
 
 ## checkTail
 
@@ -206,6 +208,7 @@ const s2 = new S2({
 async function run() {
   const result = await s2.records.checkTail({
     stream: "<value>",
+    s2Basin: "<value>",
   });
 
   // Handle the result
@@ -232,6 +235,7 @@ const s2 = new S2Core({
 async function run() {
   const res = await recordsCheckTail(s2, {
     stream: "<value>",
+    s2Basin: "<value>",
   });
 
   if (!res.ok) {
@@ -263,9 +267,8 @@ run();
 
 ### Errors
 
-| Error Type            | Status Code           | Content Type          |
-| --------------------- | --------------------- | --------------------- |
-| errors.ErrorResponse  | 400, 401, 404, 409    | application/json      |
-| errors.RetryableError | 499                   | application/json      |
-| errors.RetryableError | 500, 503, 504         | application/json      |
-| errors.APIError       | 4XX, 5XX              | \*/\*                 |
+| Error Type           | Status Code          | Content Type         |
+| -------------------- | -------------------- | -------------------- |
+| errors.ErrorResponse | 400, 401, 404, 409   | application/json     |
+| errors.ErrorResponse | 500                  | application/json     |
+| errors.APIError      | 4XX, 5XX             | \*/\*                |

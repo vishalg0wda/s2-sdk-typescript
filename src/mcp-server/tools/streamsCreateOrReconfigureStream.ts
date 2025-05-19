@@ -15,7 +15,7 @@ export const tool$streamsCreateOrReconfigureStream: ToolDefinition<
 > = {
   name: "streams-create-or-reconfigure-stream",
   description: `Create or reconfigure a stream.`,
-  scopes: ["write"],
+  scopes: ["write", "write", "write"],
   args,
   tool: async (client, args, ctx) => {
     const [result, apiCall] = await streamsCreateOrReconfigureStream(

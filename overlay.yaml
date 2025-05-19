@@ -29,59 +29,7 @@ actions:
             type: limit
         outputs:
           nextCursor: "$.streams[(@.length-1)].name"
-        type: cursor
-  - target: $.components.schemas
-    description: Add NotFoundError and RetryableError schemas
-    update:
-      NotFoundError:
-        type: object
-        required:
-          - error
-        properties:
-          error:
-            type: string
-            x-speakeasy-error-message: true
-      RetryableError:
-        type: object
-        required:
-          - error
-        properties:
-          error:
-            type: string
-            x-speakeasy-error-message: true
-      ErrorResponse:
-        type: object
-        required:
-          - error
-        properties:
-          error:
-            type: string
-            x-speakeasy-error-message: true
-  - target: $['paths'][*]['delete']['responses']['404']['content']['application/json']['schema']
-    update:
-      $ref: "#/components/schemas/NotFoundError"
-  - target: $['paths'][*][*]['responses']
-    update:
-      "499":
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/RetryableError"
-      "500":
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/RetryableError"
-      "503":
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/RetryableError"
-      "504":
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/RetryableError"  
+        type: cursor    
   - target: $.paths.*["get"]
     update:
       x-speakeasy-mcp:
@@ -92,4 +40,44 @@ actions:
       x-speakeasy-mcp:
         scopes:
           - write
-
+            
+  - target: $['paths']['/streams']['get', 'post']
+    description: Add s2-basin header to streams operations
+    update:
+      parameters:
+        - name: s2-basin
+          in: header
+          description: Basin name for basin-specific endpoints
+          required: true
+          schema:
+            type: string
+  - target: $['paths']['/streams/{stream}']['get', 'put', 'delete', 'patch']
+    description: Add s2-basin header to stream operations
+    update:
+      parameters:
+        - name: s2-basin
+          in: header
+          description: Basin name for basin-specific endpoints
+          required: true
+          schema:
+            type: string
+  - target: $['paths']['/streams/{stream}/records']['get', 'post']
+    description: Add s2-basin header to stream records operations
+    update:
+      parameters:
+        - name: s2-basin
+          in: header
+          description: Basin name for basin-specific endpoints
+          required: true
+          schema:
+            type: string
+  - target: $['paths']['/streams/{stream}/records/tail']['get']
+    description: Add s2-basin header to stream tail operation
+    update:
+      parameters:
+        - name: s2-basin
+          in: header
+          description: Basin name for basin-specific endpoints
+          required: true
+          schema:
+            type: string

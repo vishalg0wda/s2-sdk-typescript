@@ -13,5 +13,5 @@ export function initHooks(hooks: Hooks) {
   // with an instance of a hook that implements that specific Hook interface
   // Hooks are registered per SDK instance, and are valid for the lifetime of the SDK instance
   // hooks.registerBeforeCreateRequestHook(new CompressionHook());
-  hooks.registerBeforeCreateRequestHook(new AddBasinToUrlHook());
+  hooks.registerBeforeCreateRequestHook(new AddBasinToUrlHook());  
 }

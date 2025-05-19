@@ -28,7 +28,9 @@ const s2 = new S2({
 });
 
 async function run() {
-  const result = await s2.streams.listStreams({});
+  const result = await s2.streams.listStreams({
+    s2Basin: "<value>",
+  });
 
   for await (const page of result) {
     // Handle the page
@@ -54,7 +56,9 @@ const s2 = new S2Core({
 });
 
 async function run() {
-  const res = await streamsListStreams(s2, {});
+  const res = await streamsListStreams(s2, {
+    s2Basin: "<value>",
+  });
 
   if (!res.ok) {
     throw res.error;
@@ -87,12 +91,10 @@ run();
 
 ### Errors
 
-| Error Type            | Status Code           | Content Type          |
-| --------------------- | --------------------- | --------------------- |
-| errors.ErrorResponse  | 400, 403, 404         | application/json      |
-| errors.RetryableError | 499                   | application/json      |
-| errors.RetryableError | 500, 503, 504         | application/json      |
-| errors.APIError       | 4XX, 5XX              | \*/\*                 |
+| Error Type           | Status Code          | Content Type         |
+| -------------------- | -------------------- | -------------------- |
+| errors.ErrorResponse | 400, 403, 404        | application/json     |
+| errors.APIError      | 4XX, 5XX             | \*/\*                |
 
 ## createStream
 
@@ -109,7 +111,10 @@ const s2 = new S2({
 
 async function run() {
   const result = await s2.streams.createStream({
-    stream: "<value>",
+    s2Basin: "<value>",
+    createStreamRequest: {
+      stream: "<value>",
+    },
   });
 
   // Handle the result
@@ -135,7 +140,10 @@ const s2 = new S2Core({
 
 async function run() {
   const res = await streamsCreateStream(s2, {
-    stream: "<value>",
+    s2Basin: "<value>",
+    createStreamRequest: {
+      stream: "<value>",
+    },
   });
 
   if (!res.ok) {
@@ -155,7 +163,7 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [components.CreateStreamRequest](../../models/components/createstreamrequest.md)                                                                                               | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `request`                                                                                                                                                                      | [operations.CreateStreamRequest](../../models/operations/createstreamrequest.md)                                                                                               | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
@@ -167,12 +175,10 @@ run();
 
 ### Errors
 
-| Error Type            | Status Code           | Content Type          |
-| --------------------- | --------------------- | --------------------- |
-| errors.ErrorResponse  | 400, 403, 404, 409    | application/json      |
-| errors.RetryableError | 499                   | application/json      |
-| errors.RetryableError | 500, 503, 504         | application/json      |
-| errors.APIError       | 4XX, 5XX              | \*/\*                 |
+| Error Type           | Status Code          | Content Type         |
+| -------------------- | -------------------- | -------------------- |
+| errors.ErrorResponse | 400, 403, 404, 409   | application/json     |
+| errors.APIError      | 4XX, 5XX             | \*/\*                |
 
 ## getStreamConfig
 
@@ -190,6 +196,7 @@ const s2 = new S2({
 async function run() {
   const result = await s2.streams.getStreamConfig({
     stream: "<value>",
+    s2Basin: "<value>",
   });
 
   // Handle the result
@@ -216,6 +223,7 @@ const s2 = new S2Core({
 async function run() {
   const res = await streamsGetStreamConfig(s2, {
     stream: "<value>",
+    s2Basin: "<value>",
   });
 
   if (!res.ok) {
@@ -247,12 +255,10 @@ run();
 
 ### Errors
 
-| Error Type            | Status Code           | Content Type          |
-| --------------------- | --------------------- | --------------------- |
-| errors.ErrorResponse  | 400, 403, 404, 409    | application/json      |
-| errors.RetryableError | 499                   | application/json      |
-| errors.RetryableError | 500, 503, 504         | application/json      |
-| errors.APIError       | 4XX, 5XX              | \*/\*                 |
+| Error Type           | Status Code          | Content Type         |
+| -------------------- | -------------------- | -------------------- |
+| errors.ErrorResponse | 400, 403, 404, 409   | application/json     |
+| errors.APIError      | 4XX, 5XX             | \*/\*                |
 
 ## createOrReconfigureStream
 
@@ -270,6 +276,7 @@ const s2 = new S2({
 async function run() {
   const result = await s2.streams.createOrReconfigureStream({
     stream: "<value>",
+    s2Basin: "<value>",
   });
 
   // Handle the result
@@ -296,6 +303,7 @@ const s2 = new S2Core({
 async function run() {
   const res = await streamsCreateOrReconfigureStream(s2, {
     stream: "<value>",
+    s2Basin: "<value>",
   });
 
   if (!res.ok) {
@@ -327,12 +335,10 @@ run();
 
 ### Errors
 
-| Error Type            | Status Code           | Content Type          |
-| --------------------- | --------------------- | --------------------- |
-| errors.ErrorResponse  | 400, 403, 404, 409    | application/json      |
-| errors.RetryableError | 499                   | application/json      |
-| errors.RetryableError | 500, 503, 504         | application/json      |
-| errors.APIError       | 4XX, 5XX              | \*/\*                 |
+| Error Type           | Status Code          | Content Type         |
+| -------------------- | -------------------- | -------------------- |
+| errors.ErrorResponse | 400, 403, 404, 409   | application/json     |
+| errors.APIError      | 4XX, 5XX             | \*/\*                |
 
 ## deleteStream
 
@@ -350,6 +356,7 @@ const s2 = new S2({
 async function run() {
   await s2.streams.deleteStream({
     stream: "<value>",
+    s2Basin: "<value>",
   });
 
 
@@ -375,6 +382,7 @@ const s2 = new S2Core({
 async function run() {
   const res = await streamsDeleteStream(s2, {
     stream: "<value>",
+    s2Basin: "<value>",
   });
 
   if (!res.ok) {
@@ -405,13 +413,10 @@ run();
 
 ### Errors
 
-| Error Type            | Status Code           | Content Type          |
-| --------------------- | --------------------- | --------------------- |
-| errors.ErrorResponse  | 400, 403              | application/json      |
-| errors.NotFoundError  | 404                   | application/json      |
-| errors.RetryableError | 499                   | application/json      |
-| errors.RetryableError | 500, 503, 504         | application/json      |
-| errors.APIError       | 4XX, 5XX              | \*/\*                 |
+| Error Type           | Status Code          | Content Type         |
+| -------------------- | -------------------- | -------------------- |
+| errors.ErrorResponse | 400, 403, 404        | application/json     |
+| errors.APIError      | 4XX, 5XX             | \*/\*                |
 
 ## reconfigureStream
 
@@ -429,6 +434,7 @@ const s2 = new S2({
 async function run() {
   const result = await s2.streams.reconfigureStream({
     stream: "<value>",
+    s2Basin: "<value>",
     streamReconfiguration: {},
   });
 
@@ -456,6 +462,7 @@ const s2 = new S2Core({
 async function run() {
   const res = await streamsReconfigureStream(s2, {
     stream: "<value>",
+    s2Basin: "<value>",
     streamReconfiguration: {},
   });
 
@@ -488,9 +495,7 @@ run();
 
 ### Errors
 
-| Error Type            | Status Code           | Content Type          |
-| --------------------- | --------------------- | --------------------- |
-| errors.ErrorResponse  | 400, 403, 404, 409    | application/json      |
-| errors.RetryableError | 499                   | application/json      |
-| errors.RetryableError | 500, 503, 504         | application/json      |
-| errors.APIError       | 4XX, 5XX              | \*/\*                 |
+| Error Type           | Status Code          | Content Type         |
+| -------------------- | -------------------- | -------------------- |
+| errors.ErrorResponse | 400, 403, 404, 409   | application/json     |
+| errors.APIError      | 4XX, 5XX             | \*/\*                |

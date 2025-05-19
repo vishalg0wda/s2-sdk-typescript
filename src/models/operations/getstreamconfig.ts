@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod";
+import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
@@ -22,6 +23,10 @@ export type GetStreamConfigRequest = {
    * It can be an arbitrary string up to 512 characters.
    */
   stream: string;
+  /**
+   * Basin name for basin-specific endpoints
+   */
+  s2Basin: string;
 };
 
 /** @internal */
@@ -31,11 +36,17 @@ export const GetStreamConfigRequest$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   stream: z.string(),
+  "s2-basin": z.string(),
+}).transform((v) => {
+  return remap$(v, {
+    "s2-basin": "s2Basin",
+  });
 });
 
 /** @internal */
 export type GetStreamConfigRequest$Outbound = {
   stream: string;
+  "s2-basin": string;
 };
 
 /** @internal */
@@ -45,6 +56,11 @@ export const GetStreamConfigRequest$outboundSchema: z.ZodType<
   GetStreamConfigRequest
 > = z.object({
   stream: z.string(),
+  s2Basin: z.string(),
+}).transform((v) => {
+  return remap$(v, {
+    s2Basin: "s2-basin",
+  });
 });
 
 /**

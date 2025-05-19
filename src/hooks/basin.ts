@@ -1,6 +1,6 @@
 import {
-  BeforeCreateRequestContext,
-  BeforeCreateRequestHook,
+    BeforeCreateRequestContext,
+    BeforeCreateRequestHook,
 } from "./types.js";
 import { RequestInput } from "../lib/http.js";
 
@@ -9,20 +9,31 @@ export class AddBasinToUrlHook implements BeforeCreateRequestHook {
         _hookCtx: BeforeCreateRequestContext,
         input: RequestInput,
     ): RequestInput {
-        const url = new URL(input.url);
-        const basinHeader = (input.options?.headers as Record<string, string>)?.[
-            "s2-basin"
-        ];
-        
-        if (basinHeader && typeof basinHeader === 'string') {            
-            const { "s2-basin": _, ...remainingHeaders } = input.options?.headers as Record<string, string> ?? {};
-                        
-            if (url.hostname.endsWith('.b.aws.s2.dev')) {
-                url.hostname = `${basinHeader}.b.aws.s2.dev`;
-            }
+        const headers = input.options?.headers;
+        if (!headers) return input;
 
-            return { ...input, url, options: { ...input.options, headers: remainingHeaders } };
-        }        
-        return input;
+        const basinHeader = headers instanceof Headers 
+            ? headers.get("s2-basin")
+            : (headers as Record<string, string>)["s2-basin"];
+
+        if (!basinHeader) return input;
+
+        const url = new URL(input.url);
+        if (!url.hostname.includes('.b.aws.s2.dev')) return input;
+
+        url.hostname = `${basinHeader}.b.aws.s2.dev`;
+        
+        const remainingHeaders = headers instanceof Headers
+            ? Object.fromEntries([...headers.entries()].filter(([key]) => key !== 's2-basin'))
+            : Object.fromEntries(Object.entries(headers).filter(([key]) => key !== 's2-basin'));
+
+        return {
+            ...input,
+            url,
+            options: {
+                ...input.options,
+                headers: remainingHeaders,
+            },
+        };
     }
 }

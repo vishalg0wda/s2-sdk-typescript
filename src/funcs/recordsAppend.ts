@@ -41,8 +41,7 @@ export function recordsAppend(
     components.AppendAck,
     | errors.ErrorResponse
     | errors.AppendConditionFailed
-    | errors.RetryableError
-    | errors.RetryableError
+    | errors.ErrorResponse
     | APIError
     | SDKValidationError
     | UnexpectedClientError
@@ -69,8 +68,7 @@ async function $do(
       components.AppendAck,
       | errors.ErrorResponse
       | errors.AppendConditionFailed
-      | errors.RetryableError
-      | errors.RetryableError
+      | errors.ErrorResponse
       | APIError
       | SDKValidationError
       | UnexpectedClientError
@@ -110,6 +108,10 @@ async function $do(
   const headers = new Headers(compactMap({
     "Content-Type": "application/json",
     Accept: "application/json",
+    "s2-basin": encodeSimple("s2-basin", payload["s2-basin"], {
+      explode: false,
+      charEncoding: "none",
+    }),
     "s2-format": encodeSimple("s2-format", payload["s2-format"], {
       explode: false,
       charEncoding: "none",
@@ -150,19 +152,7 @@ async function $do(
 
   const doResult = await client._do(req, {
     context,
-    errorCodes: [
-      "400",
-      "401",
-      "404",
-      "409",
-      "412",
-      "499",
-      "4XX",
-      "500",
-      "503",
-      "504",
-      "5XX",
-    ],
+    errorCodes: ["400", "401", "404", "409", "412", "4XX", "500", "5XX"],
     retryConfig: context.retryConfig,
     retryCodes: context.retryCodes,
   });
@@ -179,8 +169,7 @@ async function $do(
     components.AppendAck,
     | errors.ErrorResponse
     | errors.AppendConditionFailed
-    | errors.RetryableError
-    | errors.RetryableError
+    | errors.ErrorResponse
     | APIError
     | SDKValidationError
     | UnexpectedClientError
@@ -192,8 +181,7 @@ async function $do(
     M.json(200, components.AppendAck$inboundSchema),
     M.jsonErr([400, 401, 404, 409], errors.ErrorResponse$inboundSchema),
     M.jsonErr(412, errors.AppendConditionFailed$inboundSchema),
-    M.jsonErr(499, errors.RetryableError$inboundSchema),
-    M.jsonErr([500, 503, 504], errors.RetryableError$inboundSchema),
+    M.jsonErr(500, errors.ErrorResponse$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, { extraFields: responseFields });

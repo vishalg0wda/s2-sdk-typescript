@@ -7,23 +7,22 @@ import * as z from "zod";
 export type ErrorResponseData = {
   code?: string | null | undefined;
   message: string;
-  error: string;
 };
 
 export class ErrorResponse extends Error {
   code?: string | null | undefined;
-  error: string;
 
   /** The original data that was passed to this error instance. */
   data$: ErrorResponseData;
 
   constructor(err: ErrorResponseData) {
-    const message = err.error || "API error occurred";
+    const message = "message" in err && typeof err.message === "string"
+      ? err.message
+      : `API error occurred: ${JSON.stringify(err)}`;
     super(message);
     this.data$ = err;
 
     if (err.code != null) this.code = err.code;
-    this.error = err.error;
 
     this.name = "ErrorResponse";
   }
@@ -37,7 +36,6 @@ export const ErrorResponse$inboundSchema: z.ZodType<
 > = z.object({
   code: z.nullable(z.string()).optional(),
   message: z.string(),
-  error: z.string(),
 })
   .transform((v) => {
     return new ErrorResponse(v);
@@ -47,7 +45,6 @@ export const ErrorResponse$inboundSchema: z.ZodType<
 export type ErrorResponse$Outbound = {
   code?: string | null | undefined;
   message: string;
-  error: string;
 };
 
 /** @internal */
@@ -60,7 +57,6 @@ export const ErrorResponse$outboundSchema: z.ZodType<
   .pipe(z.object({
     code: z.nullable(z.string()).optional(),
     message: z.string(),
-    error: z.string(),
   }));
 
 /**

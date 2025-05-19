@@ -13,7 +13,7 @@ const args = {
 export const tool$streamsGetStreamConfig: ToolDefinition<typeof args> = {
   name: "streams-get-stream-config",
   description: `Get stream configuration.`,
-  scopes: ["read"],
+  scopes: ["read", "read", "read"],
   args,
   tool: async (client, args, ctx) => {
     const [result, apiCall] = await streamsGetStreamConfig(

@@ -13,7 +13,7 @@ const args = {
 export const tool$accessTokensIssueAccessToken: ToolDefinition<typeof args> = {
   name: "access-tokens-issue-access-token",
   description: `Issue a new access token.`,
-  scopes: ["write"],
+  scopes: ["write", "write", "write"],
   args,
   tool: async (client, args, ctx) => {
     const [result, apiCall] = await accessTokensIssueAccessToken(

@@ -15,7 +15,7 @@ export const tool$recordsAppend: ToolDefinition<typeof args> = {
   description: `Append records.
 
 Append a batch of records to a stream.`,
-  scopes: ["write"],
+  scopes: ["write", "write", "write"],
   args,
   tool: async (client, args, ctx) => {
     const [result, apiCall] = await recordsAppend(

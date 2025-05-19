@@ -13,7 +13,7 @@ const args = {
 export const tool$basinsListBasins: ToolDefinition<typeof args> = {
   name: "basins-list-basins",
   description: `List basins.`,
-  scopes: ["read"],
+  scopes: ["read", "read", "read"],
   args,
   tool: async (client, args, ctx) => {
     const [result, apiCall] = await basinsListBasins(

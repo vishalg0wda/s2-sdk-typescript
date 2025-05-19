@@ -28,6 +28,10 @@ export type CreateOrReconfigureStreamRequest = {
    * Provide a client request token header for idempotent retry behaviour.
    */
   s2RequestToken?: string | undefined;
+  /**
+   * Basin name for basin-specific endpoints
+   */
+  s2Basin: string;
   streamConfig?: components.StreamConfig | null | undefined;
 };
 
@@ -39,10 +43,12 @@ export const CreateOrReconfigureStreamRequest$inboundSchema: z.ZodType<
 > = z.object({
   stream: z.string(),
   "s2-request-token": z.string().optional(),
+  "s2-basin": z.string(),
   StreamConfig: z.nullable(components.StreamConfig$inboundSchema).optional(),
 }).transform((v) => {
   return remap$(v, {
     "s2-request-token": "s2RequestToken",
+    "s2-basin": "s2Basin",
     "StreamConfig": "streamConfig",
   });
 });
@@ -51,6 +57,7 @@ export const CreateOrReconfigureStreamRequest$inboundSchema: z.ZodType<
 export type CreateOrReconfigureStreamRequest$Outbound = {
   stream: string;
   "s2-request-token"?: string | undefined;
+  "s2-basin": string;
   StreamConfig?: components.StreamConfig$Outbound | null | undefined;
 };
 
@@ -62,10 +69,12 @@ export const CreateOrReconfigureStreamRequest$outboundSchema: z.ZodType<
 > = z.object({
   stream: z.string(),
   s2RequestToken: z.string().optional(),
+  s2Basin: z.string(),
   streamConfig: z.nullable(components.StreamConfig$outboundSchema).optional(),
 }).transform((v) => {
   return remap$(v, {
     s2RequestToken: "s2-request-token",
+    s2Basin: "s2-basin",
     streamConfig: "StreamConfig",
   });
 });

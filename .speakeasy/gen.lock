@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 2d20490e-9921-47d5-9711-d3c4b91c8cfa
 management:
-  docChecksum: 9523b9459b5f677a101907d505c25740
+  docChecksum: 80b7f096f183a883b97b4a640b7567cb
   docVersion: 1.0.0
-  speakeasyVersion: 1.546.1
-  generationVersion: 2.604.2
-  releaseVersion: 0.12.0
-  configChecksum: 885a98a924647abb089e5b22be351cea
+  speakeasyVersion: 1.548.1
+  generationVersion: 2.605.0
+  releaseVersion: 0.13.1
+  configChecksum: 0399f3f3cee3a7ebccfec584d30c97f3
   repoURL: https://github.com/s2-streamstore/s2-sdk-typescript.git
   installationURL: https://github.com/s2-streamstore/s2-sdk-typescript
   published: true
@@ -21,7 +21,6 @@ features:
     enumUnions: 0.1.0
     envVarSecurityUsage: 0.1.2
     errorUnions: 0.1.1
-    errors: 2.84.0
     globalSecurity: 2.82.13
     globalSecurityCallbacks: 0.1.0
     globalSecurityFlattening: 0.1.0
@@ -92,15 +91,14 @@ generatedFiles:
   - docs/models/components/timestampingreconfiguration.md
   - docs/models/errors/appendconditionfailed.md
   - docs/models/errors/errorresponse.md
-  - docs/models/errors/notfounderror.md
   - docs/models/errors/one.md
-  - docs/models/errors/retryableerror.md
   - docs/models/errors/tailresponse.md
   - docs/models/errors/two.md
   - docs/models/operations/appendrequest.md
   - docs/models/operations/checktailrequest.md
   - docs/models/operations/createorreconfigurebasinrequest.md
   - docs/models/operations/createorreconfigurestreamrequest.md
+  - docs/models/operations/createstreamrequest.md
   - docs/models/operations/deletebasinrequest.md
   - docs/models/operations/deletestreamrequest.md
   - docs/models/operations/getbasinconfigrequest.md
@@ -237,8 +235,6 @@ generatedFiles:
   - src/models/errors/errorresponse.ts
   - src/models/errors/httpclienterrors.ts
   - src/models/errors/index.ts
-  - src/models/errors/notfounderror.ts
-  - src/models/errors/retryableerror.ts
   - src/models/errors/sdkvalidationerror.ts
   - src/models/errors/tailresponse.ts
   - src/models/operations/append.ts
@@ -286,7 +282,7 @@ examples:
         "200":
           application/json: {"access_tokens": [{"auto_prefix_streams": false, "id": "<id>", "scope": {}}, {"auto_prefix_streams": false, "id": "<id>", "scope": {}}, {"auto_prefix_streams": false, "id": "<id>", "scope": {}}], "has_more": false}
         "400":
-          application/json: {"message": "<value>", "error": "<value>"}
+          application/json: {"message": "<value>"}
         "499":
           application/json: {"error": "<value>"}
         "500":
@@ -299,7 +295,7 @@ examples:
         "201":
           application/json: {"access_token": "<value>"}
         "400":
-          application/json: {"message": "<value>", "error": "<value>"}
+          application/json: {"message": "<value>"}
         "499":
           application/json: {"error": "<value>"}
         "500":
@@ -311,7 +307,7 @@ examples:
           id: "<id>"
       responses:
         "400":
-          application/json: {"message": "<value>", "error": "<value>"}
+          application/json: {"message": "<value>"}
         "499":
           application/json: {"error": "<value>"}
         "500":
@@ -327,7 +323,7 @@ examples:
         "200":
           application/json: {"basins": [{"name": "<value>", "scope": "aws:us-east-1", "state": "active"}, {"name": "<value>", "scope": "aws:us-east-1", "state": "active"}, {"name": "<value>", "scope": "aws:us-east-1", "state": "active"}], "has_more": false}
         "400":
-          application/json: {"message": "<value>", "error": "<value>"}
+          application/json: {"message": "<value>"}
         "499":
           application/json: {"error": "<value>"}
         "500":
@@ -340,7 +336,7 @@ examples:
         "201":
           application/json: {"name": "<value>", "scope": "aws:us-east-1", "state": "deleting"}
         "400":
-          application/json: {"message": "<value>", "error": "<value>"}
+          application/json: {"message": "<value>"}
         "499":
           application/json: {"error": "<value>"}
         "500":
@@ -354,7 +350,7 @@ examples:
         "200":
           application/json: {}
         "400":
-          application/json: {"message": "<value>", "error": "<value>"}
+          application/json: {"message": "<value>"}
         "499":
           application/json: {"error": "<value>"}
         "500":
@@ -369,7 +365,7 @@ examples:
         "201":
           application/json: {"name": "<value>", "scope": "aws:us-east-1", "state": "active"}
         "400":
-          application/json: {"message": "<value>", "error": "<value>"}
+          application/json: {"message": "<value>"}
         "499":
           application/json: {"error": "<value>"}
         "500":
@@ -381,7 +377,7 @@ examples:
           basin: "<value>"
       responses:
         "400":
-          application/json: {"message": "<value>", "error": "<value>"}
+          application/json: {"message": "<value>"}
         "404":
           application/json: {"error": "<value>"}
         "499":
@@ -399,7 +395,7 @@ examples:
         "200":
           application/json: {}
         "400":
-          application/json: {"message": "<value>", "error": "<value>"}
+          application/json: {"message": "<value>"}
         "499":
           application/json: {"error": "<value>"}
         "500":
@@ -411,24 +407,29 @@ examples:
           prefix: ""
           start_after: ""
           limit: 1000
+        header:
+          s2-basin: "<value>"
       responses:
         "200":
           application/json: {"has_more": true, "streams": [{"created_at": "<value>", "name": "<value>"}, {"created_at": "<value>", "name": "<value>"}, {"created_at": "<value>", "name": "<value>"}]}
         "400":
-          application/json: {"message": "<value>", "error": "<value>"}
+          application/json: {"message": "<value>"}
         "499":
           application/json: {"error": "<value>"}
         "500":
           application/json: {"error": "<value>"}
   create_stream:
     speakeasy-default-create-stream:
+      parameters:
+        header:
+          s2-basin: "<value>"
       requestBody:
         application/json: {"stream": "<value>"}
       responses:
         "201":
           application/json: {"created_at": "<value>", "name": "<value>"}
         "400":
-          application/json: {"message": "<value>", "error": "<value>"}
+          application/json: {"message": "<value>"}
         "499":
           application/json: {"error": "<value>"}
         "500":
@@ -438,11 +439,13 @@ examples:
       parameters:
         path:
           stream: "<value>"
+        header:
+          s2-basin: "<value>"
       responses:
         "200":
           application/json: {}
         "400":
-          application/json: {"message": "<value>", "error": "<value>"}
+          application/json: {"message": "<value>"}
         "499":
           application/json: {"error": "<value>"}
         "500":
@@ -452,12 +455,13 @@ examples:
       parameters:
         path:
           stream: "<value>"
-        header: {}
+        header:
+          s2-basin: "<value>"
       responses:
         "201":
           application/json: {"created_at": "<value>", "name": "<value>"}
         "400":
-          application/json: {"message": "<value>", "error": "<value>"}
+          application/json: {"message": "<value>"}
         "499":
           application/json: {"error": "<value>"}
         "500":
@@ -467,9 +471,11 @@ examples:
       parameters:
         path:
           stream: "<value>"
+        header:
+          s2-basin: "<value>"
       responses:
         "400":
-          application/json: {"message": "<value>", "error": "<value>"}
+          application/json: {"message": "<value>"}
         "404":
           application/json: {"error": "<value>"}
         "499":
@@ -481,13 +487,15 @@ examples:
       parameters:
         path:
           stream: "<value>"
+        header:
+          s2-basin: "<value>"
       requestBody:
         application/json: {}
       responses:
         "200":
           application/json: {}
         "400":
-          application/json: {"message": "<value>", "error": "<value>"}
+          application/json: {"message": "<value>"}
         "499":
           application/json: {"error": "<value>"}
         "500":
@@ -498,50 +506,54 @@ examples:
         path:
           stream: "<value>"
         query: {}
-        header: {}
+        header:
+          s2-basin: "<value>"
       responses:
         "200":
-          application/json: {"records": [{"seq_num": 726908, "timestamp": 537175}]}
+          application/json: {"records": [{"body": "", "seq_num": 726908, "timestamp": 537175}]}
         "400":
-          application/json: {"message": "<value>", "error": "<value>"}
+          application/json: {"message": "<value>"}
         "416":
           application/json: {"tail": {"seq_num": 297326, "timestamp": 934740}}
         "499":
           application/json: {"error": "<value>"}
         "500":
-          application/json: {"error": "<value>"}
+          application/json: {"message": "<value>"}
   append:
     speakeasy-default-append:
       parameters:
         path:
           stream: "<value>"
-        header: {}
+        header:
+          s2-basin: "<value>"
       requestBody:
         application/json: {"records": [{}, {}]}
       responses:
         "200":
           application/json: {"end": {"seq_num": 955507, "timestamp": 515119}, "start": {"seq_num": 141999, "timestamp": 468943}, "tail": {"seq_num": 543056, "timestamp": 568743}}
         "400":
-          application/json: {"message": "<value>", "error": "<value>"}
+          application/json: {"message": "<value>"}
         "412":
           application/json: {"FencingTokenMismatch": "<value>"}
         "499":
           application/json: {"error": "<value>"}
         "500":
-          application/json: {"error": "<value>"}
+          application/json: {"message": "<value>"}
   check_tail:
     speakeasy-default-check-tail:
       parameters:
         path:
           stream: "<value>"
+        header:
+          s2-basin: "<value>"
       responses:
         "200":
           application/json: {"tail": {"seq_num": 552218, "timestamp": 574770}}
         "400":
-          application/json: {"message": "<value>", "error": "<value>"}
+          application/json: {"message": "<value>"}
         "499":
           application/json: {"error": "<value>"}
         "500":
-          application/json: {"error": "<value>"}
+          application/json: {"message": "<value>"}
 examplesVersion: 1.0.2
 generatedTests: {}

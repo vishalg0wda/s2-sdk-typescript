@@ -3,17 +3,17 @@
  */
 
 import { streamsCreateStream } from "../../funcs/streamsCreateStream.js";
-import * as components from "../../models/components/index.js";
+import * as operations from "../../models/operations/index.js";
 import { formatResult, ToolDefinition } from "../tools.js";
 
 const args = {
-  request: components.CreateStreamRequest$inboundSchema,
+  request: operations.CreateStreamRequest$inboundSchema,
 };
 
 export const tool$streamsCreateStream: ToolDefinition<typeof args> = {
   name: "streams-create-stream",
   description: `Create a stream.`,
-  scopes: ["write"],
+  scopes: ["write", "write", "write"],
   args,
   tool: async (client, args, ctx) => {
     const [result, apiCall] = await streamsCreateStream(

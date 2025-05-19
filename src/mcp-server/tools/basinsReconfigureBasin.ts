@@ -13,7 +13,7 @@ const args = {
 export const tool$basinsReconfigureBasin: ToolDefinition<typeof args> = {
   name: "basins-reconfigure-basin",
   description: `Reconfigure a basin.`,
-  scopes: ["write"],
+  scopes: ["write", "write", "write"],
   args,
   tool: async (client, args, ctx) => {
     const [result, apiCall] = await basinsReconfigureBasin(
