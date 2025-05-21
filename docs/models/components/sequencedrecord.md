@@ -15,9 +15,9 @@ let value: SequencedRecord = {
 
 ## Fields
 
-| Field                                                    | Type                                                     | Required                                                 | Description                                              |
-| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
-| `body`                                                   | *string*                                                 | :heavy_minus_sign:                                       | Body of the record.                                      |
-| `headers`                                                | [components.Header](../../models/components/header.md)[] | :heavy_minus_sign:                                       | Series of name-value pairs for this record.              |
-| `seqNum`                                                 | *number*                                                 | :heavy_check_mark:                                       | N/A                                                      |
-| `timestamp`                                              | *number*                                                 | :heavy_check_mark:                                       | N/A                                                      |
+| Field                                       | Type                                        | Required                                    | Description                                 |
+| ------------------------------------------- | ------------------------------------------- | ------------------------------------------- | ------------------------------------------- |
+| `body`                                      | *string*                                    | :heavy_minus_sign:                          | Body of the record.                         |
+| `headers`                                   | *string*[][]                                | :heavy_minus_sign:                          | Series of name-value pairs for this record. |
+| `seqNum`                                    | *number*                                    | :heavy_check_mark:                          | N/A                                         |
+| `timestamp`                                 | *number*                                    | :heavy_check_mark:                          | N/A                                         |

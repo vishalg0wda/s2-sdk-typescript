@@ -7,12 +7,6 @@ import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
-import {
-  Header,
-  Header$inboundSchema,
-  Header$Outbound,
-  Header$outboundSchema,
-} from "./header.js";
 
 /**
  * Record that is durably sequenced on a stream.
@@ -25,7 +19,7 @@ export type SequencedRecord = {
   /**
    * Series of name-value pairs for this record.
    */
-  headers?: Array<Header> | undefined;
+  headers?: Array<Array<string>> | undefined;
   seqNum: number;
   timestamp: number;
 };
@@ -37,7 +31,7 @@ export const SequencedRecord$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   body: z.string().optional(),
-  headers: z.array(Header$inboundSchema).optional(),
+  headers: z.array(z.array(z.string())).optional(),
   seq_num: z.number().int(),
   timestamp: z.number().int(),
 }).transform((v) => {
@@ -49,7 +43,7 @@ export const SequencedRecord$inboundSchema: z.ZodType<
 /** @internal */
 export type SequencedRecord$Outbound = {
   body?: string | undefined;
-  headers?: Array<Header$Outbound> | undefined;
+  headers?: Array<Array<string>> | undefined;
   seq_num: number;
   timestamp: number;
 };
@@ -61,7 +55,7 @@ export const SequencedRecord$outboundSchema: z.ZodType<
   SequencedRecord
 > = z.object({
   body: z.string().optional(),
-  headers: z.array(Header$outboundSchema).optional(),
+  headers: z.array(z.array(z.string())).optional(),
   seqNum: z.number().int(),
   timestamp: z.number().int(),
 }).transform((v) => {

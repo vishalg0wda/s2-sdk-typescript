@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 2d20490e-9921-47d5-9711-d3c4b91c8cfa
 management:
-  docChecksum: 80b7f096f183a883b97b4a640b7567cb
+  docChecksum: 4707541e20676787419cb4924aa93c5b
   docVersion: 1.0.0
-  speakeasyVersion: 1.548.1
-  generationVersion: 2.605.0
-  releaseVersion: 0.13.1
-  configChecksum: 0399f3f3cee3a7ebccfec584d30c97f3
+  speakeasyVersion: 1.548.4
+  generationVersion: 2.605.6
+  releaseVersion: 0.13.2
+  configChecksum: b6d4789153bcec24abe3854f358fa080
   repoURL: https://github.com/s2-streamstore/s2-sdk-typescript.git
   installationURL: https://github.com/s2-streamstore/s2-sdk-typescript
   published: true
@@ -15,7 +15,7 @@ features:
     acceptHeaders: 2.81.2
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.1.11
-    core: 3.21.8
+    core: 3.21.9
     defaultEnabledRetries: 0.1.0
     devContainers: 2.90.0
     enumUnions: 0.1.0
@@ -61,7 +61,6 @@ generatedFiles:
   - docs/models/components/createstreamrequest.md
   - docs/models/components/errort.md
   - docs/models/components/exact.md
-  - docs/models/components/header.md
   - docs/models/components/issueaccesstokenresponse.md
   - docs/models/components/listaccesstokensresponse.md
   - docs/models/components/listbasinsresponse.md
@@ -205,7 +204,6 @@ generatedFiles:
   - src/models/components/createbasinrequest.ts
   - src/models/components/createorreconfigurebasinrequest.ts
   - src/models/components/createstreamrequest.ts
-  - src/models/components/header.ts
   - src/models/components/index.ts
   - src/models/components/issueaccesstokenresponse.ts
   - src/models/components/listaccesstokensresponse.ts

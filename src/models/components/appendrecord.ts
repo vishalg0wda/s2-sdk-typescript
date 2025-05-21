@@ -6,12 +6,6 @@ import * as z from "zod";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
-import {
-  Header,
-  Header$inboundSchema,
-  Header$Outbound,
-  Header$outboundSchema,
-} from "./header.js";
 
 /**
  * Record to be appended to a stream.
@@ -24,7 +18,7 @@ export type AppendRecord = {
   /**
    * Series of name-value pairs for this record.
    */
-  headers?: Array<Header> | undefined;
+  headers?: Array<Array<string>> | undefined;
   timestamp?: number | null | undefined;
 };
 
@@ -35,14 +29,14 @@ export const AppendRecord$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   body: z.string().optional(),
-  headers: z.array(Header$inboundSchema).optional(),
+  headers: z.array(z.array(z.string())).optional(),
   timestamp: z.nullable(z.number().int()).optional(),
 });
 
 /** @internal */
 export type AppendRecord$Outbound = {
   body?: string | undefined;
-  headers?: Array<Header$Outbound> | undefined;
+  headers?: Array<Array<string>> | undefined;
   timestamp?: number | null | undefined;
 };
 
@@ -53,7 +47,7 @@ export const AppendRecord$outboundSchema: z.ZodType<
   AppendRecord
 > = z.object({
   body: z.string().optional(),
-  headers: z.array(Header$outboundSchema).optional(),
+  headers: z.array(z.array(z.string())).optional(),
   timestamp: z.nullable(z.number().int()).optional(),
 });
 

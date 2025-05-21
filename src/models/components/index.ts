@@ -15,7 +15,6 @@ export * from "./basinstate.js";
 export * from "./createbasinrequest.js";
 export * from "./createorreconfigurebasinrequest.js";
 export * from "./createstreamrequest.js";
-export * from "./header.js";
 export * from "./issueaccesstokenresponse.js";
 export * from "./listaccesstokensresponse.js";
 export * from "./listbasinsresponse.js";

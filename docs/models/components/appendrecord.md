@@ -12,8 +12,8 @@ let value: AppendRecord = {};
 
 ## Fields
 
-| Field                                                    | Type                                                     | Required                                                 | Description                                              |
-| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
-| `body`                                                   | *string*                                                 | :heavy_minus_sign:                                       | Body of the record.                                      |
-| `headers`                                                | [components.Header](../../models/components/header.md)[] | :heavy_minus_sign:                                       | Series of name-value pairs for this record.              |
-| `timestamp`                                              | *number*                                                 | :heavy_minus_sign:                                       | N/A                                                      |
+| Field                                       | Type                                        | Required                                    | Description                                 |
+| ------------------------------------------- | ------------------------------------------- | ------------------------------------------- | ------------------------------------------- |
+| `body`                                      | *string*                                    | :heavy_minus_sign:                          | Body of the record.                         |
+| `headers`                                   | *string*[][]                                | :heavy_minus_sign:                          | Series of name-value pairs for this record. |
+| `timestamp`                                 | *number*                                    | :heavy_minus_sign:                          | N/A                                         |
