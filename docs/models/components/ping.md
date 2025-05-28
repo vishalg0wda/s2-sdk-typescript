@@ -6,14 +6,16 @@
 import { Ping } from "@s2-dev/streamstore/models/components";
 
 let value: Ping = {
-  data: "<value>",
-  event: "<value>",
+  data: {
+    timestamp: 743406,
+  },
+  event: "ping",
 };
 ```
 
 ## Fields
 
-| Field              | Type               | Required           | Description        |
-| ------------------ | ------------------ | ------------------ | ------------------ |
-| `data`             | *string*           | :heavy_check_mark: | N/A                |
-| `event`            | *string*           | :heavy_check_mark: | N/A                |
+| Field                                                                    | Type                                                                     | Required                                                                 | Description                                                              |
+| ------------------------------------------------------------------------ | ------------------------------------------------------------------------ | ------------------------------------------------------------------------ | ------------------------------------------------------------------------ |
+| `data`                                                                   | [components.PingEventData](../../models/components/pingeventdata.md)     | :heavy_check_mark:                                                       | N/A                                                                      |
+| `event`                                                                  | [components.ReadEvent3Event](../../models/components/readevent3event.md) | :heavy_check_mark:                                                       | N/A                                                                      |

@@ -15,7 +15,8 @@ const value: components.Batch = {
       },
     ],
   },
-  event: "<value>",
+  event: "batch",
+  id: "<id>",
 };
 ```
 
@@ -24,7 +25,7 @@ const value: components.Batch = {
 ```typescript
 const value: components.ErrorT = {
   data: "<value>",
-  event: "<value>",
+  event: "error",
 };
 ```
 
@@ -32,8 +33,10 @@ const value: components.ErrorT = {
 
 ```typescript
 const value: components.Ping = {
-  data: "<value>",
-  event: "<value>",
+  data: {
+    timestamp: 352303,
+  },
+  event: "ping",
 };
 ```
 

@@ -14,7 +14,8 @@ let value: Batch = {
       },
     ],
   },
-  event: "<value>",
+  event: "batch",
+  id: "<id>",
 };
 ```
 
@@ -23,4 +24,5 @@ let value: Batch = {
 | Field                                                        | Type                                                         | Required                                                     | Description                                                  |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | `data`                                                       | [components.ReadBatch](../../models/components/readbatch.md) | :heavy_check_mark:                                           | N/A                                                          |
-| `event`                                                      | *string*                                                     | :heavy_check_mark:                                           | N/A                                                          |
+| `event`                                                      | [components.Event](../../models/components/event.md)         | :heavy_check_mark:                                           | N/A                                                          |
+| `id`                                                         | *string*                                                     | :heavy_check_mark:                                           | N/A                                                          |

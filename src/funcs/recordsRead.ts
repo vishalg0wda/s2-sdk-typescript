@@ -192,7 +192,9 @@ async function $do(
     | ConnectionError
   >(
     M.json(200, operations.ReadResponse$inboundSchema),
-    M.sse(200, operations.ReadResponse$inboundSchema),
+    M.sse(200, operations.ReadResponse$inboundSchema, {
+      sseSentinel: "[DONE]",
+    }),
     M.jsonErr([400, 401, 404, 409], errors.ErrorResponse$inboundSchema),
     M.jsonErr(416, errors.TailResponse$inboundSchema),
     M.jsonErr(500, errors.ErrorResponse$inboundSchema),

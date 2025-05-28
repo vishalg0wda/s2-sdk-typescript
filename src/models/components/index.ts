@@ -21,6 +21,7 @@ export * from "./listbasinsresponse.js";
 export * from "./liststreamsresponse.js";
 export * from "./operation.js";
 export * from "./permittedoperationgroups.js";
+export * from "./pingeventdata.js";
 export * from "./readbatch.js";
 export * from "./readevent.js";
 export * from "./readwritepermissions.js";

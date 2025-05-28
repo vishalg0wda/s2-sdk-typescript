@@ -81,3 +81,7 @@ actions:
           required: true
           schema:
             type: string
+  - target: $['paths']['/streams/{stream}/records']['get']['responses']['200']['content']['text/event-stream']
+    description: Add SSE sentinel for streaming reads
+    update:
+      x-speakeasy-sse-sentinel: '[DONE]'
