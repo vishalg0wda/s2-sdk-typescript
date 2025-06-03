@@ -81,6 +81,8 @@ yarn add @s2-dev/streamstore zod
 This SDK is also an installable MCP server where the various SDK methods are
 exposed as tools that can be invoked by AI applications.
 
+See it in action [here](https://s2.dev/docs/integrations/mcp#example)!
+
 > Node.js v20 or greater is required to run the MCP server from npm.
 
 <details>
