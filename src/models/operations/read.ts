@@ -43,12 +43,25 @@ export type ReadRequest = {
   tailOffset?: number | undefined;
   /**
    * Limit total records to return.
+   *
+   * @remarks
+   * If this is provided, tailing will be disabled.
    */
   count?: number | undefined;
   /**
    * Limit total metered bytes to return.
+   *
+   * @remarks
+   * If this is provided, tailing will be disabled.
    */
   bytes?: number | undefined;
+  /**
+   * Exclusive timestamp to read until.
+   *
+   * @remarks
+   * If this is provided, tailing will be disabled.
+   */
+  until?: number | undefined;
   /**
    * Basin name for basin-specific endpoints
    */
@@ -72,6 +85,7 @@ export const ReadRequest$inboundSchema: z.ZodType<
   tail_offset: z.number().int().optional(),
   count: z.number().int().optional(),
   bytes: z.number().int().optional(),
+  until: z.number().int().optional(),
   "s2-basin": z.string(),
 }).transform((v) => {
   return remap$(v, {
@@ -91,6 +105,7 @@ export type ReadRequest$Outbound = {
   tail_offset?: number | undefined;
   count?: number | undefined;
   bytes?: number | undefined;
+  until?: number | undefined;
   "s2-basin": string;
 };
 
@@ -107,6 +122,7 @@ export const ReadRequest$outboundSchema: z.ZodType<
   tailOffset: z.number().int().optional(),
   count: z.number().int().optional(),
   bytes: z.number().int().optional(),
+  until: z.number().int().optional(),
   s2Basin: z.string(),
 }).transform((v) => {
   return remap$(v, {

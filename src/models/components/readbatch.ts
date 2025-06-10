@@ -12,9 +12,22 @@ import {
   SequencedRecord$Outbound,
   SequencedRecord$outboundSchema,
 } from "./sequencedrecord.js";
+import {
+  StreamPosition,
+  StreamPosition$inboundSchema,
+  StreamPosition$Outbound,
+  StreamPosition$outboundSchema,
+} from "./streamposition.js";
 
 export type ReadBatch = {
+  /**
+   * Records that are durably sequenced on the stream,
+   *
+   * @remarks
+   * retrieved based on the requested criteria.
+   */
   records: Array<SequencedRecord>;
+  tail?: StreamPosition | null | undefined;
 };
 
 /** @internal */
@@ -24,11 +37,13 @@ export const ReadBatch$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   records: z.array(SequencedRecord$inboundSchema),
+  tail: z.nullable(StreamPosition$inboundSchema).optional(),
 });
 
 /** @internal */
 export type ReadBatch$Outbound = {
   records: Array<SequencedRecord$Outbound>;
+  tail?: StreamPosition$Outbound | null | undefined;
 };
 
 /** @internal */
@@ -38,6 +53,7 @@ export const ReadBatch$outboundSchema: z.ZodType<
   ReadBatch
 > = z.object({
   records: z.array(SequencedRecord$outboundSchema),
+  tail: z.nullable(StreamPosition$outboundSchema).optional(),
 });
 
 /**
