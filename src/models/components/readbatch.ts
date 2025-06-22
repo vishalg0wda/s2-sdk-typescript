@@ -21,10 +21,10 @@ import {
 
 export type ReadBatch = {
   /**
-   * Records that are durably sequenced on the stream,
+   * Records that are durably sequenced on the stream, retrieved based on the requested criteria.
    *
    * @remarks
-   * retrieved based on the requested criteria.
+   * This can only be empty in response to a regular (non-SSE) read, if the request cannot be satisfied without violating an explicit limit.
    */
   records: Array<SequencedRecord>;
   tail?: StreamPosition | null | undefined;

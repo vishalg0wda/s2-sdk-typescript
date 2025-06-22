@@ -1,6 +1,6 @@
 # AppendAck
 
-Success response message to an Append request.
+Success response to an `append` request.
 
 ## Example Usage
 
@@ -17,8 +17,8 @@ let value: AppendAck = {
     timestamp: 913959,
   },
   tail: {
-    seqNum: 786094,
-    timestamp: 783488,
+    seqNum: 112878,
+    timestamp: 979879,
   },
 };
 ```

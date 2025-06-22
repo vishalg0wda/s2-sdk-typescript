@@ -20,20 +20,6 @@ const value: components.Batch = {
 };
 ```
 
-### `components.ReadEvent2`
-
-```typescript
-const value: components.ReadEvent2 = {
-  data: {
-    tail: {
-      seqNum: 786094,
-      timestamp: 783488,
-    },
-  },
-  event: "tail",
-};
-```
-
 ### `components.ErrorT`
 
 ```typescript

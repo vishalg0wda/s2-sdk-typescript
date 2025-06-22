@@ -22,10 +22,11 @@ export type AppendRequest = {
    */
   stream: string;
   /**
-   * Define treatment of blob fields when exchanging records as JSON.
+   * Defines the interpretation of record data (header name, header value, and body) with the JSON content type.
    *
    * @remarks
-   * The default is `raw`.
+   * Use `raw` (default) for efficient transmission and storage of Unicode data — storage will be in UTF-8.
+   * Use `base64` for safe transmission with efficient storage of binary data.
    */
   s2Format?: components.S2Format | undefined;
   /**
