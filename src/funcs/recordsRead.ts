@@ -4,7 +4,6 @@
 
 import { S2Core } from "../core.js";
 import { encodeFormQuery, encodeSimple } from "../lib/encodings.js";
-import { EventStream } from "../lib/event-streams.js";
 import * as M from "../lib/matchers.js";
 import { compactMap } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
@@ -31,6 +30,14 @@ export enum ReadAcceptEnum {
   applicationJson = "application/json",
   textEventStream = "text/event-stream",
 }
+
+const oldConsoleLog = console.log.bind(console);
+
+console.log = (...args: any[]) => {
+  // Add a timestamp to the beginning of the message
+  const timestamp = new Date().toISOString();
+  oldConsoleLog(`[${timestamp}]`, ...args);
+};
 
 /**
  * Read records.
@@ -179,27 +186,33 @@ async function $do(
   const responseFields = {
     HttpMeta: { Response: response, Request: req },
   };
+
+  const components = await import("../models/components/index.js");
+  const { EventStream, discardSentinel } = await import("../lib/event-streams.js");
+
+  const d = discardSentinel(response.body!, "[DONE]");
+  const d2 = new EventStream({
+    stream: d,
+    decoder: (rawEvent) => {
+      const schema = components.ReadEvent$inboundSchema;
+      return schema.parse(rawEvent);
+    },
+  });
+  for await (const event of d2) {
+    console.log(`event-discarded: ${event.event}`);
+  }
+
+
   const e = new EventStream({
     stream: response.body!,
-    decoder: (x) => {
-      console.log(`x: ${JSON.stringify(x)}`);
-      return x;
+    decoder: (rawEvent) => {
+      const schema = components.ReadEvent$inboundSchema;
+      return schema.parse(rawEvent);
     },
   });
   for await (const event of e) {
-    console.log(`event: ${JSON.stringify(event)}`);
+    console.log(`event: ${event.event}`);
   }
-  // const reader = response.body?.getReader();
-  // let result1 = await reader?.read();
-  // let totalLength = 0;
-  // while (result1?.done !== true) {
-  //   // print the buffer as text
-  //   console.log(`Stream: ${new TextDecoder().decode(result1?.value)}`);
-  //   console.log('--------------------------------');
-  //   totalLength += result1?.value?.length ?? 0;
-  //   result1 = await reader?.read();
-  // }
-  // console.log("done");
   const [result] = await M.match<
     operations.ReadResponse,
     | errors.ErrorResponse
