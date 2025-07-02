@@ -17,13 +17,16 @@ const MESSAGE_BOUNDARIES = [
   new Uint8Array([LF, LF]),
 ];
 
+export const STOP = Symbol("stop");
+export type StopSymbol = typeof STOP;
+
 export class EventStream<Event extends ServerEvent<unknown>> {
   private readonly stream: ReadableStream<Uint8Array>;
-  private readonly decoder: (rawEvent: ServerEvent<string>) => Event;
+  private readonly decoder: (rawEvent: ServerEvent<string>) => Event | StopSymbol;
 
   constructor(init: {
     stream: ReadableStream<Uint8Array>;
-    decoder: (rawEvent: ServerEvent<string>) => Event;
+    decoder: (rawEvent: ServerEvent<string>) => Event | StopSymbol;
   }) {
     this.stream = init.stream;
     this.decoder = init.decoder;
@@ -60,6 +63,9 @@ export class EventStream<Event extends ServerEvent<unknown>> {
           const chunk = buffer.slice(position, i);
           position = i + boundary.length;
           const event = parseEvent(chunk, this.decoder);
+          if (event === STOP) {
+            return;
+          }
           if (event != null) {
             yield event;
           }
@@ -73,6 +79,9 @@ export class EventStream<Event extends ServerEvent<unknown>> {
 
       if (buffer.length > 0) {
         const event = parseEvent(buffer, this.decoder);
+        if (event === STOP) {
+          return;
+        }
         if (event != null) {
           yield event;
         }
@@ -134,8 +143,8 @@ function peekSequence(
 
 function parseEvent<Event extends ServerEvent<unknown>>(
   chunk: Uint8Array,
-  decoder: (rawEvent: ServerEvent<string>) => Event,
-) {
+  decoder: (rawEvent: ServerEvent<string>) => Event | StopSymbol,
+): Event | typeof STOP | null {
   if (!chunk.length) {
     return null;
   }
@@ -202,80 +211,3 @@ function parseEvent<Event extends ServerEvent<unknown>>(
   return decoder(rawEvent);
 }
 
-export function discardSentinel(
-  stream: ReadableStream<Uint8Array>,
-  sentinel: string,
-): ReadableStream<Uint8Array> {
-  return new ReadableStream<Uint8Array>({
-    async start(controller) {
-      let buffer = new Uint8Array([]);
-      let position = 0;
-      let done = false;
-      let discard = false;
-      const rdr = stream.getReader();
-      try {
-        while (!done) {
-          const start = Date.now();
-          console.log("------ discardSentinel await read()---");
-          const result = await rdr.read();
-          const end = Date.now();
-          console.log(`------ discardSentinel await read() done--- ${end - start}ms`, result.done);
-          const value = result.value;
-          done = done || result.done;
-          // We keep consuming from the source to its completion so it can
-          // flush all its contents and release resources.
-          if (discard) {
-            console.log("discarding");
-            continue;
-          }
-          if (typeof value === "undefined") {
-            console.log(">>>undefined");
-            continue;
-          }
-
-          const newBuffer = new Uint8Array(buffer.length + value.length);
-          newBuffer.set(buffer);
-          newBuffer.set(value, buffer.length);
-          buffer = newBuffer;
-
-          for (let i = position; i < buffer.length; i++) {
-            const boundary = findBoundary(buffer, i);
-            if (boundary == null) {
-              // console.log(">>no boundary");
-              continue;
-            }
-
-            const start = position;
-            const chunk = buffer.slice(start, i);
-            position = i + boundary.length;
-            const event = parseEvent(chunk, id);
-            if (event?.data === sentinel) {
-              const asString = new TextDecoder().decode(buffer.slice(0, start));
-              console.log(">>enqueuing str: discard", asString);
-              controller.enqueue(buffer.slice(0, start));
-              discard = true;
-            } else {
-              const asString = new TextDecoder().decode(buffer.slice(0, position));
-              console.log(">>enqueuing str: ", asString);
-              controller.enqueue(buffer.slice(0, position));
-              buffer = buffer.slice(position);
-              position = 0;
-            }
-          }
-        }
-      } catch (e) {
-        controller.error(e);
-      } finally {
-        // If the source stream terminates, flush its contents and terminate.
-        // If the sentinel event was found, flush everything up to its start.
-        console.log("---finally close controller---");
-        controller.close();
-        rdr.releaseLock();
-      }
-    },
-  });
-}
-
-function id<T>(v: T): T {
-  return v;
-}

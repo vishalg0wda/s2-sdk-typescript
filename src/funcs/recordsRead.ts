@@ -187,32 +187,6 @@ async function $do(
     HttpMeta: { Response: response, Request: req },
   };
 
-  const components = await import("../models/components/index.js");
-  const { EventStream, discardSentinel } = await import("../lib/event-streams.js");
-
-  const d = discardSentinel(response.body!, "[DONE]");
-  const d2 = new EventStream({
-    stream: d,
-    decoder: (rawEvent) => {
-      const schema = components.ReadEvent$inboundSchema;
-      return schema.parse(rawEvent);
-    },
-  });
-  for await (const event of d2) {
-    console.log(`yay got event: ${event.event}`);
-  }
-
-
-  const e = new EventStream({
-    stream: response.body!,
-    decoder: (rawEvent) => {
-      const schema = components.ReadEvent$inboundSchema;
-      return schema.parse(rawEvent);
-    },
-  });
-  for await (const event of e) {
-    console.log(`event: ${event.event}`);
-  }
   const [result] = await M.match<
     operations.ReadResponse,
     | errors.ErrorResponse

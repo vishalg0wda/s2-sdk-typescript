@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod";
-import { EventStream } from "../../lib/event-streams.js";
+import { EventStream, STOP } from "../../lib/event-streams.js";
 import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
@@ -172,6 +172,9 @@ export const ReadResponse$inboundSchema: z.ZodType<
     return new EventStream({
       stream,
       decoder(rawEvent) {
+        if (rawEvent.data === "[DONE]") {
+          return STOP;
+        }
         const schema = components.ReadEvent$inboundSchema;
         return schema.parse(rawEvent);
       },
