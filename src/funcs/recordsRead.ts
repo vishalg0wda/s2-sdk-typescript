@@ -199,7 +199,7 @@ async function $do(
     },
   });
   for await (const event of d2) {
-    console.log(`event-discarded: ${event.event}`);
+    console.log(`yay got event: ${event.event}`);
   }
 
 
