@@ -36,12 +36,12 @@ export class EventStream<Event extends ServerEvent<unknown>> {
 
     try {
       while (true) {
-        console.log("--------------await reader.read()------------------");
+        console.log("------------ await read()------------------");
         // measure the time it takes to read the stream
         const start = Date.now();
         const { done, value } = await reader.read();
         const end = Date.now();
-        console.log(`await reader.read() took: ${end - start}ms`);
+        console.log(`------------ await read() took: ${end - start}ms`);
         if (done) {
           break;
         }
@@ -202,136 +202,6 @@ function parseEvent<Event extends ServerEvent<unknown>>(
   return decoder(rawEvent);
 }
 
-// export function discardSentinel(
-//   source: ReadableStream<Uint8Array>,
-//   sentinel: string
-// ): ReadableStream<Uint8Array> {
-//   // 1) Decode bytes → strings
-//   const decoded = source.pipeThrough(new TextDecoderStream());
-
-//   let buffer = "";
-
-//   // 2) Transform: split on SSE double-newlines, drop everything after sentinel
-//   const filtered = decoded.pipeThrough(
-//     new TransformStream<string, string>({
-//       start() {
-//         buffer = "";
-//       },
-//       transform(chunk, ctrl) {
-//         buffer += chunk;
-
-//         let boundaryIndex: number;
-//         // SSE messages end with \r\n\r\n (or variations); normalize to \n\n
-//         // so we split on \n\n for simplicity
-//         while ((boundaryIndex = buffer.indexOf("\n\n")) !== -1) {
-//           const rawMsg = buffer.slice(0, boundaryIndex);
-//           buffer = buffer.slice(boundaryIndex + 2);
-
-//           // If this message contains the sentinel, emit only up to it and then terminate
-//           if (rawMsg.includes(`data: ${sentinel}`)) {
-//             // emit everything before sentinel
-//             const before = rawMsg
-//               .split("\n")
-//               .filter((l) => !l.startsWith("data: " + sentinel))
-//               .join("\n");
-//             if (before) ctrl.enqueue(before + "\n\n");
-//             ctrl.terminate();
-//             return;
-//           }
-
-//           // otherwise, pass it through
-//           ctrl.enqueue(rawMsg + "\n\n");
-//         }
-//       },
-//       flush(ctrl) {
-//         // any trailing partial chunk
-//         if (buffer) {
-//           ctrl.enqueue(buffer);
-//         }
-//       },
-//     })
-//   );
-
-//   // 3) Re-encode strings → bytes
-//   return filtered.pipeThrough(new TextEncoderStream());
-// }
-
-// export function discardSentinel(
-//   stream: ReadableStream<Uint8Array>,
-//   sentinel: string,
-// ): ReadableStream<Uint8Array> {
-//   const sentinelBytes = new TextEncoder().encode(sentinel);
-
-//   // Helper to concatenate two Uint8Arrays
-//   function concat(a: Uint8Array, b: Uint8Array): Uint8Array {
-//     const c = new Uint8Array(a.length + b.length);
-//     c.set(a, 0);
-//     c.set(b, a.length);
-//     return c;
-//   }
-
-//   // Helper to find needle in haystack starting at fromIndex
-//   function indexOfBytes(
-//     haystack: Uint8Array,
-//     needle: Uint8Array,
-//     fromIndex = 0,
-//   ): number {
-//     outer: for (let i = fromIndex; i <= haystack.length - needle.length; i++) {
-//       for (let j = 0; j < needle.length; j++) {
-//         if (haystack[i + j] !== needle[j]) continue outer;
-//       }
-//       return i;
-//     }
-//     return -1;
-//   }
-
-//   return new ReadableStream<Uint8Array>({
-//     async start(controller) {
-//       const reader = stream.getReader();
-//       let tail: Uint8Array<ArrayBufferLike> = new Uint8Array(0);
-
-//       try {
-//         while (true) {
-//           const { value, done } = await reader.read();
-//           if (done) break;
-
-//           // Combine leftover tail with new chunk
-//           const combined = concat(tail, value);
-//           let cursor = 0;
-
-//           // Scan for all sentinel occurrences
-//           let idx: number;
-//           while ((idx = indexOfBytes(combined, sentinelBytes, cursor)) !== -1) {
-//             // Enqueue data before the sentinel
-//             const segment = combined.subarray(cursor, idx);
-//             if (segment.length > 0) controller.enqueue(segment);
-//             cursor = idx + sentinelBytes.length;
-//           }
-
-//           // After last sentinel, keep a tail that might be partial sentinel
-//           const remaining = combined.subarray(cursor);
-//           if (remaining.length > sentinelBytes.length) {
-//             controller.enqueue(
-//               remaining.subarray(0, remaining.length - sentinelBytes.length),
-//             );
-//             tail = remaining.subarray(remaining.length - sentinelBytes.length);
-//           } else {
-//             tail = remaining;
-//           }
-//         }
-
-//         // Enqueue any leftover bytes (they can't form a full sentinel)
-//         if (tail.length > 0) controller.enqueue(tail);
-//         controller.close();
-//       } catch (err) {
-//         controller.error(err);
-//       } finally {
-//         reader.releaseLock();
-//       }
-//     },
-//   });
-// }
-
 export function discardSentinel(
   stream: ReadableStream<Uint8Array>,
   sentinel: string,
@@ -346,10 +216,10 @@ export function discardSentinel(
       try {
         while (!done) {
           const start = Date.now();
-          console.log("---outer loop await rdr.read()---");
+          console.log("------ discardSentinel await read()---");
           const result = await rdr.read();
           const end = Date.now();
-          console.log(`---outer loop await rdr.read() done--- ${end - start}ms`, result.done);
+          console.log(`------ discardSentinel await read() done--- ${end - start}ms`, result.done);
           const value = result.value;
           done = done || result.done;
           // We keep consuming from the source to its completion so it can
