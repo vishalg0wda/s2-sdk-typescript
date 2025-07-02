@@ -36,7 +36,13 @@ export class EventStream<Event extends ServerEvent<unknown>> {
 
     try {
       while (true) {
+        // measure the time it takes to read the stream
+        const start = Date.now();
         const { done, value } = await reader.read();
+        const end = Date.now();
+        console.log(`Time taken to read: ${end - start}ms`);
+        const valueAsString = new TextDecoder().decode(value);
+        console.log(`Value length: ${valueAsString}`);
         if (done) {
           break;
         }

@@ -28,6 +28,7 @@
   },
   "scripts": {
     "lint": "eslint --cache --max-warnings=0 src",
+    "build:sdk": "tshy",
     "build:mcp": "bun src/mcp-server/build.mts",
     "build": "npm run build:mcp && tshy",
     "prepublishOnly": "npm run build"
