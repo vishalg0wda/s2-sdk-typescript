@@ -5,6 +5,14 @@ const s2 = new S2({
   accessToken: "YAAAAAAAAABoYqMP8u0qiA1W5ckAhaZXDGVVHKi/36giuekR",
 });
 
+const oldConsoleLog = console.log.bind(console);
+
+console.log = (...args: any[]) => {
+  // Add a timestamp to the beginning of the message
+  const timestamp = new Date().toISOString();
+  oldConsoleLog(`[${timestamp}]`, ...args);
+};
+
 async function run() {
   const result = await s2.records.read(
     {

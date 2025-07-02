@@ -39,12 +39,7 @@ export class EventStream<Event extends ServerEvent<unknown>> {
 
     try {
       while (true) {
-        console.log("------------ await read()------------------");
-        // measure the time it takes to read the stream
-        const start = Date.now();
         const { done, value } = await reader.read();
-        const end = Date.now();
-        console.log(`------------ await read() took: ${end - start}ms`);
         if (done) {
           break;
         }
