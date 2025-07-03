@@ -25,3 +25,4 @@
 /.tshy-*
 /__tests__
 /.speakeasy/reports
+node_modules
